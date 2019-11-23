@@ -1,0 +1,23 @@
+{
+    "Version": "1.0",
+    "CredentialsProvider": {
+        "CognitoIdentity": {
+            "Default": {
+                "PoolId": "REPLACEME",
+                "Region": "REPLACEME"
+            }
+        }
+    },
+    "IdentityManager": {
+        "Default": {}
+    },
+    "CognitoUserPool": {
+        "Default": {
+            "AppClientSecret": "REPLACEME",
+            "AppClientId": "REPLACEME",
+            "PoolId": "REPLACEME",
+            "Region": "REPLACEME"
+        }
+    }
+}
+

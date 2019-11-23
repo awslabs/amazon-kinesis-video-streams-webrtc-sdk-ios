@@ -1,0 +1,7 @@
+framework module AWSKinesisVideo {
+  umbrella header "AWSKinesisVideo.h"
+  header "AWSKinesisVideoSignaling.h"
+
+  export *
+  module * { export * }
+}

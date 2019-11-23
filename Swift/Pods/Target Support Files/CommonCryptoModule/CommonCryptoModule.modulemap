@@ -1,0 +1,6 @@
+framework module CommonCryptoModule {
+  umbrella header "CommonCryptoModule-umbrella.h"
+
+  export *
+  module * { export * }
+}

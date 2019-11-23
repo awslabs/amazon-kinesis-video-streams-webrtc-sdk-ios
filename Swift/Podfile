@@ -1,0 +1,12 @@
+
+platform :ios, '11.0'
+use_frameworks!
+
+target 'AWSKinesisVideoWebRTCDemoApp' do
+  $awsVersion = '~> 2.11.1'
+  pod 'AWSCognitoIdentityProvider', $awsVersion
+  pod 'AWSMobileClient', $awsVersion
+  pod 'CommonCryptoModule'
+  pod 'GoogleWebRTC', '~> 1.1'
+  pod 'Starscream', '~> 3.0'
+end
