@@ -550,8 +550,6 @@ static NSString *const AWSServiceNameSageMakerRuntime = @"sagemaker";
         case AWSServiceSageMakerRuntime:
             return AWSServiceNameSageMakerRuntime;
         default:
-            // TODO: TO REMOVE. Hardcoding instead of nil to workaround.
-            // TODO: https://issues.amazon.com/issues/KinesisVideo-5038
             return AWSServiceNameKinesisVideo;
     }
 }
