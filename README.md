@@ -5,7 +5,7 @@ This sample demonstrates the Amazon Cognito Identity Provider found in the AWS M
 ## Requirements
 
 * Xcode 9.2 and later
-* iOS 8 and later
+* iOS 11 and later
 
 #### Download the WebRTC SDK in iOS
 To download the WebRTC SDK in iOS, run the following command:
