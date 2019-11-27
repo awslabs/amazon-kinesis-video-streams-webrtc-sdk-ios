@@ -1,6 +1,7 @@
 language:
   - swift
 osx_image: xcode10.1
+xcode_workspace: Swift/AWSKinesisVideoWebRTCDemoApp.xcworkspace
 script:
   - xcodebuild -scheme AWSKinesisVideoWebRTCDemoApp -sdk iphonesimulator -destination 'platform=iOS Simulator,name=iPhone X,OS=12.1' build test
 after_success:
