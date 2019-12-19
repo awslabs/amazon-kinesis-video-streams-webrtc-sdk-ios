@@ -1,23 +1,48 @@
 import Foundation
 import AWSCognitoIdentityProvider
 
-let CognitoIdentityUserPoolRegion = AWSRegionType.USWest2
-let CognitoIdentityUserPoolId = "REPLACEME"
-let CognitoIdentityUserPoolAppClientId = "REPLACEME"
-let CognitoIdentityUserPoolAppClientSecret = "REPLACEME"
+let cognitoIdentityUserPoolRegion = AWSRegionType.USWest2 //  <- REPLACE ME!
+let cognitoIdentityUserPoolId = "REPLACEME"
+let cognitoIdentityUserPoolAppClientId = "REPLACEME"
+let cognitoIdentityUserPoolAppClientSecret = "REPLACEME"
+let cognitoIdentityPoolId = "REPLACEME"
 
-let AWSCognitoUserPoolsSignInProviderKey = "UserPool"
-let CognitoIdentityPoolID = "REPLACEME"
+// KinesisVideo constants
+let awsKinesisVideoKey = "kinesisvideo"
+let videoProtocols =  ["WSS", "HTTPS"]
 
-let AWSKinesisVideoEndpoint = "https://kinesisvideo.us-west-2.amazonaws.com"
-let AWSKinesisVideoKey = "kinesisvideo"
+// Connection constants
+let connectAsMasterKey = "connect-as-master"
+let connectAsViewerKey = "connect-as-viewer"
 
-let VideoProtocols =  ["WSS", "HTTPS"]
+let masterRole = "MASTER"
+let viewerRole = "VIEWER"
+let connectAsViewClientId = "ConsumerViewer"
 
-let ConnectAsMaster = "connect-as-master"
-let ConnectAsViewer = "connect-as-viewer"
+// AWSv4 signer constants
+let signerAlgorithm = "AWS4-HMAC-SHA256"
+let awsRequestTypeKey = "aws4_request"
+let xAmzAlgorithm = "X-Amz-Algorithm"
+let xAmzCredential = "X-Amz-Credential"
+let xAmzDate = "X-Amz-Date"
+let xAmzExpiresKey = "X-Amz-Expires"
+let xAmzExpiresValue = "299"
+let xAmzSecurityToken = "X-Amz-Security-Token"
+let xAmzSignature = "X-Amz-Signature"
+let xAmzSignedHeaders = "X-Amz-SignedHeaders"
+let newlineDelimiter = "\n"
+let slashDelimiter = "/"
+let colonDelimiter = ":"
+let plusDelimiter = "+"
+let equalsDelimiter = "="
+let ampersandDelimiter = "&"
+let restMethod = "GET"
+let utcDateFormatter = "yyyyMMdd'T'HHmmss'Z'"
+let utcTimezone = "UTC"
 
-let MasterRole = "MASTER"
-let ViewerRole = "VIEWER"
+let hostKey = "host"
+let wssKey = "wss"
 
-let ClientID = "ConsumerViewer"
+let plusEncoding = "%2B"
+let equalsEncoding = "%3D"
+
