@@ -1,8 +1,8 @@
 language:
   - swift
-osx_image: xcode10.1
+osx_image: xcode11.3
 xcode_workspace: Swift/AWSKinesisVideoWebRTCDemoApp.xcworkspace
 script:
-  - xcodebuild -workspace Swift/AWSKinesisVideoWebRTCDemoApp.xcworkspace -scheme AWSKinesisVideoWebRTCDemoApp -destination 'platform=iOS Simulator,name=iPhone XS Max,OS=12.1'
+  - xcodebuild -workspace Swift/AWSKinesisVideoWebRTCDemoApp.xcworkspace -scheme AWSKinesisVideoWebRTCDemoApp -destination 'platform=iOS Simulator,name=iPhone XS Max,OS=13.2'
 after_success:
   - bash <(curl -s https://codecov.io/bash)
