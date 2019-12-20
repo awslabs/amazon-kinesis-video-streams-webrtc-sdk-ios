@@ -3,6 +3,6 @@ language:
 osx_image: xcode10.1
 xcode_workspace: Swift/AWSKinesisVideoWebRTCDemoApp.xcworkspace
 script:
-  - xcodebuild -workspace Swift/AWSKinesisVideoWebRTCDemoApp.xcworkspace -scheme AWSKinesisVideoWebRTCDemoApp -sdk iphoneos  -allowProvisioningUpdates build
+  - xcodebuild -workspace Swift/AWSKinesisVideoWebRTCDemoApp.xcworkspace -scheme AWSKinesisVideoWebRTCDemoApp -destination 'platform=iOS Simulator,name=iPhone 11,OS=13.2'
 after_success:
   - bash <(curl -s https://codecov.io/bash)
