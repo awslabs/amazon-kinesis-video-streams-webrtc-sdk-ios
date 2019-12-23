@@ -6,6 +6,7 @@ let cognitoIdentityUserPoolId = "REPLACEME"
 let cognitoIdentityUserPoolAppClientId = "REPLACEME"
 let cognitoIdentityUserPoolAppClientSecret = "REPLACEME"
 let cognitoIdentityPoolId = "REPLACEME"
+let awsCognitoUserPoolsSignInProviderKey = "UserPool"
 
 // KinesisVideo constants
 let awsKinesisVideoKey = "kinesisvideo"
