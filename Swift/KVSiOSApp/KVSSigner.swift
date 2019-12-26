@@ -1,40 +1,12 @@
 import CommonCrypto
 import Foundation
 
-let ALGORITHM_AWS4_HMAC_SHA_256 = "AWS4-HMAC-SHA256"
-let AWS4_REQUEST_TYPE = "aws4_request"
-let AWS_SERVICE = "kinesisvideo"
-let X_AMZ_ALGORITHM = "X-Amz-Algorithm"
-let X_AMZ_CREDENTIAL = "X-Amz-Credential"
-let X_AMZ_DATE = "X-Amz-Date"
-let X_AMZ_EXPIRES = "X-Amz-Expires"
-let X_AMZ_SECURITY_TOKEN = "X-Amz-Security-Token"
-let X_AMZ_SIGNATURE = "X-Amz-Signature"
-let X_AMZ_SIGNED_HEADERS = "X-Amz-SignedHeaders"
-let NEW_LINE_DELIMITER = "\n"
-let SLASH_DELIMITER = "/"
-let AWS_REGION = "us-west-2"
-let REST_METHOD = "GET"
-let UTC_DATE_FORMATTER = "yyyyMMdd'T'HHmmss'Z'"
-let TIMEZONE = "UTC"
-
-func iso8601() -> (fullDateTimestamp: String, shortDate: String) {
-    let dateFormatter: DateFormatter = DateFormatter()
-    dateFormatter.dateFormat = UTC_DATE_FORMATTER
-    dateFormatter.timeZone = TimeZone(abbreviation: TIMEZONE)
-    let date = Date()
-    let dateString = dateFormatter.string(from: date)
-    let index = dateString.index(dateString.startIndex, offsetBy: 8)
-    let shortDate = dateString.substring(to: index)
-    return (fullDateTimestamp: dateString, shortDate: shortDate)
-}
-
 private extension Data {
     func toHexString() -> String {
         let hexString = map { String(format: "%02x", $0) }.joined()
         return hexString
     }
-    
+
     func bytes() -> [UInt8] {
         let array = [UInt8](self)
         return array
@@ -48,158 +20,211 @@ extension String {
         }
         return ""
     }
-    
+
     private func digest(input: NSData) -> NSData {
         let digestLength = Int(CC_SHA256_DIGEST_LENGTH)
         var hash = [UInt8](repeating: 0, count: digestLength)
         CC_SHA256(input.bytes, UInt32(input.length), &hash)
         return NSData(bytes: hash, length: digestLength)
     }
-    
+
     private func hexStringFromData(input: NSData) -> String {
         var bytes = [UInt8](repeating: 0, count: input.length)
         input.getBytes(&bytes, length: input.length)
-        
+
         var hexString = ""
         for byte in bytes {
             hexString += String(format: "%02x", UInt8(byte))
         }
-        
+
         return hexString
     }
-    
+
     func hmac(keyString: String) -> Data {
         var digest = [UInt8](repeating: 0, count: Int(CC_SHA256_DIGEST_LENGTH))
         CCHmac(CCHmacAlgorithm(kCCHmacAlgSHA256), keyString, keyString.count, self, count, &digest)
-        let data = Data(bytes: digest)
-        return data
+        return Data.init(bytes: digest)
     }
-    
+
     func hmac(keyData: Data) -> Data {
         let keyBytes = keyData.bytes()
         let data = cString(using: String.Encoding.utf8)
         let dataLen = Int(lengthOfBytes(using: String.Encoding.utf8))
         var result = [UInt8](repeating: 0, count: Int(CC_SHA256_DIGEST_LENGTH))
         CCHmac(CCHmacAlgorithm(kCCHmacAlgSHA256), keyBytes, keyData.count, data, dataLen, &result)
-        
-        return Data(bytes: result)
+
+        return Data.init(bytes: result)
     }
 }
 
-/*
- DateKey              = HMAC-SHA256("AWS4"+"<SecretAccessKey>", "<YYYYMMDD>")
- DateRegionKey        = HMAC-SHA256(<DateKey>, "<aws-region>")
- DateRegionServiceKey = HMAC-SHA256(<DateRegionKey>, "<aws-service>")
- SigningKey           = HMAC-SHA256(<DateRegionServiceKey>, "aws4_request")
- */
-private func signatureWith(stringToSign: String, secretAccessKey: String, shortDateString: String, awsRegion: String, serviceType: String) -> String? {
-    
-    let firstKey = "AWS4" + secretAccessKey
-    let dateKey = shortDateString.hmac(keyString: firstKey)
-    let dateRegionKey = awsRegion.hmac(keyData: dateKey)
-    let dateRegionServiceKey = serviceType.hmac(keyData: dateRegionKey)
-    let signingKey = AWS4_REQUEST_TYPE.hmac(keyData: dateRegionServiceKey)
-    
-    let signature = stringToSign.hmac(keyData: signingKey)
-    return signature.toHexString()
-}
 
 class KVSSigner {
-    static func sign(signRequest: URL, secretKey: String, accessKey: String, sessionToken: String,
-                     wssRequest: URL, region: String) -> URL? {
-        let signedRequest = signRequest
+    
+    static func iso8601() -> (fullDateTimestamp: String, shortDate: String) {
+        let dateFormatter: DateFormatter = DateFormatter()
+        dateFormatter.dateFormat = utcDateFormatter
+        dateFormatter.timeZone = TimeZone(abbreviation: utcTimezone)
+        let date = Date()
+        let dateString = dateFormatter.string(from: date)
+        let index = dateString.index(dateString.startIndex, offsetBy: 8)
+        let shortDate = dateString.substring(to: index)
+        return (fullDateTimestamp: dateString, shortDate: shortDate)
+    }
+    
+    /*
+     DateKey              = HMAC-SHA256("AWS4"+"<SecretAccessKey>", "<YYYYMMDD>")
+     DateRegionKey        = HMAC-SHA256(<DateKey>, "<aws-region>")
+     DateRegionServiceKey = HMAC-SHA256(<DateRegionKey>, "<aws-service>")
+     SigningKey           = HMAC-SHA256(<DateRegionServiceKey>, "aws4_request")
+     */
+    static func signatureWith(stringToSign: String, secretAccessKey: String, shortDateString: String, awsRegion: String, serviceType: String) -> String? {
+
+        let firstKey = "AWS4" + secretAccessKey
+        let dateKey = shortDateString.hmac(keyString: firstKey)
+        let dateRegionKey = awsRegion.hmac(keyData: dateKey)
+        let dateRegionServiceKey = serviceType.hmac(keyData: dateRegionKey)
+        let signingKey = awsRequestTypeKey.hmac(keyData: dateRegionServiceKey)
+
+        let signature = stringToSign.hmac(keyData: signingKey)
+        return signature.toHexString()
+    }
+
+    static func getCredentialScope(shortDate: String, region: String, serviceName: String, requestType: String) -> String {
+        let credentialArray = [shortDate, region, serviceName, requestType]
+        return credentialArray.joined(separator: slashDelimiter)
+    }
+    
+    static func getQueryParams(accessKey: String, sessionToken: String, credentialScope: String, date:(fullDateTimestamp: String, shortDate: String)) -> (queryParamBuilder: [URLQueryItem], queryParamBuilderDict: [String: String]) {
+        var queryParamsBuilderArray = [URLQueryItem]()
+        queryParamsBuilderArray.append(URLQueryItem(name: xAmzAlgorithm, value: signerAlgorithm))
+        queryParamsBuilderArray.append(URLQueryItem(name: xAmzCredential, value: (accessKey + slashDelimiter + credentialScope).addingPercentEncoding(withAllowedCharacters: .urlHostAllowed)!))
+        queryParamsBuilderArray.append(URLQueryItem(name: xAmzDate, value: date.fullDateTimestamp))
+        queryParamsBuilderArray.append(URLQueryItem(name: xAmzExpiresKey, value: xAmzExpiresValue))
+        queryParamsBuilderArray.append(URLQueryItem(name: xAmzSignedHeaders, value: hostKey))
         
-        let date = iso8601()
-        guard let host = signedRequest.host
-            else { return .none }
-        
-        var canonicalUri = signedRequest.path
-        if (canonicalUri.isEmpty) {
-            canonicalUri = SLASH_DELIMITER
-        }
-        let canonicalHeaders = "host:" + host + NEW_LINE_DELIMITER
-        let signedHeaders = "host"
-        
-        let credentialArray = [date.shortDate, region, AWS_SERVICE, AWS4_REQUEST_TYPE]
-        let credentialScope = credentialArray.joined(separator: SLASH_DELIMITER)
-        
-        var queryParamsBuilder = [URLQueryItem]()
-        queryParamsBuilder.append(URLQueryItem(name: X_AMZ_ALGORITHM, value: ALGORITHM_AWS4_HMAC_SHA_256))
-        queryParamsBuilder.append(URLQueryItem(name: X_AMZ_CREDENTIAL, value: (accessKey + "/" + credentialScope).addingPercentEncoding(withAllowedCharacters: .urlHostAllowed)!))
-        queryParamsBuilder.append(URLQueryItem(name: X_AMZ_DATE, value: date.fullDateTimestamp))
-        queryParamsBuilder.append(URLQueryItem(name: X_AMZ_EXPIRES, value: "299"))
-        queryParamsBuilder.append(URLQueryItem(name: X_AMZ_SIGNED_HEADERS, value: signedHeaders))
-        
-        var queryParamsBuilderDict: [String: String] = [
-            X_AMZ_ALGORITHM: ALGORITHM_AWS4_HMAC_SHA_256,
-            X_AMZ_CREDENTIAL: (accessKey + "/" + credentialScope).addingPercentEncoding(withAllowedCharacters: .urlHostAllowed)!,
-            X_AMZ_DATE: date.fullDateTimestamp,
-            X_AMZ_EXPIRES: "299",
-            X_AMZ_SIGNED_HEADERS: signedHeaders,
+        var queryParamsBuilderDictionary: [String: String] = [
+            xAmzAlgorithm: signerAlgorithm,
+            xAmzCredential: (accessKey + slashDelimiter + credentialScope).addingPercentEncoding(withAllowedCharacters: .urlHostAllowed)!,
+            xAmzDate: date.fullDateTimestamp,
+            xAmzExpiresKey: xAmzExpiresValue,
+            xAmzSignedHeaders: hostKey
         ]
         
         if !sessionToken.isEmpty {
-            queryParamsBuilder.append(URLQueryItem(name: X_AMZ_SECURITY_TOKEN, value: sessionToken.addingPercentEncoding(withAllowedCharacters: .urlHostAllowed)!.replacingOccurrences(of: "+", with: "%2B").replacingOccurrences(of: "=", with: "%3D")))
-            queryParamsBuilderDict.updateValue(sessionToken.addingPercentEncoding(withAllowedCharacters: .urlHostAllowed)!.replacingOccurrences(of: "+", with: "%2B").replacingOccurrences(of: "=", with: "%3D"), forKey: X_AMZ_SECURITY_TOKEN)
+            queryParamsBuilderArray
+                .append(URLQueryItem(
+                    name: xAmzSecurityToken,
+                    value: sessionToken.addingPercentEncoding(withAllowedCharacters: .urlHostAllowed)!.replacingOccurrences(of: plusDelimiter, with: plusEncoding).replacingOccurrences(of: equalsDelimiter, with: equalsEncoding)))
+            queryParamsBuilderDictionary
+                .updateValue(sessionToken.addingPercentEncoding(withAllowedCharacters: .urlHostAllowed)!.replacingOccurrences(of: plusDelimiter, with: plusEncoding).replacingOccurrences(of: equalsDelimiter, with: equalsEncoding),
+                             forKey: xAmzSecurityToken)
         }
         
+        return (queryParamsBuilderArray, queryParamsBuilderDictionary)
+    }
+    
+    static func getStringToSign(fullDateTimeStamp: String, credentialScope: String, canonicalRequest: String) -> String {
+        return signerAlgorithm + newlineDelimiter +
+        fullDateTimeStamp + newlineDelimiter +
+        credentialScope + newlineDelimiter +
+        canonicalRequest.sha256()
+    }
+    
+    static func getSignedUrl(wssRequest: URL, queryParamsBuilder:[URLQueryItem], canonicalUri: String, signature: String) -> URL? {
+        
+        var components = URLComponents()
+        components.scheme = wssKey
+        components.host = wssRequest.host
+        components.path = canonicalUri
+        var queryParamsBuilderArray = queryParamsBuilder
+        queryParamsBuilderArray.sort {
+            $0.name < $1.name
+        }
+        queryParamsBuilderArray.append(URLQueryItem(name: xAmzSignature, value: signature))
+
+        if #available(iOS 11.0, *) {
+            components.percentEncodedQueryItems = queryParamsBuilderArray
+        } else {
+            
+        }
+        print("Signed url", components.url!)
+        return components.url
+    }
+    
+    static func getCanonicalHeaders(signRequest:URL) -> String? {
+        guard let host = signRequest.host
+            else { return .none }
+        return hostKey + colonDelimiter + host + newlineDelimiter
+    }
+    
+    static func getCanonicalUri (signRequest:URL) -> String? {
+        if (signRequest.path.isEmpty) {
+            return slashDelimiter
+        }
+        return signRequest.path
+    }
+    
+    static func getCanonicalRequest(canonicalQuerystring: String, signRequest: URL) -> String? {
+        let cleanedcanonicalQuerystring = String(canonicalQuerystring.dropLast())
+        let emptyString = ""
+        let payloadHash = emptyString.sha256()
+        return
+            restMethod + newlineDelimiter +
+                getCanonicalUri(signRequest: signRequest)! + newlineDelimiter +
+                cleanedcanonicalQuerystring + newlineDelimiter +
+                getCanonicalHeaders(signRequest: signRequest)! + newlineDelimiter +
+                hostKey + newlineDelimiter + payloadHash
+    }
+    
+    static func getCanonicalQueryString(queryParamBuilderDict: [String: String]) -> String? {
+        let sortedKeys = queryParamBuilderDict.keys.sorted()
+        var canonicalQueryString: String = ""
+
+        for key in sortedKeys {
+            canonicalQueryString += key + equalsDelimiter + queryParamBuilderDict[key]! + ampersandDelimiter
+        }
+        return canonicalQueryString
+    }
+    
+    static func sign(signRequest: URL, secretKey: String, accessKey: String, sessionToken: String,
+                     wssRequest: URL, region: String) -> URL? {
+        let date = iso8601()
+        return signWithDate(signRequest: signRequest, secretKey: secretKey, accessKey: accessKey, sessionToken: sessionToken, wssRequest: wssRequest, region: region, date: date)
+    }
+    
+    static func signWithDate(signRequest: URL, secretKey: String, accessKey: String, sessionToken: String,
+                             wssRequest: URL, region: String, date:(fullDateTimestamp: String, shortDate: String)) -> URL? {
+        var canonicalUri = signRequest.path
+        if (canonicalUri.isEmpty) {
+            canonicalUri = slashDelimiter
+        }
+        let credentialScope = getCredentialScope(shortDate: date.shortDate, region: region, serviceName: awsKinesisVideoKey, requestType: awsRequestTypeKey)
+
+        let queryParams = getQueryParams(accessKey: accessKey, sessionToken: sessionToken, credentialScope: credentialScope, date: date)
+        var queryParamsBuilder :[URLQueryItem] = queryParams.queryParamBuilder
+        var queryParamsBuilderDict: [String: String] = queryParams.queryParamBuilderDict
+
+        //Adding queryParams from the signRequest's query.
         if signRequest.query != nil {
             let queryParams = signRequest.query!
-            let queryParamArray = queryParams.components(separatedBy: "&")
-            
-            for s in queryParamArray {
-                if let index = s.firstIndex(of: "=") {
-                    let nextIndex = s.index(after: index)
-                    queryParamsBuilderDict.updateValue(String(s[nextIndex...]).addingPercentEncoding(withAllowedCharacters: .urlHostAllowed)!, forKey: String(s[..<index]))
-                    queryParamsBuilder.append(URLQueryItem(name: String(s[..<index].addingPercentEncoding(withAllowedCharacters: .urlHostAllowed)!), value: String(s[nextIndex...])))
+            let queryParamArray = queryParams.components(separatedBy: ampersandDelimiter)
+
+            for param in queryParamArray {
+                if let index = param.firstIndex(of: "=") {
+                    let nextIndex = param.index(after: index)
+                    queryParamsBuilderDict.updateValue(String(param[nextIndex...]).addingPercentEncoding(withAllowedCharacters: .urlHostAllowed)!, forKey: String(param[..<index]))
+                    queryParamsBuilder.append(URLQueryItem(name: String(param[..<index].addingPercentEncoding(withAllowedCharacters: .urlHostAllowed)!), value: String(param[nextIndex...])))
                 }
             }
         } else {
             print("Error: Missing channel ARN.")
         }
+
+        let canonicalQuerystring = getCanonicalQueryString(queryParamBuilderDict: queryParamsBuilderDict)
+        let canonicalRequest = getCanonicalRequest(canonicalQuerystring: canonicalQuerystring!, signRequest: signRequest)
+        let stringToSign = getStringToSign(fullDateTimeStamp: date.fullDateTimestamp, credentialScope: credentialScope, canonicalRequest: canonicalRequest!)
+        let signature = signatureWith(stringToSign: stringToSign, secretAccessKey: secretKey, shortDateString: date.shortDate, awsRegion: region, serviceType: awsKinesisVideoKey)
+        return getSignedUrl(wssRequest: wssRequest, queryParamsBuilder: queryParamsBuilder, canonicalUri: canonicalUri, signature: signature!)
         
-        let sortedKeys = queryParamsBuilderDict.keys.sorted()
-        var canonicalQuerystring: String = ""
-        
-        for key in sortedKeys {
-            canonicalQuerystring += key + "=" + queryParamsBuilderDict[key]! + "&"
-        }
-        
-        let cleanedcanonicalQuerystring = String(canonicalQuerystring.dropLast())
-        let emptyString = ""
-        let payloadHash = emptyString.sha256()
-        let canonicalRequest =
-            REST_METHOD + NEW_LINE_DELIMITER +
-                canonicalUri + NEW_LINE_DELIMITER +
-                cleanedcanonicalQuerystring + NEW_LINE_DELIMITER +
-                canonicalHeaders + NEW_LINE_DELIMITER +
-                signedHeaders + NEW_LINE_DELIMITER + payloadHash
-        
-        let stringToSign = ALGORITHM_AWS4_HMAC_SHA_256 + NEW_LINE_DELIMITER +
-            date.fullDateTimestamp + NEW_LINE_DELIMITER +
-            credentialScope + NEW_LINE_DELIMITER +
-            canonicalRequest.sha256()
-        
-        let signature = signatureWith(stringToSign: stringToSign, secretAccessKey: secretKey, shortDateString: date.shortDate, awsRegion: region, serviceType: AWS_SERVICE)
-                
-        var components = URLComponents()
-        components.scheme = "wss"
-        components.host = wssRequest.host
-        components.path = canonicalUri
-        queryParamsBuilder.sort {
-            $0.name < $1.name
-        }
-        queryParamsBuilder.append(URLQueryItem(name: X_AMZ_SIGNATURE, value: signature!))
-        
-        if #available(iOS 11.0, *) {
-            components.percentEncodedQueryItems = queryParamsBuilder
-        } else {
-            // Fallback on earlier versions
-            // No fallback for now, because we do not intend to support less than iOS 11.0
-        }
-        print("Signed url", components.url!)
-        return components.url
     }
 }
-
-

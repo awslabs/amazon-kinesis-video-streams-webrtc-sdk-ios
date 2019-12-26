@@ -29,26 +29,26 @@ public class Event {
 }
 
 extension String {
-    func base64Encoded() -> String? {
+    public func base64Encoded() -> String? {
         return data(using: .utf8)?.base64EncodedString()
     }
 
-    func base64Decoded() -> String? {
+    public func base64Decoded() -> String? {
         print("decode base64")
 
         var localData: Data?
         localData = Data(base64Encoded: self)
-        var s: String = self
+        var temp: String = self
         if localData == nil {
-            s = self + "=="
+            temp = self + "=="
         }
-        guard let data = Data(base64Encoded: s, options: Data.Base64DecodingOptions(rawValue: 0)) else {
+        guard let data = Data(base64Encoded: temp, options: Data.Base64DecodingOptions(rawValue: 0)) else {
             return nil
         }
         return String(data: data, encoding: .utf8)
     }
 
-    func convertToDictionaryValueAsString() throws -> [String: String] {
+    public func convertToDictionaryValueAsString() throws -> [String: String] {
         let data = Data(utf8)
 
         if let anyResult = try JSONSerialization.jsonObject(with: data, options: []) as? [String: String] {
@@ -58,3 +58,4 @@ extension String {
         }
     }
 }
+

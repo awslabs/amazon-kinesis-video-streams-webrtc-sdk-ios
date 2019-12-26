@@ -23,51 +23,58 @@ final class SignalingClient {
         socket.delegate = self
         socket.connect()
     }
-    
+
     func disconnect() {
         socket.disconnect()
     }
 
     func sendOffer(rtcSdp: RTCSessionDescription, senderClientid: String) {
-        debugPrint("Sending SDP offer \(rtcSdp)")
+        do {
+            debugPrint("Sending SDP offer \(rtcSdp)")
+            let message: Message = Message.createOfferMessage(sdp: rtcSdp.sdp, senderClientId: senderClientid)
+            let data = try encoder.encode(message)
+            let msg = String(data: data, encoding: .utf8)!
+            socket.write(string: msg)
+            print("Sent SDP offer message over to signaling:", msg)
 
-        let message: Message = Message.createOfferMessage(sdp: rtcSdp.sdp, senderClientId: senderClientid)
-        let data = try! encoder.encode(message)
-        let msg = String(data: data, encoding: .utf8)!
-
-        socket.write(string: msg)
-        print("Sent SDP offer message over to signaling:", msg)
+        } catch {
+            print(error)
+        }
     }
 
     func sendAnswer(rtcSdp: RTCSessionDescription, recipientClientId: String) {
-        debugPrint("Sending SDP answer\(rtcSdp)")
-
-        let message: Message = Message.createAnswerMessage(sdp: rtcSdp.sdp, recipientClientId)
-        let data = try! encoder.encode(message)
-        let msg = String(data: data, encoding: .utf8)!
-
-        socket.write(string: msg)
-        print("Sent SDP answer message over to signaling:", msg)
+        do {
+            debugPrint("Sending SDP answer\(rtcSdp)")
+            let message: Message = Message.createAnswerMessage(sdp: rtcSdp.sdp, recipientClientId)
+            let data = try encoder.encode(message)
+            let msg = String(data: data, encoding: .utf8)!
+            socket.write(string: msg)
+            print("Sent SDP answer message over to signaling:", msg)
+        } catch {
+            print(error)
+        }
     }
 
     func sendIceCandidate(rtcIceCandidate: RTCIceCandidate, master: Bool,
                           recipientClientId: String,
                           senderClientId: String) {
-        debugPrint("Sending ICE candidate \(rtcIceCandidate)")
-
-        let message: Message = Message.createIceCandidateMessage(candidate: rtcIceCandidate,
-                                                                 master,
-                                                                 recipientClientId: recipientClientId,
-                                                                 senderClientId: senderClientId)
-        let data = try! encoder.encode(message)
-        let msg = String(data: data, encoding: .utf8)!
-
-        socket.write(string: msg)
-        print("Sent ICE candidate message over to signaling:", msg)
+        do {
+            debugPrint("Sending ICE candidate \(rtcIceCandidate)")
+            let message: Message = Message.createIceCandidateMessage(candidate: rtcIceCandidate,
+                                                                     master,
+                                                                     recipientClientId: recipientClientId,
+                                                                     senderClientId: senderClientId)
+            let data = try encoder.encode(message)
+            let msg = String(data: data, encoding: .utf8)!
+            socket.write(string: msg)
+            print("Sent ICE candidate message over to signaling:", msg)
+        } catch {
+            print(error)
+        }
     }
 }
 
-// Mark: Websocket
+// MARK: Websocket
 extension SignalingClient: WebSocketDelegate {
     func websocketDidConnect(socket _: WebSocketClient) {
         delegate?.signalClientDidConnect(self)
@@ -94,25 +101,36 @@ extension SignalingClient: WebSocketDelegate {
 
             let messageType = parsedMessage?.getAction()
             let senderClientId = parsedMessage?.getSenderClientId()
+            // todo: add a guard here because some of java base64 encode options might break ios base64 decode unless extended
             let message: String = String(messagePayload!.base64Decoded()!)
 
             do {
                 let jsonObject = try message.trim().convertToDictionary()
                 if jsonObject.count != 0 {
                     if messageType == "SDP_OFFER" {
-                        let sdp: String = jsonObject["sdp"] as! String
+                        guard let sdp = jsonObject["sdp"] as? String else {
+                            return
+                        }
                         let rcSessionDescription: RTCSessionDescription = RTCSessionDescription(type: .offer, sdp: sdp)
                         delegate?.signalClient(self, senderClientId: senderClientId!, didReceiveRemoteSdp: rcSessionDescription)
                         debugPrint("SDP offer received from signaling \(sdp)")
                     } else if messageType == "SDP_ANSWER" {
-                        let sdp: String = jsonObject["sdp"] as! String
+                        guard let sdp = jsonObject["sdp"] as? String else {
+                            return
+                        }
                         let rcSessionDescription: RTCSessionDescription = RTCSessionDescription(type: .answer, sdp: sdp)
                         delegate?.signalClient(self, senderClientId: "", didReceiveRemoteSdp: rcSessionDescription)
                         debugPrint("SDP answer received from signaling \(sdp)")
                     } else if messageType == "ICE_CANDIDATE" {
-                        let iceCandidate: String = jsonObject["candidate"] as! String
-                        let sdpMid: String = jsonObject["sdpMid"] as! String
-                        let sdpMLineIndex: Int32 = jsonObject["sdpMLineIndex"] as! Int32
+                        guard let iceCandidate = jsonObject["candidate"] as? String else {
+                            return
+                        }
+                        guard let sdpMid = jsonObject["sdpMid"] as? String else {
+                            return
+                        }
+                        guard let sdpMLineIndex = jsonObject["sdpMLineIndex"] as? Int32 else {
+                            return
+                        }
                         let rtcIceCandidate: RTCIceCandidate = RTCIceCandidate(sdp: iceCandidate, sdpMLineIndex: sdpMLineIndex, sdpMid: sdpMid)
                         delegate?.signalClient(self, senderClientId: senderClientId!, didReceiveCandidate: rtcIceCandidate)
                         debugPrint("ICE candidate received from signaling \(iceCandidate)")

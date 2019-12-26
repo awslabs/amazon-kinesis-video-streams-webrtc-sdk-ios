@@ -2,7 +2,6 @@
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="15504" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="SfA-Z0-41u">
     <device id="retina4_7" orientation="portrait" appearance="light"/>
     <dependencies>
-        <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15508"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -10,7 +9,7 @@
         <!--SignIn View Controller-->
         <scene sceneID="tne-QT-ifu">
             <objects>
-                <viewController id="BYZ-38-t0r" userLabel="SignIn View Controller" customClass="SignInViewController" customModule="KVSiOSApp" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="signinvc" id="BYZ-38-t0r" userLabel="SignIn View Controller" customClass="SignInViewController" customModule="AWSKinesisVideoWebRTCDemoApp" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="y3c-jy-aDJ"/>
                         <viewControllerLayoutGuide type="bottom" id="wfy-db-euE"/>
@@ -30,12 +29,14 @@
                             </label>
                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Password" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="jtg-5s-y9B">
                                 <rect key="frame" x="16" y="155" width="343" height="34"/>
+                                <accessibility key="accessibilityConfiguration" identifier="signinpasswordtextfield"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" keyboardType="alphabet" secureTextEntry="YES"/>
                             </textField>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="DzC-gK-L3y">
                                 <rect key="frame" x="16" y="195" width="343" height="34"/>
                                 <color key="backgroundColor" red="0.1960784314" green="0.60392156860000001" blue="0.83921568629999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <accessibility key="accessibilityConfiguration" identifier="signinbutton"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="18"/>
                                 <state key="normal" title="Sign In">
                                     <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -46,6 +47,7 @@
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="aXe-qm-Syq">
                                 <rect key="frame" x="16" y="249" width="54" height="30"/>
+                                <accessibility key="accessibilityConfiguration" identifier="signupbutton"/>
                                 <state key="normal" title="Sign Up"/>
                                 <connections>
                                     <segue destination="O2Z-Ld-ZTv" kind="show" id="VLH-5V-Rly"/>
@@ -53,6 +55,7 @@
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="O01-Qr-hlK">
                                 <rect key="frame" x="244" y="249" width="115" height="30"/>
+                                <accessibility key="accessibilityConfiguration" identifier="signinforgotpasswordbutton"/>
                                 <state key="normal" title="Forgot Password"/>
                                 <connections>
                                     <segue destination="BkF-2Z-FaF" kind="show" identifier="forgotPasswordSegue" id="999-73-2kk"/>
@@ -60,6 +63,7 @@
                             </button>
                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Username" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="XdH-zS-hci">
                                 <rect key="frame" x="16" y="113" width="343" height="34"/>
+                                <accessibility key="accessibilityConfiguration" identifier="signinusernametextfield"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" keyboardType="alphabet"/>
                             </textField>
@@ -88,7 +92,10 @@
                     <nil key="simulatedTopBarMetrics"/>
                     <nil key="simulatedBottomBarMetrics"/>
                     <connections>
+                        <outlet property="forgotPasswordButton" destination="O01-Qr-hlK" id="x74-yx-YiW"/>
                         <outlet property="password" destination="jtg-5s-y9B" id="NG7-MV-RKZ"/>
+                        <outlet property="signInButton" destination="DzC-gK-L3y" id="SQn-U7-EMy"/>
+                        <outlet property="signUpButton" destination="aXe-qm-Syq" id="ezQ-Ss-JvP"/>
                         <outlet property="username" destination="XdH-zS-hci" id="uBd-s7-BUU"/>
                     </connections>
                 </viewController>
@@ -99,7 +106,7 @@
         <!--Forgot Password-->
         <scene sceneID="4u0-bl-9q3">
             <objects>
-                <viewController id="BkF-2Z-FaF" userLabel="Forgot Password" customClass="ForgotPasswordViewController" customModule="KVSiOSApp" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="BkF-2Z-FaF" userLabel="Forgot Password" customClass="ForgotPasswordViewController" customModule="AWSKinesisVideoWebRTCDemoApp" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="ozn-xv-KbX"/>
                         <viewControllerLayoutGuide type="bottom" id="i9G-jC-z6Y"/>
@@ -110,6 +117,7 @@
                         <subviews>
                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Username" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="6BZ-sc-Lc1">
                                 <rect key="frame" x="17" y="75" width="343" height="34"/>
+                                <accessibility key="accessibilityConfiguration" identifier="forgotpasswordusernametextfield"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" keyboardType="alphabet"/>
                             </textField>
@@ -126,6 +134,7 @@
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="AeR-Mz-1Zm">
                                 <rect key="frame" x="17" y="117" width="343" height="34"/>
                                 <color key="backgroundColor" red="0.1960784314" green="0.60392156860000001" blue="0.83921568629999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <accessibility key="accessibilityConfiguration" identifier="forgotpasswordviewforgotpasswordbutton"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="18"/>
                                 <state key="normal" title="Forgot Password">
                                     <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -160,7 +169,7 @@
         <!--SignUp-->
         <scene sceneID="be2-Yb-YLI">
             <objects>
-                <viewController title="Register" id="O2Z-Ld-ZTv" userLabel="SignUp" customClass="SignUpViewController" customModule="KVSiOSApp" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController title="Register" id="O2Z-Ld-ZTv" userLabel="SignUp" customClass="SignUpViewController" customModule="AWSKinesisVideoWebRTCDemoApp" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="ghu-il-qny"/>
                         <viewControllerLayoutGuide type="bottom" id="sGa-Oe-RKc"/>
@@ -171,6 +180,7 @@
                         <subviews>
                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Phone with country code i.e. +155555555" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="yJN-sh-wk7">
                                 <rect key="frame" x="15" y="193" width="343" height="34"/>
+                                <accessibility key="accessibilityConfiguration" identifier="signuphonenumbertextfield"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" keyboardType="phonePad"/>
                                 <connections>
@@ -198,12 +208,14 @@
                             </label>
                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Password" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="vlW-ds-11L">
                                 <rect key="frame" x="15" y="138" width="343" height="34"/>
+                                <accessibility key="accessibilityConfiguration" identifier="signuppasswordtextfield"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" keyboardType="alphabet" secureTextEntry="YES"/>
                             </textField>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="L92-OD-AWi">
                                 <rect key="frame" x="15" y="293" width="343" height="34"/>
                                 <color key="backgroundColor" red="0.1960784314" green="0.60392156860000001" blue="0.83921568629999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <accessibility key="accessibilityConfiguration" identifier="signupconfirmbutton"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="18"/>
                                 <state key="normal" title="Sign Up">
                                     <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -220,6 +232,7 @@
                             </label>
                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Email" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="WyZ-BE-297">
                                 <rect key="frame" x="15" y="246" width="343" height="34"/>
+                                <accessibility key="accessibilityConfiguration" identifier="signupemailtextfield"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" keyboardType="emailAddress"/>
                             </textField>
@@ -231,6 +244,7 @@
                             </label>
                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Username" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Ozv-Iw-42u">
                                 <rect key="frame" x="15" y="95" width="343" height="34"/>
+                                <accessibility key="accessibilityConfiguration" identifier="signupusernametextfield"/>
                                 <constraints>
                                     <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="30" id="FE6-vt-jzJ"/>
                                     <constraint firstAttribute="height" constant="30" id="oN7-Vv-fbV"/>
@@ -313,7 +327,7 @@
         <!--Confirm SignUp-->
         <scene sceneID="8Mt-2p-96b">
             <objects>
-                <viewController id="52d-g9-hr2" userLabel="Confirm SignUp" customClass="ConfirmSignUpViewController" customModule="KVSiOSApp" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="confirm-signup" id="52d-g9-hr2" userLabel="Confirm SignUp" customClass="ConfirmSignUpViewController" customModule="AWSKinesisVideoWebRTCDemoApp" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="Dxb-36-4Km"/>
                         <viewControllerLayoutGuide type="bottom" id="tpb-eb-shG"/>
@@ -430,7 +444,7 @@
         <!--Forgot Password-->
         <scene sceneID="svH-gs-W3w">
             <objects>
-                <viewController id="1Z9-ek-DYA" userLabel="Forgot Password" customClass="ConfirmForgotPasswordViewController" customModule="KVSiOSApp" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="1Z9-ek-DYA" userLabel="Forgot Password" customClass="ConfirmForgotPasswordViewController" customModule="AWSKinesisVideoWebRTCDemoApp" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="YgV-e6-3Jt"/>
                         <viewControllerLayoutGuide type="bottom" id="c47-Yg-fOV"/>
@@ -441,6 +455,7 @@
                         <subviews>
                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Confirmation Code" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="s02-hv-Uoj">
                                 <rect key="frame" x="17" y="75" width="343" height="34"/>
+                                <accessibility key="accessibilityConfiguration" identifier="confirmforgotpasswordconfirmationcodetextfield"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" keyboardType="numberPad"/>
                             </textField>
@@ -456,6 +471,7 @@
                             </label>
                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="New Password" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="FgX-KG-zLK">
                                 <rect key="frame" x="17" y="140" width="343" height="34"/>
+                                <accessibility key="accessibilityConfiguration" identifier="confirmforgotpasswordnewpasswordtextfield"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" keyboardType="alphabet" secureTextEntry="YES"/>
                             </textField>
@@ -472,6 +488,7 @@
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="jfj-m7-W5X">
                                 <rect key="frame" x="17" y="178" width="343" height="34"/>
                                 <color key="backgroundColor" red="0.1960784314" green="0.60392156860000001" blue="0.83921568629999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <accessibility key="accessibilityConfiguration" identifier="confirmforgotpasswordupdatepasswordbutton"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="18"/>
                                 <state key="normal" title="Update Password">
                                     <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -529,7 +546,7 @@
         <!--Channel Configuration View Controller-->
         <scene sceneID="Of1-Bu-MjB">
             <objects>
-                <viewController storyboardIdentifier="channelvc" id="fxY-gB-7Yj" customClass="ChannelConfigurationViewController" customModule="KVSiOSApp" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="channelvc" id="fxY-gB-7Yj" customClass="ChannelConfigurationViewController" customModule="AWSKinesisVideoWebRTCDemoApp" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="719-2R-FoQ"/>
                         <viewControllerLayoutGuide type="bottom" id="xzu-VI-sNV"/>
@@ -539,10 +556,11 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <stackView opaque="NO" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" axis="vertical" spacing="43" translatesAutoresizingMaskIntoConstraints="NO" id="4pf-3f-52M">
-                                <rect key="frame" x="66" y="74" width="243" height="428.5"/>
+                                <rect key="frame" x="66" y="74" width="250" height="428.5"/>
                                 <subviews>
                                     <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Channel Name " textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="zEP-tC-ik7">
-                                        <rect key="frame" x="0.0" y="0.0" width="243" height="25"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="250" height="25"/>
+                                        <accessibility key="accessibilityConfiguration" identifier="channelnametextfield"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="25" id="Xmx-Xt-T0T"/>
                                             <constraint firstAttribute="width" constant="250" id="miB-6z-Gg1"/>
@@ -551,7 +569,8 @@
                                         <textInputTraits key="textInputTraits"/>
                                     </textField>
                                     <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Client ID (optional)" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="a2V-fh-lBx">
-                                        <rect key="frame" x="0.0" y="68" width="243" height="25"/>
+                                        <rect key="frame" x="0.0" y="68" width="250" height="25"/>
+                                        <accessibility key="accessibilityConfiguration" identifier="clientidtextfield"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="250" id="EvI-M2-eIf"/>
                                             <constraint firstAttribute="height" constant="25" id="drp-Hv-OMz"/>
@@ -560,7 +579,8 @@
                                         <textInputTraits key="textInputTraits"/>
                                     </textField>
                                     <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Region" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="nr9-tN-CuW">
-                                        <rect key="frame" x="0.0" y="136" width="243" height="25"/>
+                                        <rect key="frame" x="0.0" y="136" width="250" height="25"/>
+                                        <accessibility key="accessibilityConfiguration" identifier="regiontextfield"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="25" id="NqF-xK-94H"/>
                                         </constraints>
@@ -568,8 +588,9 @@
                                         <textInputTraits key="textInputTraits"/>
                                     </textField>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="3k1-42-Mbg">
-                                        <rect key="frame" x="0.0" y="204" width="243" height="25"/>
+                                        <rect key="frame" x="0.0" y="204" width="250" height="25"/>
                                         <color key="backgroundColor" red="0.1960784314" green="0.60392156860000001" blue="0.83921568629999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <accessibility key="accessibilityConfiguration" identifier="connectasmasterbutton"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="200" id="F6D-5s-neo"/>
                                             <constraint firstAttribute="height" constant="25" id="IO6-mE-h8o"/>
@@ -583,8 +604,9 @@
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="KMq-bs-4Hv">
-                                        <rect key="frame" x="0.0" y="272" width="243" height="25"/>
+                                        <rect key="frame" x="0.0" y="272" width="250" height="25"/>
                                         <color key="backgroundColor" red="0.1960784314" green="0.60392156860000001" blue="0.83921568629999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <accessibility key="accessibilityConfiguration" identifier="connectasviewerbutton"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="25" id="HjA-Zg-sFx"/>
                                         </constraints>
@@ -597,16 +619,17 @@
                                         </connections>
                                     </button>
                                     <stackView opaque="NO" contentMode="scaleToFill" spacing="120" translatesAutoresizingMaskIntoConstraints="NO" id="G8H-J9-l8I">
-                                        <rect key="frame" x="0.0" y="340" width="243" height="31"/>
+                                        <rect key="frame" x="0.0" y="340" width="250" height="31"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Audio" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pV1-OS-ahX">
-                                                <rect key="frame" x="0.0" y="0.0" width="74" height="31"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="81" height="31"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="11"/>
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="uWn-mC-EnS">
-                                                <rect key="frame" x="194" y="0.0" width="51" height="31"/>
+                                                <rect key="frame" x="201" y="0.0" width="51" height="31"/>
+                                                <accessibility key="accessibilityConfiguration" identifier="audioswitch"/>
                                                 <connections>
                                                     <action selector="audioStateChangedWithSender:" destination="fxY-gB-7Yj" eventType="valueChanged" id="qaN-7b-Hmo"/>
                                                 </connections>
@@ -617,7 +640,7 @@
                                         </constraints>
                                     </stackView>
                                     <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Not Connected" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="NOw-C6-Bie">
-                                        <rect key="frame" x="0.0" y="414" width="243" height="14.5"/>
+                                        <rect key="frame" x="0.0" y="414" width="250" height="14.5"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                         <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -646,6 +669,8 @@
                     <connections>
                         <outlet property="channelName" destination="zEP-tC-ik7" id="24a-5S-JZv"/>
                         <outlet property="clientID" destination="a2V-fh-lBx" id="GfF-0J-qjq"/>
+                        <outlet property="connectAsMasterButton" destination="3k1-42-Mbg" id="SsG-ss-9bL"/>
+                        <outlet property="connectAsViewerButton" destination="KMq-bs-4Hv" id="HDg-vF-0CB"/>
                         <outlet property="connectedLabel" destination="NOw-C6-Bie" id="cMG-kR-3E9"/>
                         <outlet property="isAudioEnabled" destination="uWn-mC-EnS" id="CUs-sB-mgl"/>
                         <outlet property="regionName" destination="nr9-tN-CuW" id="tX6-zd-Kpw"/>
@@ -658,7 +683,7 @@
         <!--Video View Controller-->
         <scene sceneID="lK3-Rv-4a7">
             <objects>
-                <viewController storyboardIdentifier="videoPage" id="4eg-5R-hBB" customClass="VideoViewController" customModule="KVSiOSApp" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="videoPage" id="4eg-5R-hBB" customClass="VideoViewController" customModule="AWSKinesisVideoWebRTCDemoApp" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="mIf-qg-d2A"/>
                         <viewControllerLayoutGuide type="bottom" id="hwI-ay-Q9d"/>

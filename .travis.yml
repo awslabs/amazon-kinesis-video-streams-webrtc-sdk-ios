@@ -1,13 +1,12 @@
 language:
   - swift
-osx_image: xcode10.1
+osx_image: xcode11.3
 xcode_workspace: Swift/AWSKinesisVideoWebRTCDemoApp.xcworkspace
 podfile: Swift/Podfile
 before_install:
   - gem install cocoapods # Since Travis is not always on latest version
   - pod install --project-directory=Swift
 script:
-  - xcodebuild -workspace Swift/AWSKinesisVideoWebRTCDemoApp.xcworkspace -scheme AWSKinesisVideoWebRTCDemoApp -sdk iphoneos  -destination 'platform=iOS Simulator,name=iPhone 11,OS=13.2'
-
+  - xcodebuild -workspace Swift/AWSKinesisVideoWebRTCDemoApp.xcworkspace -scheme AWSKinesisVideoWebRTCDemoApp -sdk iphoneos  -destination 'platform=iOS Simulator,name=iPhone 11,OS=13.3'
 after_success:
   - bash <(curl -s https://codecov.io/bash)

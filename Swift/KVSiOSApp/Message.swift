@@ -62,7 +62,8 @@ public class Message: Codable {
      * @return SDP answer message to be sent to signaling service
      */
     public class func createAnswerMessage(sdp: String, _ recipientClientId: String) -> Message {
-        let answerPayload: String = "{\"type\":\"answer\",\"sdp\":\"" + sdp.replacingOccurrences(of: "\r\n", with: "\\r\\n") + "\"}"
+        let answerPayload: String = "{\"type\":\"answer\",\"sdp\":\"" +
+            sdp.replacingOccurrences(of: "\r\n", with: "\\r\\n") + "\"}"
         let encodedAnswer: String = answerPayload.data(using: .utf8)!.base64EncodedString()
         // recipientClientId is remote's senderclientId
         // senderClient id is not required
@@ -75,7 +76,8 @@ public class Message: Codable {
      * @return SDP offer message to be sent to signaling service
      */
     public class func createOfferMessage(sdp: String, senderClientId: String) -> Message {
-        let offerPayload: String = "{\"type\":\"offer\",\"sdp\":\"" + sdp.replacingOccurrences(of: "\r\n", with: "\\r\\n") + "\"}"
+        let offerPayload: String = "{\"type\":\"offer\",\"sdp\":\"" +
+            sdp.replacingOccurrences(of: "\r\n", with: "\\r\\n") + "\"}"
         let encodedOffer: String = offerPayload.data(using: .utf8)!.base64EncodedString()
 
         // recipientClientId is not applicable as we are sending offer to master
@@ -97,14 +99,17 @@ public class Message: Codable {
         let sdpMLineIndex: Int32 = candidate.sdpMLineIndex
         let sdp: String = candidate.sdp
 
-        let messagePayload: String = "{\"candidate\":\"" + sdp + "\",\"sdpMid\":\"" + sdpMid + "\",\"sdpMLineIndex\":" + String(sdpMLineIndex) + "}"
+        let messagePayload: String =
+            "{\"candidate\":\"" + sdp + "\",\"sdpMid\":\"" + sdpMid
+                + "\",\"sdpMLineIndex\":" + String(sdpMLineIndex) + "}"
 
         if master {
             print("Master mode Ice candidate")
             // recipientclientid is remote senderclientId
             // senderClientId is not required for master mode
             // e.g Message("ICE_CANDIDATE",  "ConsumerViewerJS", "", messagePayload.data(using: .utf8)!.base64EncodedString())
-            return Message("ICE_CANDIDATE", recipientClientId, "", messagePayload.data(using: .utf8)!.base64EncodedString())
+            return Message("ICE_CANDIDATE", recipientClientId, "",
+                           messagePayload.data(using: .utf8)!.base64EncodedString())
 
         } else {
             print("Viewer mode Ice candidate")

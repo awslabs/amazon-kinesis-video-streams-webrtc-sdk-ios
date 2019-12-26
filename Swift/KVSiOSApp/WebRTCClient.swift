@@ -27,7 +27,7 @@ final class WebRTCClient: NSObject {
     private var localAudioTrack: RTCAudioTrack?
     private var remoteVideoTrack: RTCVideoTrack?
     private var remoteDataChannel: RTCDataChannel?
-    private var constructedIceServers:[RTCIceServer]?
+    private var constructedIceServers: [RTCIceServer]?
 
     required init(iceServers: [RTCIceServer], isAudioOn: Bool) {
         let config = RTCConfiguration()
@@ -39,7 +39,7 @@ final class WebRTCClient: NSObject {
         config.rtcpMuxPolicy = .require
         config.tcpCandidatePolicy = .enabled
 
-        let constraints = RTCMediaConstraints(mandatoryConstraints: nil,optionalConstraints: nil)
+        let constraints = RTCMediaConstraints(mandatoryConstraints: nil, optionalConstraints: nil)
         peerConnection = WebRTCClient.factory.peerConnection(with: config, constraints: constraints, delegate: nil)
 
         super.init()
@@ -50,10 +50,10 @@ final class WebRTCClient: NSObject {
         createLocalVideoStream()
         peerConnection.delegate = self
     }
-    
-    func shutdown(){
+
+    func shutdown() {
         peerConnection.close()
-        
+
         if let stream = peerConnection.localStreams.first {
             localAudioTrack = nil
             localVideoTrack = nil
@@ -112,7 +112,7 @@ final class WebRTCClient: NSObject {
                 debugPrint("Error setting fps.")
                 return
             }
-        
+
         capturer.startCapture(with: frontCamera,
                               format: format,
                               fps: Int(fps.magnitude))
@@ -126,15 +126,15 @@ final class WebRTCClient: NSObject {
 
     private func createLocalVideoStream() {
         localVideoTrack = createVideoTrack()
-        
+
         if let localVideoTrack = localVideoTrack {
             peerConnection.add(localVideoTrack, streamIds: [streamId])
             remoteVideoTrack = peerConnection.transceivers.first { $0.mediaType == .video }?.receiver.track as? RTCVideoTrack
         }
-      
+
     }
-    
-    private func createLocalAudioStream(){
+
+    private func createLocalAudioStream() {
         localAudioTrack = createAudioTrack()
         if let localAudioTrack  = localAudioTrack {
             peerConnection.add(localAudioTrack, streamIds: [streamId])
