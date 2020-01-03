@@ -1,12 +1,14 @@
 import Foundation
 import AWSCognitoIdentityProvider
 
-let cognitoIdentityUserPoolRegion = AWSRegionType.USWest2 //  <- REPLACE ME!
+// Cognito constants
+let awsCognitoUserPoolsSignInProviderKey = "UserPool"
+
+let cognitoIdentityUserPoolRegion = AWSRegionType.Unknown //  <- REPLACE ME!
 let cognitoIdentityUserPoolId = "REPLACEME"
 let cognitoIdentityUserPoolAppClientId = "REPLACEME"
 let cognitoIdentityUserPoolAppClientSecret = "REPLACEME"
 let cognitoIdentityPoolId = "REPLACEME"
-let awsCognitoUserPoolsSignInProviderKey = "UserPool"
 
 // KinesisVideo constants
 let awsKinesisVideoKey = "kinesisvideo"
