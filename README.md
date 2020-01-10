@@ -65,6 +65,10 @@ Complete the following steps:
 1.    On your iOS device, open AWSKinesisVideoWebRTCDemoApp and login using the AWS user credentials from Set Up an AWS Account and Create an Administrator. (Note: Cognito settings can be tuned through your Cognito User Pool in the AWS management Console)
 2.    On successful sign-in, the channel configuration view is displayed where the **channel-name, client-id (optional) and region-name** have to be configured. 
 
+#### Run the Integration Tests  
+1.   To run the integration tests, the test user has to be created with the appropiate test password as in the TestConstants.swift file located at amazon-kinesis-video-streams-webrtc-sdk-ios/Swift/AWSKinesisVideoWebRTCDemoAppUITests/TestConstants.swift
+
+
 ##### Note
 *    Ensure that in all the cases described below, both the client applications use the same signaling channel name, region, viewer-id/client-id and the AWS account id.
 *    Please note that a master should be started first before the viewer connects to it.
@@ -74,12 +78,12 @@ Complete the following steps:
 *    Currently, there can be only one master for a channel at any given time.
 *    Use another iOS device to connect to the same channel name (started up in the above step set up as a master) in viewer mode. This will connect to an existing session (channel) where a master was connected previously.
 
-#####    Peer to Peer Streaming between Embedded SDK master and iOS device:
+#####    Peer to Peer Streaming between [Embedded SDK](https://github.com/awslabs/amazon-kinesis-video-streams-webrtc-sdk-c) master and iOS device:
   *    Run KVS WebRTC embedded SDK (in C) in master mode on a camera device.
   *    Start the iOS device in viewer mode – you should be able to see the local video preview in the lower right side of the screen and also the larger part of the screen should stream the remote video view.
 
 #####    Peer to Peer Streaming between iOS device as master and Web browser as viewer:
- *    Start one iOS device in master mode for starting a new session sing a channel name (e.g. demo)
+ *    Start one iOS device in master mode for starting a new session using a channel name (e.g. demo)
  *    Start the Web Browser using the Javascript SDK (JS with audio selected) and start it as viewer.
  *    Verify media showing up from the iOS device and also from the browser.
 
