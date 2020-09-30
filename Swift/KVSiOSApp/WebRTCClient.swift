@@ -43,12 +43,35 @@ final class WebRTCClient: NSObject {
         peerConnection = WebRTCClient.factory.peerConnection(with: config, constraints: constraints, delegate: nil)
 
         super.init()
+        configureAudioSession()
 
         if (isAudioOn) {
         createLocalAudioStream()
         }
         createLocalVideoStream()
         peerConnection.delegate = self
+    }
+    
+    func configureAudioSession() {
+        let audioSession = RTCAudioSession.sharedInstance()
+        audioSession.isAudioEnabled = true
+            do {
+                try? audioSession.lockForConfiguration()
+                // NOTE : Can remove .defaultToSpeaker when not required.
+                try
+                    audioSession.setCategory(AVAudioSessionCategoryPlayAndRecord, with:.defaultToSpeaker)
+                try audioSession.setMode(AVAudioSessionModeDefault)
+                // NOTE : Can remove the following line when speaker not required.
+                try audioSession.overrideOutputAudioPort(.speaker)
+                //When passed in the options parameter of the setActive(_:options:) instance method, this option indicates that when your audio session deactivates, other audio sessions that had been interrupted by your session can return to their active state.
+                try? AVAudioSession.sharedInstance().setActive(true, with: .notifyOthersOnDeactivation)
+                audioSession.unlockForConfiguration()
+            } catch {
+              print("audioSession properties weren't set because of an error.")
+              print(error.localizedDescription)
+              audioSession.unlockForConfiguration()
+            }
+        
     }
 
     func shutdown() {
