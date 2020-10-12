@@ -71,25 +71,29 @@ Complete the following steps:
 
 ##### Note
 *    Ensure that in all the cases described below, both the client applications use the same signaling channel name, region, viewer-id/client-id and the AWS account id.
-*    Please note that a master should be started first before the viewer connects to it.
+*    Please note that a Primary Connection should be started first before the viewer connects to it.
 
-#####    Peer to Peer Streaming between two iOS devices: master and viewer:
-*    Start one iOS device in master mode for starting a new session using a channel name (e.g. demo). Remote peer will be joining as viewer to this master.
-*    Currently, there can be only one master for a channel at any given time.
-*    Use another iOS device to connect to the same channel name (started up in the above step set up as a master) in viewer mode. This will connect to an existing session (channel) where a master was connected previously.
+#####    Peer to Peer Streaming between multiple iOS devices: One Primary Connection and Mutliple Viewer Connections:
+*    Start one iOS device in primary mode for starting a new session using a channel name (e.g. demo). Remote peer will be joining as viewer to this primary connection.
+*    Currently, there can be only one primary connection for a channel at any given time.
+*    Use other iOS devices, with the application installed, to connect to the same channel name (started up in the above step set up as a primary) in viewer mode. This will connect to an existing session (channel) where a primary connection was setup. 
 
 #####    Peer to Peer Streaming between [Embedded SDK](https://github.com/awslabs/amazon-kinesis-video-streams-webrtc-sdk-c) master and iOS device:
-  *    Run KVS WebRTC embedded SDK (in C) in master mode on a camera device.
+  *    Run KVS WebRTC embedded SDK (in C) in primary mode on a camera device.
   *    Start the iOS device in viewer mode – you should be able to see the local video preview in the lower right side of the screen and also the larger part of the screen should stream the remote video view.
 
 #####    Peer to Peer Streaming between iOS device as master and Web browser as viewer:
- *    Start one iOS device in master mode for starting a new session using a channel name (e.g. demo)
+ *    Start one iOS device in primary mode for starting a new session using a channel name (e.g. demo)
  *    Start the Web Browser using the Javascript SDK (JS with audio selected) and start it as viewer.
  *    Verify media showing up from the iOS device and also from the browser.
 
 ##### Note
 
-* _This sample application has been tested in iPhone XS and iPhone 6._
+* _This sample application with multiple viewers has been tested in iPhone8(iOS 14.0.1) & iPhone XS(iOS 14.0.1) and between JS SDK. 
+* _This sample does not have the audio support from Viewers to Primary Connection.
+* _In scenario (i.e) When primary connection has been established, and 2 viewers V1 & V2 have joined in
+    _Video : V1 will show up on the Primary's application and V2 will not will not visible on the Primary's screen. The Sample currently has UI only to show only 1 viewer connection and other view connections video to the master will be ignored. 
+    _Audio: Both V1 & V2 audio track on the Primary application won't be available, however we will have the Primary connection's audio on all the viewers. 
 
 ## License
 This library is licensed under the [Apache 2.0 License](https://github.com/awslabs/amazon-kinesis-video-streams-webrtc-sdk-ios/blob/master/LICENSE).
