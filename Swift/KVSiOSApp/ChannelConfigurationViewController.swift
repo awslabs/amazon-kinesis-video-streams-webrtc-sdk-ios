@@ -339,7 +339,7 @@ extension ChannelConfigurationViewController: SignalClientDelegate {
             remoteSenderClientId = senderClientId
         }
         setRemoteSenderClientId()
-        webRTCClient!.set(remoteSdp: sdp, remoteClientId:remoteSenderClientId!) { _ in
+        webRTCClient!.set(remoteSdp: sdp, remoteSenderClientId:remoteSenderClientId!) { _ in
             print("Setting remote sdp and sending answer.")
             self.vc!.sendAnswer(recipientClientID: self.remoteSenderClientId!)
         }
@@ -351,7 +351,7 @@ extension ChannelConfigurationViewController: SignalClientDelegate {
             remoteSenderClientId = senderClientId
         }
         setRemoteSenderClientId()
-        webRTCClient!.set(clientID: self.remoteSenderClientId!, remoteCandidate: candidate)
+        webRTCClient!.set(remoteSenderClientId: self.remoteSenderClientId!, remoteCandidate: candidate)
     }
 }
 
@@ -370,6 +370,12 @@ extension ChannelConfigurationViewController: WebRTCClientDelegate {
             print("WebRTC connected/completed state")
         case .disconnected:
             print("WebRTC disconnected state")
+            if (self.isMaster!) {
+                DispatchQueue.main.sync {
+                    self.webRTCClient?.remoteRenderer = nil
+                    self.vc?.view.setNeedsLayout()
+                }
+            }
         case .new:
             print("WebRTC new state")
         case .checking:
