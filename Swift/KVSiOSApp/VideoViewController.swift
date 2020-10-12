@@ -17,7 +17,8 @@ class VideoViewController: UIViewController {
 
         if !isMaster {
             // In viewer mode send offer once connection is established
-            webRTCClient.offer { sdp in
+            debugPrint("SenderClientId" + self.localSenderClientID)
+            webRTCClient.offer (clientID: self.localSenderClientID){ sdp in
                 self.signalingClient.sendOffer(rtcSdp: sdp, senderClientid: self.localSenderClientID)
             }
         }
@@ -47,6 +48,7 @@ class VideoViewController: UIViewController {
         let remoteRenderer = RTCEAGLVideoView(frame: view.frame)
         #endif
 
+        webRTCClient.remoteRenderer  = remoteRenderer
         webRTCClient.startCaptureLocalVideo(renderer: localRenderer)
         webRTCClient.renderRemoteVideo(to: remoteRenderer)
 
@@ -79,7 +81,7 @@ class VideoViewController: UIViewController {
     }
 
     func sendAnswer(recipientClientID: String) {
-        webRTCClient.answer { localSdp in
+        webRTCClient.answer(remoteClient:recipientClientID) { localSdp in
             self.signalingClient.sendAnswer(rtcSdp: localSdp, recipientClientId: recipientClientID)
         }
     }
