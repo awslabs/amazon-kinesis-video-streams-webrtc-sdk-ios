@@ -38,8 +38,6 @@ class ChannelConfigurationViewController: UIViewController, UITextFieldDelegate 
     @IBOutlet weak var connectAsMasterButton: UIButton!
     @IBOutlet weak var connectAsViewerButton: UIButton!
     
-    var peerConnection: RTCPeerConnection?
-
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(true)
         self.signalingConnected = false
@@ -341,10 +339,9 @@ extension ChannelConfigurationViewController: SignalClientDelegate {
             remoteSenderClientId = senderClientId
         }
         setRemoteSenderClientId()
-        webRTCClient!.set(remoteSdp: sdp) { _ in
+        webRTCClient!.set(remoteSdp: sdp, remoteClientId:remoteSenderClientId!) { _ in
             print("Setting remote sdp and sending answer.")
             self.vc!.sendAnswer(recipientClientID: self.remoteSenderClientId!)
-
         }
     }
 
@@ -354,7 +351,7 @@ extension ChannelConfigurationViewController: SignalClientDelegate {
             remoteSenderClientId = senderClientId
         }
         setRemoteSenderClientId()
-        webRTCClient!.set(remoteCandidate: candidate)
+        webRTCClient!.set(clientID: self.remoteSenderClientId!, remoteCandidate: candidate)
     }
 }
 
