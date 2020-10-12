@@ -89,13 +89,13 @@ Complete the following steps:
 
 ##### Note
 
-*  *This sample application with multiple viewers has been tested in iPhone8(iOS 14.0.1) & iPhone XS(iOS 14.0.1) and between JS SDK. *
+*  *This sample application with multiple viewers has been tested in iPhone8(iOS 14.0.1) & iPhone XS(iOS 14.0.1) and between JS SDK.*
 *  *This sample does not have the audio support from Viewers to Primary Connection.*
 *  *In scenario (i.e) When primary connection has been established, and 2 viewers V1 & V2 have joined in:*
 
-    *Video : V1 will show up on the Primary's application and V2 will not will not visible on the Primary's screen. The Sample currently has UI only to show only 1 viewer connection and other view connections video to the Primary will be ignored. *
+    *Video : V1 will show up on the Primary's application and V2 will not will not visible on the Primary's screen. The Sample currently has UI only to show only 1 viewer connection and other view connections video to the Primary will be ignored.*
 
-    *Audio: V1 audio track on the Primary application will be available & V2's audio track will be ignored on the primary to avoid audio mixing, however we will have the Primary's audio on all the viewers. *
+    *Audio: V1 audio track on the Primary application will be available & V2's audio track will be ignored on the primary to avoid audio mixing, however we will have the Primary's audio on all the viewers.*
 
 ## License
 This library is licensed under the [Apache 2.0 License](https://github.com/awslabs/amazon-kinesis-video-streams-webrtc-sdk-ios/blob/master/LICENSE).
