@@ -90,7 +90,7 @@ Complete the following steps:
 ##### Note
 
 *  *This sample application with multiple viewers has been tested in iPhone8(iOS 14.0.1) & iPhone XS(iOS 14.0.1) and between JS SDK.*
-*  *This sample does not have the audio support from Viewers to Primary Connection.*
+*  *This sample has audio support from the primary to all the connected viewers and only from the first connected viewer back to the primary. All the remaining remote audio tracks from the others viewers will be ignored.*
 *  *In scenario (i.e) When primary connection has been established, and 2 viewers V1 & V2 have joined in:*
 
     *Video : V1 will show up on the Primary's application and V2 will not will not visible on the Primary's screen. The Sample currently has UI only to show only 1 viewer connection and other view connections video to the Primary will be ignored.*
