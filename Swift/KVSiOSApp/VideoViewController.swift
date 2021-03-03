@@ -81,6 +81,8 @@ class VideoViewController: UIViewController {
     func sendAnswer(recipientClientID: String) {
         webRTCClient.answer { localSdp in
             self.signalingClient.sendAnswer(rtcSdp: localSdp, recipientClientId: recipientClientID)
+            print("Sent answer. Update peer connection map and handle pending ice candidates")
+            self.webRTCClient.updatePeerConnectionAndHandleIceCandidates(clientId: recipientClientID)
         }
     }
 }

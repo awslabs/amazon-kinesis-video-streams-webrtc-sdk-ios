@@ -341,7 +341,7 @@ extension ChannelConfigurationViewController: SignalClientDelegate {
             remoteSenderClientId = senderClientId
         }
         setRemoteSenderClientId()
-        webRTCClient!.set(remoteSdp: sdp) { _ in
+        webRTCClient!.set(remoteSdp: sdp, clientId: senderClientId) { _ in
             print("Setting remote sdp and sending answer.")
             self.vc!.sendAnswer(recipientClientID: self.remoteSenderClientId!)
 
@@ -354,7 +354,7 @@ extension ChannelConfigurationViewController: SignalClientDelegate {
             remoteSenderClientId = senderClientId
         }
         setRemoteSenderClientId()
-        webRTCClient!.set(remoteCandidate: candidate)
+        webRTCClient!.set(remoteCandidate: candidate, clientId: senderClientId)
     }
 }
 

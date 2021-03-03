@@ -29,6 +29,9 @@ final class WebRTCClient: NSObject {
     private var remoteDataChannel: RTCDataChannel?
     private var constructedIceServers: [RTCIceServer]?
 
+    private var peerConnectionFoundMap = [String: RTCPeerConnection]()
+    private var pendingIceCandidatesMap = [String: Set<RTCIceCandidate>]()
+
     required init(iceServers: [RTCIceServer], isAudioOn: Bool) {
         let config = RTCConfiguration()
         config.iceServers = iceServers
@@ -51,7 +54,7 @@ final class WebRTCClient: NSObject {
         createLocalVideoStream()
         peerConnection.delegate = self
     }
-    
+
     func configureAudioSession() {
         let audioSession = RTCAudioSession.sharedInstance()
         audioSession.isAudioEnabled = true
@@ -83,6 +86,8 @@ final class WebRTCClient: NSObject {
             remoteVideoTrack = nil
             peerConnection.remove(stream)
         }
+        peerConnectionFoundMap.removeAll();
+        pendingIceCandidatesMap.removeAll();
     }
 
     func offer(completion: @escaping (_ sdp: RTCSessionDescription) -> Void) {
@@ -113,12 +118,64 @@ final class WebRTCClient: NSObject {
         }
     }
 
-    func set(remoteSdp: RTCSessionDescription, completion: @escaping (Error?) -> Void) {
-        peerConnection.setRemoteDescription(remoteSdp, completionHandler: completion)
+    func updatePeerConnectionAndHandleIceCandidates(clientId: String) {
+        peerConnectionFoundMap[clientId] = peerConnection;
+        handlePendingIceCandidates(clientId: clientId);
     }
 
-    func set(remoteCandidate: RTCIceCandidate) {
-        peerConnection.add(remoteCandidate)
+    func handlePendingIceCandidates(clientId: String) {
+        // Add any pending ICE candidates from the queue for the client ID
+        if pendingIceCandidatesMap.index(forKey: clientId) != nil {
+            var pendingIceCandidateListByClientId: Set<RTCIceCandidate> = pendingIceCandidatesMap[clientId]!;
+            while !pendingIceCandidateListByClientId.isEmpty {
+                let iceCandidate: RTCIceCandidate = pendingIceCandidateListByClientId.popFirst()!
+                let peerConnectionCurrent : RTCPeerConnection = peerConnectionFoundMap[clientId]!
+                peerConnectionCurrent.add(iceCandidate)
+                print("Added ice candidate after SDP exchange \(iceCandidate.sdp)");
+            }
+            // After sending pending ICE candidates, the client ID's peer connection need not be tracked
+            pendingIceCandidatesMap.removeValue(forKey: clientId)
+        }
+    }
+
+    func set(remoteSdp: RTCSessionDescription, clientId: String, completion: @escaping (Error?) -> Void) {
+        peerConnection.setRemoteDescription(remoteSdp, completionHandler: completion)
+        if remoteSdp.type == RTCSdpType.answer {
+            print("Received answer for client ID: \(clientId)")
+            updatePeerConnectionAndHandleIceCandidates(clientId: clientId)
+        }
+    }
+
+    func checkAndAddIceCandidate(remoteCandidate: RTCIceCandidate, clientId: String) {
+        // if answer/offer is not received, it means peer connection is not found. Hold the received ICE candidates in the map.
+        if peerConnectionFoundMap.index(forKey: clientId) == nil {
+            print("SDP exchange not completed yet. Adding candidate: \(remoteCandidate.sdp) to pending queue")
+
+            // If the entry for the client ID already exists (in case of subsequent ICE candidates), update the queue
+            if pendingIceCandidatesMap.index(forKey: clientId) != nil {
+                var pendingIceCandidateListByClientId: Set<RTCIceCandidate> = pendingIceCandidatesMap[clientId]!
+                pendingIceCandidateListByClientId.insert(remoteCandidate)
+                pendingIceCandidatesMap[clientId] = pendingIceCandidateListByClientId
+            }
+            // If the first ICE candidate before peer connection is received, add entry to map and ICE candidate to a queue
+            else {
+                var pendingIceCandidateListByClientId = Set<RTCIceCandidate>()
+                pendingIceCandidateListByClientId.insert(remoteCandidate)
+                pendingIceCandidatesMap[clientId] = pendingIceCandidateListByClientId
+            }
+        }
+        // This is the case where peer connection is established and ICE candidates are received for the established connection
+        else {
+            print("Peer connection found already")
+            // Remote sent us ICE candidates, add to local peer connection
+            let peerConnectionCurrent : RTCPeerConnection = peerConnectionFoundMap[clientId]!
+            peerConnectionCurrent.add(remoteCandidate);
+            print("Added ice candidate \(remoteCandidate.sdp)");
+        }
+    }
+
+    func set(remoteCandidate: RTCIceCandidate, clientId: String) {
+        checkAndAddIceCandidate(remoteCandidate: remoteCandidate, clientId: clientId)
     }
 
     func startCaptureLocalVideo(renderer: RTCVideoRenderer) {
