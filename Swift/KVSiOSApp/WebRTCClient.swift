@@ -30,20 +30,27 @@ final class WebRTCClient: NSObject {
     private var remoteAudioTrack: [RTCAudioTrack]?
     
     private var remoteDataChannel: RTCDataChannel?
+
     
     // The renderer view to set the remoteVideo once the remoteVideoTrack is received.
-    var remoteRenderer: RTCMTLVideoView?
+    #if arch(arm64)
+        var remoteRenderer: RTCMTLVideoView?
+    #else
+        var remoteRenderer: RTCEAGLVideoView?
+    #endif
     
     var isAudioOn:Bool
+    var isMaster:Bool
     var iceServers : [RTCIceServer]?
     
     // Using map to support multiple peerConnections to the primary.
     var peerConnectionMap: [String: RTCPeerConnection]
     
-    required init(iceServers: [RTCIceServer], isAudioOn: Bool) {
+    required init(iceServers: [RTCIceServer], isAudioOn: Bool, isMaster: Bool) {
         self.isAudioOn = isAudioOn
         self.iceServers = iceServers
         peerConnectionMap = [:]
+        self.isMaster = isMaster
         super.init()
         try? AVAudioSession.sharedInstance().overrideOutputAudioPort(.speaker)
         self.localVideoTrack = createVideoTrack()
@@ -164,7 +171,7 @@ final class WebRTCClient: NSObject {
         
         // Primary can show only one remoteVideoTrack of Viewer1 on the UI.
         // All the other remote tracks from viewers are ignored and not added to the remoteRenderer.
-        if (self.peerConnectionMap.count < 2) {
+        if (self.peerConnectionMap.count < 2 && self.isMaster) {
             remoteVideoTrack = peerConnection.transceivers.first { $0.mediaType == .video }?.receiver.track as? RTCVideoTrack
             remoteVideoTrack?.add(self.remoteRenderer!)
         }

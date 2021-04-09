@@ -146,7 +146,7 @@ class ChannelConfigurationViewController: UIViewController, UITextFieldDelegate 
         }
 
         RTCIceServersList.append(RTCIceServer.init(urlStrings: ["stun:stun.kinesisvideo." + self.regionName.text! + ".amazonaws.com:443"]))
-        webRTCClient = WebRTCClient(iceServers: RTCIceServersList, isAudioOn: sendAudioEnabled)
+        webRTCClient = WebRTCClient(iceServers: RTCIceServersList, isAudioOn: sendAudioEnabled, isMaster: self.isMaster!)
         webRTCClient!.delegate = self
 
         print("Connecting to web socket from channel config")
