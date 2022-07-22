@@ -13,21 +13,16 @@ on:
 jobs:
   mac-ios-build:
     runs-on: macos-11
-    env: # $BUNDLE_GEMFILE must be set at the job level, so it is set for all steps
-      BUNDLE_GEMFILE: ${{ github.workspace }}/gemfiles/${{ matrix.gemfile }}.gemfile
     steps:
       - name: Git - Checkout
         uses: actions/checkout@master
       - name: Setup - Xcode
         run: |
           sudo xcode-select -s /Applications/Xcode_13.2.1.app
-          sudo gem install cocoapods
-          pod setup
       - name: Setup - Ruby and bundler dependencies
         uses: ruby/setup-ruby@v1.111.0
         with:
           ruby-version: 3.0
           bundler-cache: true
-      
       - name: Test - Fastlane tests
         run: bundle exec fastlane test
