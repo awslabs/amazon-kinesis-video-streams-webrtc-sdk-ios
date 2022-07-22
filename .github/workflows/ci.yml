@@ -13,6 +13,8 @@ on:
 jobs:
   mac-ios-build:
     runs-on: macos-11
+    env: # $BUNDLE_GEMFILE must be set at the job level, so it is set for all steps
+      BUNDLE_GEMFILE: ${{ github.workspace }}/gemfiles/${{ matrix.gemfile }}.gemfile
     steps:
       - name: Git - Checkout
         uses: actions/checkout@master
