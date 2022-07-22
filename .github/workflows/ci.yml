@@ -11,8 +11,8 @@ on:
       - develop
       - master
 jobs:
-  clang-format-check:
-    runs-on: macos-10.15
+  mac-ios-build:
+    runs-on: macos-12
     steps:
       - name: Git - Checkout
         uses: actions/checkout@master
