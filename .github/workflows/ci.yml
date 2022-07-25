@@ -28,4 +28,4 @@ jobs:
         run: |
           gem install cocoapods
           pod install --project-directory=Swift
-          xcodebuild -workspace Swift/AWSKinesisVideoWebRTCDemoApp.xcworkspace -scheme AWSKinesisVideoWebRTCDemoApp -sdk iphoneos  -destination 'platform:iOS Simulator, id:A3593B58-B7C4-4FC5-B1A6-CE5EE47715CD, OS:15.2, name:iPhone 12'
+          xcodebuild -workspace Swift/AWSKinesisVideoWebRTCDemoApp.xcworkspace -scheme AWSKinesisVideoWebRTCDemoApp -sdk iphoneos  -destination 'platform=iOS Simulator, OS=15.2, name=iPhone 12'
