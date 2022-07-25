@@ -21,7 +21,7 @@ jobs:
           sudo xcode-select -s /Applications/Xcode_13.2.1.app
       - name: Install with gem
         run: |
-          gem install cocoapods
+          sudo gem install -n /usr/local/bin cocoapods -v 1.8.4
           pod install --project-directory=Swift
       - name: Xcode build
         run: xcodebuild -workspace Swift/AWSKinesisVideoWebRTCDemoApp.xcworkspace -scheme AWSKinesisVideoWebRTCDemoApp -sdk iphoneos  -destination 'platform=iOS Simulator,OS=15.2,name=iPhone 12'

@@ -1,0 +1,6 @@
+framework module Pods_AWSKinesisVideoWebRTCDemoApp_AWSKinesisVideoWebRTCDemoAppUITests {
+  umbrella header "Pods-AWSKinesisVideoWebRTCDemoApp-AWSKinesisVideoWebRTCDemoAppUITests-umbrella.h"
+
+  export *
+  module * { export * }
+}
