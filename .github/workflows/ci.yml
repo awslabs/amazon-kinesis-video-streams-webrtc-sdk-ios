@@ -13,6 +13,8 @@ on:
 jobs:
   mac-ios-build:
     runs-on: macos-11
+    env: 
+      podfile: Swift/Podfile
     steps:
       - name: Git - Checkout
         uses: actions/checkout@master
