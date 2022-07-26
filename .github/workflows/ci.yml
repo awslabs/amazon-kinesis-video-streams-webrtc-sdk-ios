@@ -18,7 +18,7 @@ jobs:
         uses: actions/checkout@master
       - name: Setup - Xcode
         run: |
-          sudo xcode-select -s /Applications/Xcode_11.7.app
+          sudo xcode-select -s /Applications/Xcode_13.2.1.app
       - name: Install with gem
         run: |
           sudo gem install -n /usr/local/bin cocoapods -v 1.8.4
