@@ -1,0 +1,27 @@
+name: WebRTC iOS SDK CI
+
+on:
+  push:
+    branches:
+      - master
+  pull_request:
+    branches:
+      - master
+jobs:
+  mac-ios-build:
+    runs-on: macos-11
+    steps:
+      - name: Git - Checkout
+        uses: actions/checkout@master
+      - name: Setup - Xcode
+        run: sudo xcode-select -s /Applications/Xcode_11.7.app
+      - name: Install with gem
+        run: |
+          sudo gem install cocoapods
+          cd Swift
+          pod setup
+          pod install
+      - name: Xcode build
+        run: xcodebuild -workspace Swift/AWSKinesisVideoWebRTCDemoApp.xcworkspace -scheme AWSKinesisVideoWebRTCDemoApp -sdk iphoneos  -destination 'platform=iOS Simulator,OS=13.7,name=iPhone 11'
+      - name: Code coverage
+        run: bash <(curl -s https://codecov.io/bash)
