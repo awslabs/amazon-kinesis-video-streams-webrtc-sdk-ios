@@ -7,7 +7,7 @@ This sample demonstrates the Amazon KinesisVideoStreams and KinesisVideoSignalin
 
 ## Requirements
 
-* Xcode 10 and later
+* Xcode 10 / Xcode 11 (not supporting higher versions of Xcode yet)
 * iOS 11 and later
 
 #### Download the WebRTC SDK in iOS

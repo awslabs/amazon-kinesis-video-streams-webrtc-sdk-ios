@@ -18,7 +18,7 @@ jobs:
           sudo xcode-select -s /Applications/Xcode_11.7.app
       - name: Install with gem
         run: |
-          sudo gem install -n /usr/local/bin cocoapods -v 1.8.4
+          sudo gem install cocoapods
           cd Swift
           pod setup
           pod install
