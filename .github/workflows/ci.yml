@@ -24,7 +24,8 @@ jobs:
           sudo gem install -n /usr/local/bin cocoapods -v 1.8.4
           cd Swift
           pod setup
-          pod install --project-directory=Swift
+          pod install
+          ls -a Pods 
       - name: Xcode build
         run: |
           cd Swift
