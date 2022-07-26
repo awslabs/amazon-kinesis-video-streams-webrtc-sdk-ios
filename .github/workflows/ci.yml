@@ -25,3 +25,5 @@ jobs:
       - name: Xcode build
         run: |
           xcodebuild -workspace Swift/AWSKinesisVideoWebRTCDemoApp.xcworkspace -scheme AWSKinesisVideoWebRTCDemoApp -sdk iphoneos  -destination 'platform=iOS Simulator,OS=13.7,name=iPhone 11'
+      - name: Code coverage
+        run: bash <(curl -s https://codecov.io/bash)
