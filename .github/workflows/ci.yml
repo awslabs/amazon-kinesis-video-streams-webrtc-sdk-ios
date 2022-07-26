@@ -27,4 +27,6 @@ jobs:
           pod install
           ls -a Pods 
       - name: Xcode build
-        run: xcodebuild -workspace Swift/AWSKinesisVideoWebRTCDemoApp.xcworkspace -scheme AWSKinesisVideoWebRTCDemoApp -sdk iphoneos  -destination 'platform=iOS Simulator,OS=15.2,name=iPhone 12'
+        run: |
+          cd Swift
+          xcodebuild -workspace AWSKinesisVideoWebRTCDemoApp.xcworkspace -scheme AWSKinesisVideoWebRTCDemoApp -sdk iphoneos  -destination 'platform=iOS Simulator,OS=15.2,name=iPhone 12'
