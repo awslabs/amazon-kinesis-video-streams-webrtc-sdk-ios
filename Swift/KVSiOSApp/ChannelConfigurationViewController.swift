@@ -313,13 +313,6 @@ class ChannelConfigurationViewController: UIViewController, UITextFieldDelegate 
    
     // Get signalling endpoints for the given signalling channel ARN 
     func getSignallingEndpoints(channelARN: String, region: String, isMaster: Bool, useMediaServer: Bool) -> Dictionary<String, String?> {
-        // get appropriate AWSKinesisVideoChannelRole
-        func getSingleMasterChannelEndpointRole(isMaster: Bool) -> AWSKinesisVideoChannelRole {
-            if isMaster {
-                return .master
-            }
-            return .viewer
-        }
         
         var endpoints = Dictionary <String, String?>()
         /*
@@ -395,7 +388,14 @@ class ChannelConfigurationViewController: UIViewController, UITextFieldDelegate 
                   region: region)
         return wssURL
     }
-
+    
+    // get appropriate AWSKinesisVideoChannelRole
+    func getSingleMasterChannelEndpointRole(isMaster: Bool) -> AWSKinesisVideoChannelRole {
+        if isMaster {
+            return .master
+        }
+        return .viewer
+    }
 }
 
 
