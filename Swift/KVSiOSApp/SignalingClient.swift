@@ -83,7 +83,7 @@ extension SignalingClient: WebSocketDelegate {
 
     func websocketDidDisconnect(socket _: WebSocketClient, error: Error?) {
         delegate?.signalClientDidDisconnect(self)
-        debugPrint("Disconnected from signaling. \(error!)")
+        debugPrint("Disconnected from signaling. \(error != nil ? error!.localizedDescription : "")")
     }
 
     func websocketDidReceiveData(socket _: WebSocketClient, data: Data) {

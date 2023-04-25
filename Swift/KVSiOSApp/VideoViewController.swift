@@ -1,40 +1,45 @@
 import UIKit
+import AWSKinesisVideo
 import WebRTC
 
 class VideoViewController: UIViewController {
     @IBOutlet var localVideoView: UIView?
+    @IBOutlet var joinStorageButton: UIButton?
+    
     private let webRTCClient: WebRTCClient
     private let signalingClient: SignalingClient
     private let localSenderClientID: String
     private let isMaster: Bool
 
-    init(webRTCClient: WebRTCClient, signalingClient: SignalingClient, localSenderClientID: String, isMaster: Bool) {
+    init(webRTCClient: WebRTCClient, signalingClient: SignalingClient, localSenderClientID: String, isMaster: Bool, mediaServerEndPoint: String?) {
         self.webRTCClient = webRTCClient
         self.signalingClient = signalingClient
         self.localSenderClientID = localSenderClientID
         self.isMaster = isMaster
         super.init(nibName: String(describing: VideoViewController.self), bundle: Bundle.main)
-
+        
         if !isMaster {
             // In viewer mode send offer once connection is established
             webRTCClient.offer { sdp in
                 self.signalingClient.sendOffer(rtcSdp: sdp, senderClientid: self.localSenderClientID)
             }
         }
+        if mediaServerEndPoint == nil {
+            self.joinStorageButton?.isHidden = true
+        }
     }
-
+    
     @available(*, unavailable)
     required init?(coder _: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
     override func viewWillAppear(_ animated: Bool) {
-    AppDelegate.AppUtility.lockOrientation(UIInterfaceOrientationMask.portrait, andRotateTo: UIInterfaceOrientation.portrait)
-        }
+        AppDelegate.AppUtility.lockOrientation(UIInterfaceOrientationMask.portrait, andRotateTo: UIInterfaceOrientation.portrait)
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
         #if arch(arm64)
         // Using metal (arm64 only)
         let localRenderer = RTCMTLVideoView(frame: localVideoView?.frame ?? CGRect.zero)
@@ -76,6 +81,12 @@ class VideoViewController: UIViewController {
         webRTCClient.shutdown()
         signalingClient.disconnect()
         dismiss(animated: true)
+    }
+    
+    @IBAction func joinStorageSession(_: Any) {
+        print("button pressed")
+        joinStorageButton?.isHidden = true
+        
     }
 
     func sendAnswer(recipientClientID: String) {

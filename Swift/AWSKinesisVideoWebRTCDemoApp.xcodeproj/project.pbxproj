@@ -59,7 +59,6 @@
 		70AB167223A2E1A900EA8E2C /* AWSKinesisVideoSignaling.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 70AB167123A2E1A900EA8E2C /* AWSKinesisVideoSignaling.framework */; };
 		70AB167423A2E1A900EA8E2C /* AWSMobileClient.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 70AB167323A2E1A900EA8E2C /* AWSMobileClient.framework */; };
 		70AB167623A2E1A900EA8E2C /* CommonCryptoModule.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 70AB167523A2E1A900EA8E2C /* CommonCryptoModule.framework */; };
-		70AB167A23A2E1A900EA8E2C /* Pods_AWSKinesisVideoWebRTCDemoApp.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 70AB167923A2E1A900EA8E2C /* Pods_AWSKinesisVideoWebRTCDemoApp.framework */; };
 		70AB167C23A2E1A900EA8E2C /* Starscream.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 70AB167B23A2E1A900EA8E2C /* Starscream.framework */; };
 		70AB167E23A4417F00EA8E2C /* MessageTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70AB167D23A4417F00EA8E2C /* MessageTests.swift */; };
 		70AB167F23A44A3200EA8E2C /* TestConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 703513DE23999E2900376B66 /* TestConstants.swift */; };
@@ -71,8 +70,8 @@
 		70BE4671235F800B00322E33 /* Event.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70BE466E235F800B00322E33 /* Event.swift */; };
 		70BE46732360E58600322E33 /* VideoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70BE46722360E58600322E33 /* VideoViewController.swift */; };
 		70BE46752360FC2F00322E33 /* WebRTCClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70BE46742360FC2F00322E33 /* WebRTCClient.swift */; };
-		9BA1AA370DAD4F73D6B3F1BA /* Pods_AWSKinesisVideoWebRTCDemoApp.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F2DE4FD68C3E4937597E2F21 /* Pods_AWSKinesisVideoWebRTCDemoApp.framework */; };
-		B958EE530BA577DB2A51EE9D /* Pods_AWSKinesisVideoWebRTCDemoApp_AWSKinesisVideoWebRTCDemoAppUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 80BEB119661E3782F8ED2AD6 /* Pods_AWSKinesisVideoWebRTCDemoApp_AWSKinesisVideoWebRTCDemoAppUITests.framework */; };
+		A68934B3AFFC9180786A6986 /* Pods_AWSKinesisVideoWebRTCDemoApp.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 467088A133185CD44103A029 /* Pods_AWSKinesisVideoWebRTCDemoApp.framework */; };
+		A780103EDC7B2A8A05A51068 /* Pods_AWSKinesisVideoWebRTCDemoApp_AWSKinesisVideoWebRTCDemoAppUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0718A3E39C66A10CDC65BAF0 /* Pods_AWSKinesisVideoWebRTCDemoApp_AWSKinesisVideoWebRTCDemoAppUITests.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -106,6 +105,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		0718A3E39C66A10CDC65BAF0 /* Pods_AWSKinesisVideoWebRTCDemoApp_AWSKinesisVideoWebRTCDemoAppUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_AWSKinesisVideoWebRTCDemoApp_AWSKinesisVideoWebRTCDemoAppUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		17FC2F7C1E258FC500174015 /* AWSKinesisVideoWebRTCDemoApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AWSKinesisVideoWebRTCDemoApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		17FC2F7F1E258FC500174015 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		17FC2F861E258FC500174015 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -117,7 +117,7 @@
 		17FC2F9E1E259F3200174015 /* ConfirmSignUpViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConfirmSignUpViewController.swift; sourceTree = "<group>"; };
 		17FC2FA01E25A25900174015 /* ForgotPasswordViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ForgotPasswordViewController.swift; sourceTree = "<group>"; };
 		17FC2FA21E25A5D000174015 /* ConfirmForgotPasswordViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConfirmForgotPasswordViewController.swift; sourceTree = "<group>"; };
-		3DD33BF408754EB3136F05F8 /* Pods-AWSKinesisVideoWebRTCDemoApp-AWSKinesisVideoWebRTCDemoAppUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AWSKinesisVideoWebRTCDemoApp-AWSKinesisVideoWebRTCDemoAppUITests.release.xcconfig"; path = "Target Support Files/Pods-AWSKinesisVideoWebRTCDemoApp-AWSKinesisVideoWebRTCDemoAppUITests/Pods-AWSKinesisVideoWebRTCDemoApp-AWSKinesisVideoWebRTCDemoAppUITests.release.xcconfig"; sourceTree = "<group>"; };
+		467088A133185CD44103A029 /* Pods_AWSKinesisVideoWebRTCDemoApp.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_AWSKinesisVideoWebRTCDemoApp.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		700199A7234FD06F00CFC1D0 /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
 		7022C9C5239855AE0041AD15 /* SignInViewControllerUITest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInViewControllerUITest.swift; sourceTree = "<group>"; };
 		7022C9C723987D770041AD15 /* ChannelConfigurationUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChannelConfigurationUITests.swift; sourceTree = "<group>"; };
@@ -143,7 +143,6 @@
 		70AB167123A2E1A900EA8E2C /* AWSKinesisVideoSignaling.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = AWSKinesisVideoSignaling.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		70AB167323A2E1A900EA8E2C /* AWSMobileClient.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = AWSMobileClient.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		70AB167523A2E1A900EA8E2C /* CommonCryptoModule.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = CommonCryptoModule.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		70AB167923A2E1A900EA8E2C /* Pods_AWSKinesisVideoWebRTCDemoApp.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Pods_AWSKinesisVideoWebRTCDemoApp.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		70AB167B23A2E1A900EA8E2C /* Starscream.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Starscream.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		70AB167D23A4417F00EA8E2C /* MessageTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageTests.swift; sourceTree = "<group>"; };
 		70AB168023A451FD00EA8E2C /* EventTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventTests.swift; sourceTree = "<group>"; };
@@ -156,11 +155,10 @@
 		70BE46742360FC2F00322E33 /* WebRTCClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebRTCClient.swift; sourceTree = "<group>"; };
 		70FAD51523983822002A50E6 /* AWSKinesisVideoWebRTCDemoAppUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = AWSKinesisVideoWebRTCDemoAppUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		70FAD51923983822002A50E6 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		7EA37131DA984863E69D84C7 /* Pods-AWSKinesisVideoWebRTCDemoApp-AWSKinesisVideoWebRTCDemoAppUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AWSKinesisVideoWebRTCDemoApp-AWSKinesisVideoWebRTCDemoAppUITests.debug.xcconfig"; path = "Target Support Files/Pods-AWSKinesisVideoWebRTCDemoApp-AWSKinesisVideoWebRTCDemoAppUITests/Pods-AWSKinesisVideoWebRTCDemoApp-AWSKinesisVideoWebRTCDemoAppUITests.debug.xcconfig"; sourceTree = "<group>"; };
-		80BEB119661E3782F8ED2AD6 /* Pods_AWSKinesisVideoWebRTCDemoApp_AWSKinesisVideoWebRTCDemoAppUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_AWSKinesisVideoWebRTCDemoApp_AWSKinesisVideoWebRTCDemoAppUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		D10F29986EF3E5A109400A13 /* Pods-AWSKinesisVideoWebRTCDemoApp.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AWSKinesisVideoWebRTCDemoApp.release.xcconfig"; path = "Target Support Files/Pods-AWSKinesisVideoWebRTCDemoApp/Pods-AWSKinesisVideoWebRTCDemoApp.release.xcconfig"; sourceTree = "<group>"; };
-		F2DE4FD68C3E4937597E2F21 /* Pods_AWSKinesisVideoWebRTCDemoApp.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_AWSKinesisVideoWebRTCDemoApp.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		F7B67040DCE56367CC40F204 /* Pods-AWSKinesisVideoWebRTCDemoApp.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AWSKinesisVideoWebRTCDemoApp.debug.xcconfig"; path = "Target Support Files/Pods-AWSKinesisVideoWebRTCDemoApp/Pods-AWSKinesisVideoWebRTCDemoApp.debug.xcconfig"; sourceTree = "<group>"; };
+		7BA498183BC8B7610BA4EB1D /* Pods-AWSKinesisVideoWebRTCDemoApp-AWSKinesisVideoWebRTCDemoAppUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AWSKinesisVideoWebRTCDemoApp-AWSKinesisVideoWebRTCDemoAppUITests.debug.xcconfig"; path = "Target Support Files/Pods-AWSKinesisVideoWebRTCDemoApp-AWSKinesisVideoWebRTCDemoAppUITests/Pods-AWSKinesisVideoWebRTCDemoApp-AWSKinesisVideoWebRTCDemoAppUITests.debug.xcconfig"; sourceTree = "<group>"; };
+		E23EA2E883E8A567E5950B3C /* Pods-AWSKinesisVideoWebRTCDemoApp-AWSKinesisVideoWebRTCDemoAppUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AWSKinesisVideoWebRTCDemoApp-AWSKinesisVideoWebRTCDemoAppUITests.release.xcconfig"; path = "Target Support Files/Pods-AWSKinesisVideoWebRTCDemoApp-AWSKinesisVideoWebRTCDemoAppUITests/Pods-AWSKinesisVideoWebRTCDemoApp-AWSKinesisVideoWebRTCDemoAppUITests.release.xcconfig"; sourceTree = "<group>"; };
+		F82E0267F714B458901AFABF /* Pods-AWSKinesisVideoWebRTCDemoApp.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AWSKinesisVideoWebRTCDemoApp.release.xcconfig"; path = "Target Support Files/Pods-AWSKinesisVideoWebRTCDemoApp/Pods-AWSKinesisVideoWebRTCDemoApp.release.xcconfig"; sourceTree = "<group>"; };
+		F9AD35C6BDCBD2A93EAF85AA /* Pods-AWSKinesisVideoWebRTCDemoApp.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AWSKinesisVideoWebRTCDemoApp.debug.xcconfig"; path = "Target Support Files/Pods-AWSKinesisVideoWebRTCDemoApp/Pods-AWSKinesisVideoWebRTCDemoApp.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -176,9 +174,8 @@
 				70AB167223A2E1A900EA8E2C /* AWSKinesisVideoSignaling.framework in Frameworks */,
 				70AB167423A2E1A900EA8E2C /* AWSMobileClient.framework in Frameworks */,
 				70AB167623A2E1A900EA8E2C /* CommonCryptoModule.framework in Frameworks */,
-				70AB167A23A2E1A900EA8E2C /* Pods_AWSKinesisVideoWebRTCDemoApp.framework in Frameworks */,
 				70AB167C23A2E1A900EA8E2C /* Starscream.framework in Frameworks */,
-				9BA1AA370DAD4F73D6B3F1BA /* Pods_AWSKinesisVideoWebRTCDemoApp.framework in Frameworks */,
+				A68934B3AFFC9180786A6986 /* Pods_AWSKinesisVideoWebRTCDemoApp.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -193,7 +190,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				B958EE530BA577DB2A51EE9D /* Pods_AWSKinesisVideoWebRTCDemoApp_AWSKinesisVideoWebRTCDemoAppUITests.framework in Frameworks */,
+				A780103EDC7B2A8A05A51068 /* Pods_AWSKinesisVideoWebRTCDemoApp_AWSKinesisVideoWebRTCDemoAppUITests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -270,10 +267,9 @@
 				70AB167123A2E1A900EA8E2C /* AWSKinesisVideoSignaling.framework */,
 				70AB167323A2E1A900EA8E2C /* AWSMobileClient.framework */,
 				70AB167523A2E1A900EA8E2C /* CommonCryptoModule.framework */,
-				70AB167923A2E1A900EA8E2C /* Pods_AWSKinesisVideoWebRTCDemoApp.framework */,
 				70AB167B23A2E1A900EA8E2C /* Starscream.framework */,
-				F2DE4FD68C3E4937597E2F21 /* Pods_AWSKinesisVideoWebRTCDemoApp.framework */,
-				80BEB119661E3782F8ED2AD6 /* Pods_AWSKinesisVideoWebRTCDemoApp_AWSKinesisVideoWebRTCDemoAppUITests.framework */,
+				467088A133185CD44103A029 /* Pods_AWSKinesisVideoWebRTCDemoApp.framework */,
+				0718A3E39C66A10CDC65BAF0 /* Pods_AWSKinesisVideoWebRTCDemoApp_AWSKinesisVideoWebRTCDemoAppUITests.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -309,10 +305,10 @@
 		9D4478A2900C363F96D93EC3 /* Pods */ = {
 			isa = PBXGroup;
 			children = (
-				F7B67040DCE56367CC40F204 /* Pods-AWSKinesisVideoWebRTCDemoApp.debug.xcconfig */,
-				D10F29986EF3E5A109400A13 /* Pods-AWSKinesisVideoWebRTCDemoApp.release.xcconfig */,
-				7EA37131DA984863E69D84C7 /* Pods-AWSKinesisVideoWebRTCDemoApp-AWSKinesisVideoWebRTCDemoAppUITests.debug.xcconfig */,
-				3DD33BF408754EB3136F05F8 /* Pods-AWSKinesisVideoWebRTCDemoApp-AWSKinesisVideoWebRTCDemoAppUITests.release.xcconfig */,
+				F9AD35C6BDCBD2A93EAF85AA /* Pods-AWSKinesisVideoWebRTCDemoApp.debug.xcconfig */,
+				F82E0267F714B458901AFABF /* Pods-AWSKinesisVideoWebRTCDemoApp.release.xcconfig */,
+				7BA498183BC8B7610BA4EB1D /* Pods-AWSKinesisVideoWebRTCDemoApp-AWSKinesisVideoWebRTCDemoAppUITests.debug.xcconfig */,
+				E23EA2E883E8A567E5950B3C /* Pods-AWSKinesisVideoWebRTCDemoApp-AWSKinesisVideoWebRTCDemoAppUITests.release.xcconfig */,
 			);
 			path = Pods;
 			sourceTree = "<group>";
@@ -324,12 +320,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 17FC2F8E1E258FC500174015 /* Build configuration list for PBXNativeTarget "AWSKinesisVideoWebRTCDemoApp" */;
 			buildPhases = (
-				CEB951D99F1FEBF885F7BF04 /* [CP] Check Pods Manifest.lock */,
+				0D44FEB643C26C6D40442A33 /* [CP] Check Pods Manifest.lock */,
 				17FC2F781E258FC500174015 /* Sources */,
 				17FC2F791E258FC500174015 /* Frameworks */,
 				17FC2F7A1E258FC500174015 /* Resources */,
 				7055FBD3234E5832008561A1 /* Embed Frameworks */,
-				B0815765565C751217578790 /* [CP] Embed Pods Frameworks */,
+				AE964F86CA8064DCEC674A90 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -362,11 +358,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 70FAD51C23983822002A50E6 /* Build configuration list for PBXNativeTarget "AWSKinesisVideoWebRTCDemoAppUITests" */;
 			buildPhases = (
-				932CCDCF18596769430CFBA6 /* [CP] Check Pods Manifest.lock */,
+				176ADEF32AA7504BD49EE212 /* [CP] Check Pods Manifest.lock */,
 				70FAD51123983822002A50E6 /* Sources */,
 				70FAD51223983822002A50E6 /* Frameworks */,
 				70FAD51323983822002A50E6 /* Resources */,
-				C157CD9CBD6A5FD7BADDB367 /* [CP] Embed Pods Frameworks */,
+				2B6F31962160490DCE0FC199 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -461,7 +457,29 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		932CCDCF18596769430CFBA6 /* [CP] Check Pods Manifest.lock */ = {
+		0D44FEB643C26C6D40442A33 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-AWSKinesisVideoWebRTCDemoApp-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		176ADEF32AA7504BD49EE212 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -483,43 +501,7 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
-		B0815765565C751217578790 /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-AWSKinesisVideoWebRTCDemoApp/Pods-AWSKinesisVideoWebRTCDemoApp-frameworks.sh",
-				"${BUILT_PRODUCTS_DIR}/AWSAuthCore/AWSAuthCore.framework",
-				"${BUILT_PRODUCTS_DIR}/AWSCognitoIdentityProvider/AWSCognitoIdentityProvider.framework",
-				"${BUILT_PRODUCTS_DIR}/AWSCognitoIdentityProviderASF/AWSCognitoIdentityProviderASF.framework",
-				"${BUILT_PRODUCTS_DIR}/AWSCore/AWSCore.framework",
-				"${BUILT_PRODUCTS_DIR}/AWSKinesisVideo/AWSKinesisVideo.framework",
-				"${BUILT_PRODUCTS_DIR}/AWSKinesisVideoSignaling/AWSKinesisVideoSignaling.framework",
-				"${BUILT_PRODUCTS_DIR}/AWSMobileClient/AWSMobileClient.framework",
-				"${BUILT_PRODUCTS_DIR}/CommonCryptoModule/CommonCryptoModule.framework",
-				"${PODS_ROOT}/GoogleWebRTC/Frameworks/frameworks/WebRTC.framework",
-				"${BUILT_PRODUCTS_DIR}/Starscream/Starscream.framework",
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputPaths = (
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/AWSAuthCore.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/AWSCognitoIdentityProvider.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/AWSCognitoIdentityProviderASF.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/AWSCore.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/AWSKinesisVideo.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/AWSKinesisVideoSignaling.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/AWSMobileClient.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/CommonCryptoModule.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/WebRTC.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Starscream.framework",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-AWSKinesisVideoWebRTCDemoApp/Pods-AWSKinesisVideoWebRTCDemoApp-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		C157CD9CBD6A5FD7BADDB367 /* [CP] Embed Pods Frameworks */ = {
+		2B6F31962160490DCE0FC199 /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -555,27 +537,40 @@
 			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-AWSKinesisVideoWebRTCDemoApp-AWSKinesisVideoWebRTCDemoAppUITests/Pods-AWSKinesisVideoWebRTCDemoApp-AWSKinesisVideoWebRTCDemoAppUITests-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		CEB951D99F1FEBF885F7BF04 /* [CP] Check Pods Manifest.lock */ = {
+		AE964F86CA8064DCEC674A90 /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
+			buildActionMask = 12;
 			files = (
 			);
-			inputFileListPaths = (
-			);
 			inputPaths = (
-				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
-				"${PODS_ROOT}/Manifest.lock",
+				"${PODS_ROOT}/Target Support Files/Pods-AWSKinesisVideoWebRTCDemoApp/Pods-AWSKinesisVideoWebRTCDemoApp-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/AWSAuthCore/AWSAuthCore.framework",
+				"${BUILT_PRODUCTS_DIR}/AWSCognitoIdentityProvider/AWSCognitoIdentityProvider.framework",
+				"${BUILT_PRODUCTS_DIR}/AWSCognitoIdentityProviderASF/AWSCognitoIdentityProviderASF.framework",
+				"${BUILT_PRODUCTS_DIR}/AWSCore/AWSCore.framework",
+				"${BUILT_PRODUCTS_DIR}/AWSKinesisVideo/AWSKinesisVideo.framework",
+				"${BUILT_PRODUCTS_DIR}/AWSKinesisVideoSignaling/AWSKinesisVideoSignaling.framework",
+				"${BUILT_PRODUCTS_DIR}/AWSMobileClient/AWSMobileClient.framework",
+				"${BUILT_PRODUCTS_DIR}/CommonCryptoModule/CommonCryptoModule.framework",
+				"${PODS_ROOT}/GoogleWebRTC/Frameworks/frameworks/WebRTC.framework",
+				"${BUILT_PRODUCTS_DIR}/Starscream/Starscream.framework",
 			);
-			name = "[CP] Check Pods Manifest.lock";
-			outputFileListPaths = (
-			);
+			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-AWSKinesisVideoWebRTCDemoApp-checkManifestLockResult.txt",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/AWSAuthCore.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/AWSCognitoIdentityProvider.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/AWSCognitoIdentityProviderASF.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/AWSCore.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/AWSKinesisVideo.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/AWSKinesisVideoSignaling.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/AWSMobileClient.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/CommonCryptoModule.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/WebRTC.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Starscream.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
-			showEnvVarsInLog = 0;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-AWSKinesisVideoWebRTCDemoApp/Pods-AWSKinesisVideoWebRTCDemoApp-frameworks.sh\"\n";
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -719,7 +714,6 @@
 				SDKROOT = iphoneos;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				TARGETED_DEVICE_FAMILY = "1,2";
-				VALID_ARCHS = "arm64 armv7 armv7s arm64e";
 			};
 			name = Debug;
 		};
@@ -778,13 +772,12 @@
 				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;
-				VALID_ARCHS = "arm64 armv7 armv7s arm64e";
 			};
 			name = Release;
 		};
 		17FC2F8F1E258FC500174015 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = F7B67040DCE56367CC40F204 /* Pods-AWSKinesisVideoWebRTCDemoApp.debug.xcconfig */;
+			baseConfigurationReference = F9AD35C6BDCBD2A93EAF85AA /* Pods-AWSKinesisVideoWebRTCDemoApp.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				DEVELOPMENT_TEAM = F468TZWNT7;
@@ -828,13 +821,12 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.kinesisvideo.KVSiOSApp1;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.0;
-				VALID_ARCHS = "armv7 arm64 armv7s";
 			};
 			name = Debug;
 		};
 		17FC2F901E258FC500174015 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = D10F29986EF3E5A109400A13 /* Pods-AWSKinesisVideoWebRTCDemoApp.release.xcconfig */;
+			baseConfigurationReference = F82E0267F714B458901AFABF /* Pods-AWSKinesisVideoWebRTCDemoApp.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				DEVELOPMENT_TEAM = F468TZWNT7;
@@ -878,7 +870,6 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.kinesisvideo.KVSiOSApp1;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.0;
-				VALID_ARCHS = "armv7 arm64 armv7s";
 			};
 			name = Release;
 		};
@@ -935,7 +926,7 @@
 		};
 		70FAD51D23983822002A50E6 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 7EA37131DA984863E69D84C7 /* Pods-AWSKinesisVideoWebRTCDemoApp-AWSKinesisVideoWebRTCDemoAppUITests.debug.xcconfig */;
+			baseConfigurationReference = 7BA498183BC8B7610BA4EB1D /* Pods-AWSKinesisVideoWebRTCDemoApp-AWSKinesisVideoWebRTCDemoAppUITests.debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = NO;
 				ALWAYS_SEARCH_USER_PATHS = NO;
@@ -967,7 +958,7 @@
 		};
 		70FAD51E23983822002A50E6 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 3DD33BF408754EB3136F05F8 /* Pods-AWSKinesisVideoWebRTCDemoApp-AWSKinesisVideoWebRTCDemoAppUITests.release.xcconfig */;
+			baseConfigurationReference = E23EA2E883E8A567E5950B3C /* Pods-AWSKinesisVideoWebRTCDemoApp-AWSKinesisVideoWebRTCDemoAppUITests.release.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = NO;
 				ALWAYS_SEARCH_USER_PATHS = NO;
