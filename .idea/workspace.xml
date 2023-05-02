@@ -2,8 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="f893ed68-c20d-4568-be9c-f2db70a480fa" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/Swift/AWSKinesisVideoWebRTCDemoApp.xcodeproj/project.pbxproj" beforeDir="false" afterPath="$PROJECT_DIR$/Swift/AWSKinesisVideoWebRTCDemoApp.xcodeproj/project.pbxproj" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Swift/Podfile" beforeDir="false" afterPath="$PROJECT_DIR$/Swift/Podfile" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Swift/AWSKinesisVideoWebRTCDemoApp.xcworkspace/xcuserdata/jggunawa.xcuserdatad/UserInterfaceState.xcuserstate" beforeDir="false" afterPath="$PROJECT_DIR$/Swift/AWSKinesisVideoWebRTCDemoApp.xcworkspace/xcuserdata/jggunawa.xcuserdatad/UserInterfaceState.xcuserstate" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Swift/Podfile.lock" beforeDir="false" afterPath="$PROJECT_DIR$/Swift/Podfile.lock" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -54,7 +55,7 @@
       <option name="presentableId" value="Default" />
       <updated>1682979195762</updated>
       <workItem from="1682979198051" duration="7767000" />
-      <workItem from="1683046377612" duration="1217000" />
+      <workItem from="1683046377612" duration="1812000" />
     </task>
     <servers />
   </component>
