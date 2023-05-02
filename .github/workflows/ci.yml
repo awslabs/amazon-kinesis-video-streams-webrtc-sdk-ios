@@ -14,7 +14,6 @@ jobs:
         {mac_ver: "12", xc_ver: "13.4.1", os: "15.5", iphone_ver: "13"}
 #        {mac_ver: "13", xc_ver: "14.3", os: "16.3", iphone_ver: "14" }
       ]
-  mac-ios-build:
     runs-on: macos-${{ matrix.config.mac_ver }}
     steps:
       - name: Git - Checkout
