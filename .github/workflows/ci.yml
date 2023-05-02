@@ -20,7 +20,7 @@ jobs:
           brew install cocoapods || brew link --overwrite cocoapods
           cd Swift
           pod setup
-          pod install --update-repo
+          pod install --repo-update
       - name: Xcode build
         run: xcodebuild -workspace Swift/AWSKinesisVideoWebRTCDemoApp.xcworkspace -scheme AWSKinesisVideoWebRTCDemoApp -sdk iphoneos -destination 'platform=iOS Simulator,OS=16.3,name=iPhone 14'
       - name: Code coverage
