@@ -8,7 +8,22 @@ on:
     branches:
       - master
 jobs:
-  mac-ios-build:
+  mac-ios-build-12:
+    runs-on: macos-12
+    steps:
+      - name: Git - Checkout
+        uses: actions/checkout@master
+      - name: Setup - Xcode
+        run: sudo xcode-select -s /Applications/Xcode_13.4.1.app
+      - name: Install with gem
+        run: |
+          brew install cocoapods || brew link --overwrite cocoapods
+          cd Swift 
+          pod setup
+          pod install --repo-update
+      - name: Xcode build
+        run: xcodebuild -workspace Swift/AWSKinesisVideoWebRTCDemoApp.xcworkspace -scheme AWSKinesisVideoWebRTCDemoApp -sdk iphoneos -destination 'platform=iOS Simulator,OS=16.3,name=iPhone 14'
+  mac-ios-build-13:
     runs-on: macos-13
     steps:
       - name: Git - Checkout
@@ -22,6 +37,6 @@ jobs:
           pod setup
           pod install --repo-update
       - name: Xcode build
-        run: xcodebuild -workspace Swift/AWSKinesisVideoWebRTCDemoApp.xcworkspace -scheme AWSKinesisVideoWebRTCDemoApp -sdk iphoneos -destination 'platform=iOS Simulator,OS=16.3,name=iPhone 14' -allowProvisioningUpdates
+        run: xcodebuild -workspace Swift/AWSKinesisVideoWebRTCDemoApp.xcworkspace -scheme AWSKinesisVideoWebRTCDemoApp -sdk iphoneos -destination 'platform=iOS Simulator,OS=16.3,name=iPhone 14'
       - name: Code coverage
         run: bash <(curl -s https://codecov.io/bash)
