@@ -22,7 +22,7 @@ jobs:
           pod setup
           pod install --repo-update
       - name: Xcode build
-        run: xcodebuild -workspace Swift/AWSKinesisVideoWebRTCDemoApp.xcworkspace -scheme AWSKinesisVideoWebRTCDemoApp -sdk iphoneos -destination 'platform=iOS Simulator,OS=16.3,name=iPhone 14'
+        run: xcodebuild -workspace Swift/AWSKinesisVideoWebRTCDemoApp.xcworkspace -scheme AWSKinesisVideoWebRTCDemoApp -sdk iphoneos -destination 'platform=iOS Simulator,OS=15.5,name=iPhone 13'
   mac-ios-build-13:
     runs-on: macos-13
     steps:
