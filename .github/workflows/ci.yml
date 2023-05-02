@@ -17,7 +17,7 @@ jobs:
         run: sudo xcode-select -s /Applications/Xcode_14.3.app
       - name: Install with gem
         run: |
-          brew link --overwrite cocoapods
+          brew install cocoapods || brew link --overwrite cocoapods
           cd Swift
           pod setup
           pod install --update-repo
