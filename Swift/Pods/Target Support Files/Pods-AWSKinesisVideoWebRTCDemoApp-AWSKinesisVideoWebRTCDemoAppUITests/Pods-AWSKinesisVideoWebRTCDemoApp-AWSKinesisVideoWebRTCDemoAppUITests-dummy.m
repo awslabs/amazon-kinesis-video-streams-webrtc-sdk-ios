@@ -1,5 +1,0 @@
-#import <Foundation/Foundation.h>
-@interface PodsDummy_Pods_AWSKinesisVideoWebRTCDemoApp_AWSKinesisVideoWebRTCDemoAppUITests : NSObject
-@end
-@implementation PodsDummy_Pods_AWSKinesisVideoWebRTCDemoApp_AWSKinesisVideoWebRTCDemoAppUITests
-@end
