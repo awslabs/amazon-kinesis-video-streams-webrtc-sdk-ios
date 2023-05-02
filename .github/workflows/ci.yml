@@ -8,25 +8,25 @@ on:
     branches:
       - master
 jobs:
-  build:
+  build-sample-app:
     strategy:
       matrix:
         config: [
-          {mac_ver: "12", xc_ver: "13.4.1", os: "15.5", iphone_ver: "13"}
-#          {mac_ver: "13", xc_ver: "14.3", os: "16.3", iphone_ver: "14" }
+          {mac_ver: "12", xc_ver: "13.4.1", os: "15.5", iphone_ver: "13"},
+          {mac_ver: "13", xc_ver: "14.3", os: "16.3", iphone_ver: "14"}
         ]
-      runs-on: macos-${{ matrix.config.mac_ver }}
-      steps:
-        - name: Git - Checkout
-          uses: actions/checkout@master
-        - name: Setup - Xcode
-          run: sudo xcode-select -s /Applications/Xcode_${{ matrix.config.xc_ver }}.app
-        - name: Install with brew
-          run: brew install cocoapods || brew link --overwrite cocoapods
-        - name: Install dependencies      
-          run: |
-            cd Swift
-            pod setup
-            pod install --repo-update
-        - name: Xcode build
-          run: xcodebuild -workspace Swift/AWSKinesisVideoWebRTCDemoApp.xcworkspace -scheme AWSKinesisVideoWebRTCDemoApp -sdk iphoneos -destination 'platform=iOS Simulator,OS=${{ matrix.config.os }},name=iPhone ${{ matrix.config.iphone_ver }}'
+    runs-on: macos-${{ matrix.config.mac_ver }}
+    steps:
+      - name: Git - Checkout
+        uses: actions/checkout@master
+      - name: Setup - Xcode
+        run: sudo xcode-select -s /Applications/Xcode_${{ matrix.config.xc_ver }}.app
+      - name: Install with brew
+        run: brew install cocoapods || brew link --overwrite cocoapods
+      - name: Install dependencies      
+        run: |
+          cd Swift
+          pod setup
+          pod install --repo-update
+      - name: Xcode build
+        run: xcodebuild -workspace Swift/AWSKinesisVideoWebRTCDemoApp.xcworkspace -scheme AWSKinesisVideoWebRTCDemoApp -sdk iphoneos -destination 'platform=iOS Simulator,OS=${{ matrix.config.os }},name=iPhone ${{ matrix.config.iphone_ver }}'
