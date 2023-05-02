@@ -1,0 +1,16 @@
+ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES
+CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = NO
+EXCLUDED_ARCHS[sdk=iphonesimulator*] = ["arm64"]
+FRAMEWORK_SEARCH_PATHS = $(inherited) "${PODS_CONFIGURATION_BUILD_DIR}/AWSAuthCore" "${PODS_CONFIGURATION_BUILD_DIR}/AWSCognitoIdentityProvider" "${PODS_CONFIGURATION_BUILD_DIR}/AWSCognitoIdentityProviderASF" "${PODS_CONFIGURATION_BUILD_DIR}/AWSCore" "${PODS_CONFIGURATION_BUILD_DIR}/AWSKinesisVideo" "${PODS_CONFIGURATION_BUILD_DIR}/AWSKinesisVideoSignaling" "${PODS_CONFIGURATION_BUILD_DIR}/AWSMobileClient" "${PODS_CONFIGURATION_BUILD_DIR}/CommonCryptoModule" "${PODS_CONFIGURATION_BUILD_DIR}/Starscream" "${PODS_ROOT}/GoogleWebRTC/Frameworks/frameworks"
+GCC_PREPROCESSOR_DEFINITIONS = $(inherited) COCOAPODS=1
+HEADER_SEARCH_PATHS = $(inherited) "${PODS_CONFIGURATION_BUILD_DIR}/AWSAuthCore/AWSAuthCore.framework/Headers" "${PODS_CONFIGURATION_BUILD_DIR}/AWSCognitoIdentityProvider/AWSCognitoIdentityProvider.framework/Headers" "${PODS_CONFIGURATION_BUILD_DIR}/AWSCognitoIdentityProviderASF/AWSCognitoIdentityProviderASF.framework/Headers" "${PODS_CONFIGURATION_BUILD_DIR}/AWSCore/AWSCore.framework/Headers" "${PODS_CONFIGURATION_BUILD_DIR}/AWSKinesisVideo/AWSKinesisVideo.framework/Headers" "${PODS_CONFIGURATION_BUILD_DIR}/AWSKinesisVideoSignaling/AWSKinesisVideoSignaling.framework/Headers" "${PODS_CONFIGURATION_BUILD_DIR}/AWSMobileClient/AWSMobileClient.framework/Headers" "${PODS_CONFIGURATION_BUILD_DIR}/CommonCryptoModule/CommonCryptoModule.framework/Headers" "${PODS_CONFIGURATION_BUILD_DIR}/Starscream/Starscream.framework/Headers"
+LD_RUNPATH_SEARCH_PATHS = $(inherited) /usr/lib/swift "$(PLATFORM_DIR)/Developer/Library/Frameworks" '@executable_path/Frameworks' '@loader_path/Frameworks'
+LIBRARY_SEARCH_PATHS = $(inherited) "${DT_TOOLCHAIN_DIR}/usr/lib/swift/${PLATFORM_NAME}" /usr/lib/swift
+OTHER_LDFLAGS = $(inherited) -l"sqlite3" -l"z" -framework "AWSAuthCore" -framework "AWSCognitoIdentityProvider" -framework "AWSCognitoIdentityProviderASF" -framework "AWSCore" -framework "AWSKinesisVideo" -framework "AWSKinesisVideoSignaling" -framework "AWSMobileClient" -framework "CommonCryptoModule" -framework "CoreGraphics" -framework "Foundation" -framework "Security" -framework "Starscream" -framework "SystemConfiguration" -framework "UIKit" -framework "WebRTC"
+OTHER_SWIFT_FLAGS = $(inherited) -D COCOAPODS
+PODS_BUILD_DIR = ${BUILD_DIR}
+PODS_CONFIGURATION_BUILD_DIR = ${PODS_BUILD_DIR}/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)
+PODS_PODFILE_DIR_PATH = ${SRCROOT}/.
+PODS_ROOT = ${SRCROOT}/Pods
+PODS_XCFRAMEWORKS_BUILD_DIR = $(PODS_CONFIGURATION_BUILD_DIR)/XCFrameworkIntermediates
+USE_RECURSIVE_SCRIPT_INPUTS_IN_SCRIPT_PHASES = YES

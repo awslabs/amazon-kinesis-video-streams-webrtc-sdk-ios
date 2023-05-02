@@ -170,13 +170,13 @@ class ChannelConfigurationViewController: UIViewController, UITextFieldDelegate 
         }
         // get signalling channel endpoints
         let endpoints = getSignallingEndpoints(channelARN: channelARN!, region: awsRegionValue, isMaster: self.isMaster, useMediaServer: usingMediaServer)
-        let wssURL = createSignedWSSUrl(channelARN: channelARN!, region: awsRegionValue, wssEndpoint: endpoints[WSS]!, isMaster: self.isMaster)
+        let wssURL = createSignedWSSUrl(channelARN: channelARN!, region: awsRegionValue, wssEndpoint: endpoints["WSS"]!, isMaster: self.isMaster)
         print("WSS URL :", wssURL?.absoluteString as Any)
         // get ice candidates using https endpoint
         let httpsEndpoint =
             AWSEndpoint(region: awsRegionType,
                         service: .KinesisVideo,
-                        url: URL(string: endpoints[HTTPS]!!))
+                        url: URL(string: endpoints["HTTPS"]!!))
         let RTCIceServersList = getIceCandidates(channelARN: channelARN!, endpoint: httpsEndpoint!, regionType: awsRegionType, clientId: localSenderId)
         webRTCClient = WebRTCClient(iceServers: RTCIceServersList, isAudioOn: sendAudioEnabled)
         webRTCClient!.delegate = self
@@ -191,7 +191,7 @@ class ChannelConfigurationViewController: UIViewController, UITextFieldDelegate 
         let seconds = 2.0
         DispatchQueue.main.asyncAfter(deadline: .now() + seconds) {
             self.updateConnectionLabel()
-            self.vc = VideoViewController(webRTCClient: self.webRTCClient!, signalingClient: self.signalingClient!, localSenderClientID: self.localSenderId, isMaster: self.isMaster, mediaServerEndPoint: endpoints[WEBRTC] ?? nil)
+            self.vc = VideoViewController(webRTCClient: self.webRTCClient!, signalingClient: self.signalingClient!, localSenderClientID: self.localSenderId, isMaster: self.isMaster, mediaServerEndPoint: endpoints["WEBRTC"] ?? nil)
             self.present(self.vc!, animated: true, completion: nil)
         }
     }
@@ -325,7 +325,7 @@ class ChannelConfigurationViewController: UIViewController, UITextFieldDelegate 
         singleMasterChannelEndpointConfiguration?.role = getSingleMasterChannelEndpointRole(isMaster: isMaster)
         
         if(useMediaServer){
-            singleMasterChannelEndpointConfiguration?.protocols?.append(WEBRTC)
+            singleMasterChannelEndpointConfiguration?.protocols?.append("WEBRTC")
         }
  
         let kvsClient = AWSKinesisVideo(forKey: awsKinesisVideoKey)
@@ -348,11 +348,11 @@ class ChannelConfigurationViewController: UIViewController, UITextFieldDelegate 
             for endpoint in task.result!.resourceEndpointList! {
                 switch endpoint.protocols {
                 case .https:
-                    endpoints[HTTPS] = endpoint.resourceEndpoint
+                    endpoints["HTTPS"] = endpoint.resourceEndpoint
                 case .wss:
-                    endpoints[WSS] = endpoint.resourceEndpoint
+                    endpoints["WSS"] = endpoint.resourceEndpoint
                 case .webrtc:
-                    endpoints[WEBRTC] = endpoint.resourceEndpoint
+                    endpoints["WEBRTC"] = endpoint.resourceEndpoint
                 case .unknown:
                     print("Error: Unknown endpoint protocol ", endpoint.protocols, "for endpoint" + endpoint.description())
                 }
