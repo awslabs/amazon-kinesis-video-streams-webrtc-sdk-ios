@@ -218,6 +218,8 @@ Double check that [Constants.swift](Swift/KVSiOSApp/Constants.swift) contains a 
 
 </details>
 
+<br>
+
 <details>
   <summary><code><strong>Unable to create channel</strong>. Please validate all the input fields</code></summary>
 
