@@ -1,8 +1,18 @@
-# The Amazon Kinesis Video WebRTC Sample
-[![Build Status](https://travis-ci.org/awslabs/amazon-kinesis-video-streams-webrtc-sdk-ios.svg?branch=master)](https://travis-ci.org/awslabs/amazon-kinesis-video-streams-webrtc-sdk-ios)
-[![Coverage Status](https://codecov.io/gh/awslabs/amazon-kinesis-video-streams-webrtc-sdk-ios/branch/master/graph/badge.svg)](https://codecov.io/gh/awslabs/amazon-kinesis-video-streams-webrtc-sdk-ios)
+<center>
 
-This sample demonstrates the Amazon KinesisVideoStreams and KinesisVideoSignaling framework found in the AWS Mobile SDK for iOS.
+<h1>Amazon Kinesis Video iOS WebRTC Sample</h1>
+
+[![Build Status](https://img.shields.io/github/actions/workflow/status/awslabs/amazon-kinesis-video-streams-webrtc-sdk-ios/ci.yml)](https://img.shields.io/github/actions/workflow/status/awslabs/amazon-kinesis-video-streams-webrtc-sdk-ios/ci.yml)
+[![License](https://img.shields.io/badge/License-Apache_2.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
+
+[//]: # (Todo: re-enable this once code cov is setup)
+[//]: # (&#40;[![Coverage Status]&#40;https://codecov.io/gh/awslabs/amazon-kinesis-video-streams-webrtc-sdk-ios/branch/master/graph/badge.svg&#41;]&#40;https://codecov.io/gh/awslabs/amazon-kinesis-video-streams-webrtc-sdk-ios&#41;&#41;)
+
+</center>
+
+This sample demonstrates the Amazon Kinesis Video Streams and Kinesis Video Signaling framework found in the [AWS Mobile SDK for iOS](https://github.com/aws-amplify/aws-sdk-ios).
+
+For more information, see [What Is Amazon Kinesis Video Streams with WebRTC](https://docs.aws.amazon.com/kinesisvideostreams-webrtc-dg/latest/devguide/what-is-kvswebrtc.html) and [WebRTC SDK for iOS](https://docs.aws.amazon.com/kinesisvideostreams-webrtc-dg/latest/devguide/kvswebrtc-sdk-ios.html).
 
 ## Requirements
 
@@ -38,6 +48,7 @@ pod setup
    Change directories to the directory containing the [Podfile](Swift/Podfile) and run the `install` command:
    ```bash
    cd Swift
+   pod cache clean --all
    pod install --repo-update
    ```
 
@@ -137,17 +148,27 @@ Complete the following steps:
 ## Troubleshooting
 
 <details>
-    <summary><code>Scripting Bridge could not launch application /Applications/Xcode.app</code></summary>
-    <br>
-    Check that XCode is in the Application folder.
+  <summary><code>Scripting Bridge could not launch application /Applications/Xcode.app</code></summary>
+
+  Check that `XCode.app` is in your `Applications` folder.
+
 </details>
 
 <br>
 
 <details>
-    <summary><code>Could not build module 'UIKit'</code></summary>
-    <br>
-    Try reinstalling XCode, restarting your MAC, and reinstalling the Pods:
+  <summary><code>No such module 'AWSCognitoIdentityProvider'</code></summary>
+
+  Open the project by selecting the `.xcworkspace` file or using the `xed .` command, not the `.xcodeproj` file.
+
+</details>
+
+<br>
+
+<details>
+  <summary><code>Could not build module 'UIKit'</code></summary>
+
+  Try reinstalling XCode, restarting your MAC, and reinstalling the Pods. Run the following commands from the same directory containing the [Podfile](Swift).
 
    ```
    rm -rf ~/Library/Caches/CocoaPods
@@ -156,10 +177,10 @@ Complete the following steps:
    pod deintegrate
    rm -f Podfile.lock
    pod setup
-   pod install --update-repo
+   pod install --repo-update
    ```
 
-   Then, run a clean build by going to `Product > Clean Build Folder` or using ⌘+⇧+K before clicking the play button.
+   Then, run a clean build in XCode by going to `Product > Clean Build Folder` (or using ⌘+⇧+K) before clicking the play button.
 
 </details>
 
