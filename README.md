@@ -56,8 +56,8 @@ git clone https://github.com/awslabs/amazon-kinesis-video-streams-webrtc-sdk-ios
 
 4. To open the project, you can choose between these two methods:
 
-    1. Open XCode, select "Open a project or file", and choose [AWSKinesisVideoWebRTCDemoApp.**xcworkspace**](Swift/AWSKinesisVideoWebRTCDemoApp.xcworkspace), **OR**
-    2. Run the following command from the [Swift](Swift) folder.
+   1. Open XCode, select "Open a project or file", and choose [AWSKinesisVideoWebRTCDemoApp.**xcworkspace**](Swift/AWSKinesisVideoWebRTCDemoApp.xcworkspace), **OR**
+   2. Run the following command from the [Swift](Swift) folder.
     ```bash
     xed .
     ```
@@ -66,7 +66,7 @@ git clone https://github.com/awslabs/amazon-kinesis-video-streams-webrtc-sdk-ios
 
    <details>
        <summary><strong>Example Constants.swift</strong></summary>
-   
+
       ```swift
       let cognitoIdentityUserPoolRegion = AWSRegionType.USWest2
       let cognitoIdentityUserPoolId = "us-west-2_qRsTuVwXy"
@@ -74,14 +74,14 @@ git clone https://github.com/awslabs/amazon-kinesis-video-streams-webrtc-sdk-ios
       let cognitoIdentityUserPoolAppClientSecret = "abcdefghijklmnopqrstuvwxyz0123456789abcdefghijklmno"
       let cognitoIdentityPoolId = "us-west-2:01234567-89ab-cdef-0123-456789abcdef"
       ```
-   
+
    </details>
 
    Open [KvsiOSApp/awsconfiguration.json](Swift/KVSiOSApp/awsconfiguration.json) and replace the "REPLACEME" values with the values obtained earlier.
 
    <details>
        <summary><strong>Example awsconfiguration.json</strong></summary>
-   
+
    ```json
    {
      "Version": "1.0",
@@ -106,20 +106,20 @@ git clone https://github.com/awslabs/amazon-kinesis-video-streams-webrtc-sdk-ios
      }
    }
    ```
-   
+
    </details>
 
 6. To build and run, click the play button at the top of the XCode UI.
 
 #### Run the iOS Sample Application
-Building the iOS sample application installs the AWSKinesisVideoWebRTCDemoApp on your iOS device. Using this app, you can verify live audio/video streaming between mobile, web and IoT device clients (camera). The procedure below describes some of these scenarios. 
+Building the iOS sample application installs the AWSKinesisVideoWebRTCDemoApp on your iOS device. Using this app, you can verify live audio/video streaming between mobile, web and IoT device clients (camera). The procedure below describes some of these scenarios.
 
 Complete the following steps:
 
 1.    On your iOS device, open AWSKinesisVideoWebRTCDemoApp and login using the AWS user credentials from Set Up an AWS Account and Create an Administrator. (Note: Cognito settings can be tuned through your Cognito User Pool in the AWS management Console)
-2.    On successful sign-in, the channel configuration view is displayed where the **channel-name, client-id (optional) and region-name** have to be configured. 
+2.    On successful sign-in, the channel configuration view is displayed where the **channel-name, client-id (optional) and region-name** have to be configured.
 
-#### Run the Integration Tests  
+#### Run the Integration Tests
 1.   To run the integration tests, the test user has to be created with the appropriate test password as in the [AWSKinesisVideoWebRTCDemoAppUITests/TestConstants.swift](Swift/AWSKinesisVideoWebRTCDemoAppUITests/TestConstants.swift) file.
 
 
@@ -133,13 +133,13 @@ Complete the following steps:
 *    Use another iOS device to connect to the same channel name (started up in the above step set up as a master) in viewer mode. This will connect to an existing session (channel) where a master was connected previously.
 
 #####    Peer to Peer Streaming between [Embedded SDK](https://github.com/awslabs/amazon-kinesis-video-streams-webrtc-sdk-c) master and iOS device:
-  *    Run KVS WebRTC embedded SDK (in C) in master mode on a camera device.
-  *    Start the iOS device in viewer mode – you should be able to see the local video preview in the lower right side of the screen and also the larger part of the screen should stream the remote video view.
+*    Run KVS WebRTC embedded SDK (in C) in master mode on a camera device.
+*    Start the iOS device in viewer mode – you should be able to see the local video preview in the lower right side of the screen and also the larger part of the screen should stream the remote video view.
 
 #####    Peer to Peer Streaming between iOS device as master and Web browser as viewer:
- *    Start one iOS device in master mode for starting a new session using a channel name (e.g. demo)
- *    Start the Web Browser using the Javascript SDK (JS with audio selected) and start it as viewer.
- *    Verify media showing up from the iOS device and also from the browser.
+*    Start one iOS device in master mode for starting a new session using a channel name (e.g. demo)
+*    Start the Web Browser using the Javascript SDK (JS with audio selected) and start it as viewer.
+*    Verify media showing up from the iOS device and also from the browser.
 
 ##### Note
 
@@ -150,7 +150,7 @@ Complete the following steps:
 <details>
   <summary><code>Scripting Bridge could not launch application /Applications/Xcode.app</code></summary>
 
-  Check that `XCode.app` is in your `Applications` folder.
+Check that `XCode.app` is in your `Applications` folder.
 
 </details>
 
@@ -159,7 +159,7 @@ Complete the following steps:
 <details>
   <summary><code>No such module 'AWSCognitoIdentityProvider'</code></summary>
 
-  Open the project by selecting the `.xcworkspace` file or using the `xed .` command, not the `.xcodeproj` file.
+Open the project by selecting the `.xcworkspace` file or using the `xed .` command, not the `.xcodeproj` file.
 
 </details>
 
@@ -168,7 +168,7 @@ Complete the following steps:
 <details>
   <summary><code>Could not build module 'UIKit'</code></summary>
 
-  Try reinstalling XCode, restarting your MAC, and reinstalling the Pods. Run the following commands from the same directory containing the [Podfile](Swift).
+Try reinstalling XCode, restarting your MAC, and reinstalling the Pods. Run the following commands from the same directory containing the [Podfile](Swift).
 
    ```
    rm -rf ~/Library/Caches/CocoaPods
@@ -180,7 +180,7 @@ Complete the following steps:
    pod install --repo-update
    ```
 
-   Then, run a clean build in XCode by going to `Product > Clean Build Folder` (or using ⌘+⇧+K) before clicking the play button.
+Then, run a clean build in XCode by going to `Product > Clean Build Folder` (or using ⌘+⇧+K) before clicking the play button.
 
 </details>
 
@@ -189,10 +189,21 @@ Complete the following steps:
 <details>
   <summary><code>Could not find module 'AWSMobileClient' for target 'arm64-apple-ios-simulator'; found: x86_64-apple-ios-simulator</code></summary>
 
-  Open Build settings.
-  * In XCode, switch to the file viewer, scroll down and double-click on the Pods with the XCode symbol next to it. At the top, switch the tab to `Build settings`, and check that `All` and `Combined` are selected. 
+Open Build settings.
+* In XCode, switch to the file viewer, scroll down and double-click on the Pods with the XCode symbol next to it. At the top, switch the tab to `Build settings`, and check that `All` and `Combined` are selected.
 
-  In the `Architectures > Architectures` setting, add `x86_64`.
+In the `Architectures > Architectures` setting, add `x86_64`.
+
+Alternatively, you can try enabling Rosetta: `Finder > Applications > XCode > Get Info > ✓ Enable Rosetta`
+
+</details>
+
+<br>
+
+<details>
+  <summary><code>Terminating app due to uncaught exception 'NSInternalInconsistencyException', reason: 'Invalid region type.'</code></summary>
+
+Double check that [Constants.swift](Swift/KVSiOSApp/Constants.swift) contains a valid region. See [AWSRegionType](https://aws-amplify.github.io/aws-sdk-ios/docs/reference/AWSCore/Enums/AWSRegionType.html) for more info.
 
 </details>
 
@@ -201,8 +212,8 @@ Complete the following steps:
 <details>
   <summary><code><strong>Unable to create channel</strong>. Please validate all the input fields</code></summary>
 
-  Check that the values in `Constants.swift` and  `awsconfiguration.json` are set correctly. See the examples above to ensure your values match the same format.
-  Additionally, check that the IAM role has the appropriate `kinesisvideo` permissions. 
+Check that the values in `Constants.swift` and  `awsconfiguration.json` are set correctly. See the examples above to ensure your values match the same format.
+Additionally, check that the IAM role has the appropriate `kinesisvideo` permissions.
 
 </details>
 
