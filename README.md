@@ -23,17 +23,17 @@ To download the WebRTC SDK in iOS, run the following command:
 
 ```bash
 git clone https://github.com/awslabs/amazon-kinesis-video-streams-webrtc-sdk-ios.git
-```  
+```
 
 #### Using XCode to build the project
 
 0. Install XCode. You can install XCode from https://developer.apple.com/download/all/
 
-1. The AWS Mobile SDK for iOS is available through [CocoaPods](http://cocoapods.org). If CocoaPods is not installed, install it using the following command. Note that Ruby will also be installed, as it is a dependency of Cocoapods.
-```bash
-brew install cocoapods
-pod setup
-```
+1. The [AWS Mobile SDK for iOS](https://github.com/aws-amplify/aws-sdk-ios) is available through [CocoaPods](http://cocoapods.org). If CocoaPods is not installed, install it using the following command. Note that Ruby will also be installed, as it is a dependency of Cocoapods.
+   ```bash
+   brew install cocoapods
+   pod setup
+   ```
 
 2. The following cocoa pod dependencies are included in the [Podfile](Swift/Podfile) and need to be `pod install`'ed:
 
@@ -47,7 +47,7 @@ pod setup
 
    Change directories to the directory containing the [Podfile](Swift/Podfile) and run the `install` command:
    ```bash
-   cd Swift
+   cd amazon-kinesis-video-streams-webrtc-sdk-ios/Swift
    pod cache clean --all
    pod install --repo-update
    ```
@@ -56,7 +56,7 @@ pod setup
 
 4. To open the project, you can choose between these two methods:
 
-    1. Open XCode, select "Open a project or file", and choose [AWSKinesisVideoWebRTCDemoApp.xcworkspace](Swift/AWSKinesisVideoWebRTCDemoApp.xcworkspace), **OR**
+    1. Open XCode, select "Open a project or file", and choose [AWSKinesisVideoWebRTCDemoApp.**xcworkspace**](Swift/AWSKinesisVideoWebRTCDemoApp.xcworkspace), **OR**
     2. Run the following command from the [Swift](Swift) folder.
     ```bash
     xed .
@@ -184,5 +184,27 @@ Complete the following steps:
 
 </details>
 
+<br>
+
+<details>
+  <summary><code>Could not find module 'AWSMobileClient' for target 'arm64-apple-ios-simulator'; found: x86_64-apple-ios-simulator</code></summary>
+
+  Open Build settings.
+  * In XCode, switch to the file viewer, scroll down and double-click on the Pods with the XCode symbol next to it. At the top, switch the tab to `Build settings`, and check that `All` and `Combined` are selected. 
+
+  In the `Architectures > Architectures` setting, add `x86_64`.
+
+</details>
+
+<br>
+
+<details>
+  <summary><code><strong>Unable to create channel</strong>. Please validate all the input fields</code></summary>
+
+  Check that the values in `Constants.swift` and  `awsconfiguration.json` are set correctly. See the examples above to ensure your values match the same format.
+  Additionally, check that the IAM role has the appropriate `kinesisvideo` permissions. 
+
+</details>
+
 ## License
-This library is licensed under the [Apache 2.0 License](https://github.com/awslabs/amazon-kinesis-video-streams-webrtc-sdk-ios/blob/master/LICENSE).
+This library is licensed under the [Apache 2.0 License](https://github.com/awslabs/amazon-kinesis-video-streams-webrtc-sdk-ios/blob/master/LICENSE).~~
