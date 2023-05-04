@@ -58,7 +58,8 @@ class ChannelConfigurationViewControllerTest: XCTestCase {
         XCTAssertTrue((channelVC?.isMaster)!)
 
         // Channel name and region name are empty
-        channelVC?.connectAsRole(role: masterRole, connectAsUser: connectAsMasterKey)
+        channelVC?.isMaster = true
+        channelVC?.connectAsRole()
         XCTAssertTrue(channelVC?.presentedViewController is UIAlertController)
         XCTAssertEqual(channelVC?.presentedViewController?.title, "Missing Required Fields")
         
@@ -76,7 +77,8 @@ class ChannelConfigurationViewControllerTest: XCTestCase {
         // Channel name is set to `test`
         // Region is empty
         channelVC?.channelName.text = "test"
-        channelVC?.connectAsRole(role: masterRole, connectAsUser: connectAsMasterKey)
+        channelVC?.isMaster = true
+        channelVC?.connectAsRole()
         XCTAssertTrue(channelVC?.presentedViewController is UIAlertController)
         XCTAssertEqual(channelVC?.presentedViewController?.title, "Missing Required Fields")
         
@@ -93,34 +95,28 @@ class ChannelConfigurationViewControllerTest: XCTestCase {
         // Region Name is invalid and set to `us-west-3`
         channelVC?.channelName.text = "test-123"
         channelVC?.regionName.text = "us-west-3"
-        channelVC?.connectAsRole(role: masterRole, connectAsUser: connectAsMasterKey)
+        channelVC?.isMaster = true
+        channelVC?.connectAsRole()
         XCTAssertTrue(channelVC?.presentedViewController is UIAlertController)
         XCTAssertEqual(channelVC?.presentedViewController?.title, "Missing Required Fields")
-        XCTAssertTrue(channelVC?.awsRegionType == .Unknown)
-
     }
     
     func testConnectAsViewer() {
         channelVC?.connectAsViewer(_sender: channelVC!)
-        XCTAssertFalse(channelVC!.isMaster!)
+        XCTAssertFalse(channelVC!.isMaster)
     }
     
     func testRetrieveChannelARN() {
-        channelVC?.retrieveChannelARN(channelName: "")
-        XCTAssertTrue(channelVC?.presentedViewController is UIAlertController)
-        XCTAssertEqual(channelVC?.presentedViewController?.title, "Channel Name is Empty")
-        XCTAssertNil(channelVC?.channelARN)
+        XCTAssertNil(channelVC?.retrieveChannelARN(channelName: ""))
     }
     
     func testGetSingleMasterChannelEndpointRoleWithMasterRole() {
-        channelVC?.isMaster = true
-        let masterRole = channelVC?.getSingleMasterChannelEndpointRole()
+        let masterRole = channelVC?.getSingleMasterChannelEndpointRole(isMaster: true)
         XCTAssertEqual(masterRole, .master)
     }
     
     func testGetSingleMasterChannelEndpointRoleWithViewerRole() {
-        channelVC?.isMaster = false
-        let viewerRole = channelVC?.getSingleMasterChannelEndpointRole()
+        let viewerRole = channelVC?.getSingleMasterChannelEndpointRole(isMaster: false)
         XCTAssertEqual(viewerRole, .viewer)
     }
     
