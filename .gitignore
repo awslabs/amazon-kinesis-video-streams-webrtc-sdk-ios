@@ -1,0 +1,8 @@
+.idea/
+.idea/*
+Swift/Pods/
+Swift/Pods/*
+Swift/AWSKinesisVideoWebRTCDemoApp.xcworkspace/xcuserdata/*
+.DS_Store
+Swift/KVSiOSApp/Constants.swift
+Swift/KVSiOSApp/awsconfiguration.json
