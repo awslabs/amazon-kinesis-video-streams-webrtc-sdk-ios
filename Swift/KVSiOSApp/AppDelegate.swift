@@ -97,7 +97,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
         static func lockOrientation(_ orientation: UIInterfaceOrientationMask, andRotateTo rotateOrientation: UIInterfaceOrientation) {
             self.lockOrientation(orientation)
-            UIDevice.current.setValue(rotateOrientation.rawValue, forKey: "orientation")
+            if #available(iOS 16, *) {
+                DispatchQueue.main.async {
+                    let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene
+                        windowScene?.requestGeometryUpdate(.iOS(interfaceOrientations: orientation))
+                }
+            } else {
+                UIDevice.current.setValue(rotateOrientation.rawValue, forKey: "orientation")
+            }
         }
     }
     func applicationWillResignActive(_ application: UIApplication) {
