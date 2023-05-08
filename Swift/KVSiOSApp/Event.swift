@@ -11,11 +11,11 @@ public class Event {
             if payLoad.count >= 2 {
                 print(payLoad)
 
-                let messageType: String = payLoad["messageType"]!
-                let messagePayload: String = payLoad["messagePayload"]!
+                let messageType: String = payLoad["messageType"]! as! String
+                let messagePayload: String = payLoad["messagePayload"]! as! String
                 if let senderClientId = payLoad["senderClientId"] {
                     print("senderClientId : \(senderClientId)")
-                    return Message(messageType, "", senderClientId, messagePayload)
+                    return Message(messageType, "", senderClientId as! String, messagePayload)
                 } else {
                     return Message(messageType, "", "", messagePayload)
                 }
@@ -48,10 +48,10 @@ extension String {
         return String(data: data, encoding: .utf8)
     }
 
-    public func convertToDictionaryValueAsString() throws -> [String: String] {
+    public func convertToDictionaryValueAsString() throws -> [String: Any] {
         let data = Data(utf8)
 
-        if let anyResult = try JSONSerialization.jsonObject(with: data, options: []) as? [String: String] {
+        if let anyResult = try JSONSerialization.jsonObject(with: data, options: []) as? [String: Any] {
             return anyResult
         } else {
             return [:]
