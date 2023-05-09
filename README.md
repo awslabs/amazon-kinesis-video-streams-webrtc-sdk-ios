@@ -1,4 +1,4 @@
-<center>
+<div align="center">
 
 <h1>Amazon Kinesis Video iOS WebRTC Sample</h1>
 
@@ -8,7 +8,7 @@
 [//]: # (Todo: re-enable this once code cov is setup)
 [//]: # (&#40;[![Coverage Status]&#40;https://codecov.io/gh/awslabs/amazon-kinesis-video-streams-webrtc-sdk-ios/branch/master/graph/badge.svg&#41;]&#40;https://codecov.io/gh/awslabs/amazon-kinesis-video-streams-webrtc-sdk-ios&#41;&#41;)
 
-</center>
+</div>
 
 This sample demonstrates the Amazon Kinesis Video Streams and Kinesis Video Signaling framework found in the [AWS Mobile SDK for iOS](https://github.com/aws-amplify/aws-sdk-ios).
 
@@ -193,6 +193,17 @@ Open Build settings.
 * In XCode, switch to the file viewer, scroll down and double-click on the Pods with the XCode symbol next to it. At the top, switch the tab to `Build settings`, and check that `All` and `Combined` are selected.
 
 In the `Architectures > Architectures` setting, add `x86_64`.
+
+Alternatively, you can try enabling Rosetta: `Finder > Applications > XCode > Get Info > ✓ Enable Rosetta`
+
+</details>
+
+<br>
+
+<details>
+  <summary><code>Terminating app due to uncaught exception 'NSInternalInconsistencyException', reason: 'Invalid region type.'</code></summary>
+
+Double check that [Constants.swift](Swift/KVSiOSApp/Constants.swift) contains a valid region. See [AWSRegionType](https://aws-amplify.github.io/aws-sdk-ios/docs/reference/AWSCore/Enums/AWSRegionType.html) for more info.
 
 Alternatively, you can try enabling Rosetta: `Finder > Applications > XCode > Get Info > ✓ Enable Rosetta`
 
