@@ -205,17 +205,6 @@ Alternatively, you can try enabling Rosetta: `Finder > Applications > XCode > Ge
 
 Double check that [Constants.swift](Swift/KVSiOSApp/Constants.swift) contains a valid region. See [AWSRegionType](https://aws-amplify.github.io/aws-sdk-ios/docs/reference/AWSCore/Enums/AWSRegionType.html) for more info.
 
-  Alternatively, you can try enabling Rosetta: `Finder > Applications > XCode > Get Info > ✓ Enable Rosetta`
-
-</details>
-
-<br>
-
-<details>
-  <summary><code>Terminating app due to uncaught exception 'NSInternalInconsistencyException', reason: 'Invalid region type.'</code></summary>
-
-  Double check that [Constants.swift](Swift/KVSiOSApp/Constants.swift) contains a valid region. See [AWSRegionType](https://aws-amplify.github.io/aws-sdk-ios/docs/reference/AWSCore/Enums/AWSRegionType.html) for more info.
-
 </details>
 
 <br>
