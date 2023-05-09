@@ -1,4 +1,4 @@
-<center>
+<div align="center">
 
 <h1>Amazon Kinesis Video iOS WebRTC Sample</h1>
 
@@ -8,7 +8,7 @@
 [//]: # (Todo: re-enable this once code cov is setup)
 [//]: # (&#40;[![Coverage Status]&#40;https://codecov.io/gh/awslabs/amazon-kinesis-video-streams-webrtc-sdk-ios/branch/master/graph/badge.svg&#41;]&#40;https://codecov.io/gh/awslabs/amazon-kinesis-video-streams-webrtc-sdk-ios&#41;&#41;)
 
-</center>
+</div>
 
 This sample demonstrates the Amazon Kinesis Video Streams and Kinesis Video Signaling framework found in the [AWS Mobile SDK for iOS](https://github.com/aws-amplify/aws-sdk-ios).
 
