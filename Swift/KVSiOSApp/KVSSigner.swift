@@ -213,7 +213,7 @@ class KVSSigner {
                 if let index = param.firstIndex(of: "=") {
                     let nextIndex = param.index(after: index)
                     queryParamsBuilderDict.updateValue(String(param[nextIndex...]).addingPercentEncoding(withAllowedCharacters: .urlHostAllowed)!, forKey: String(param[..<index]))
-                    queryParamsBuilder.append(URLQueryItem(name: String(param[..<index].addingPercentEncoding(withAllowedCharacters: .urlHostAllowed)!), value: String(param[nextIndex...])))
+                    queryParamsBuilder.append(URLQueryItem(name: String(param[..<index].addingPercentEncoding(withAllowedCharacters: .urlHostAllowed)!), value: String(param[nextIndex...]).addingPercentEncoding(withAllowedCharacters: .urlHostAllowed)!))
                 }
             }
         } else {
