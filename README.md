@@ -10,7 +10,7 @@
 
 </div>
 
-This sample demonstrates the Amazon Kinesis Video Streams and Kinesis Video Signaling framework found in the [AWS Mobile SDK for iOS](https://github.com/aws-amplify/aws-sdk-ios).
+This sample demonstrates the Amazon Kinesis Video Streams and Kinesis Video Signaling framework found in the [AWS Mobile SDK for iOS](https://github.com/aws-amplify/aws-sdk-ios) with [Google WebRTC](https://webrtc.github.io/webrtc-org/native-code/ios/).
 
 For more information, see [What Is Amazon Kinesis Video Streams with WebRTC](https://docs.aws.amazon.com/kinesisvideostreams-webrtc-dg/latest/devguide/what-is-kvswebrtc.html) and [WebRTC SDK for iOS](https://docs.aws.amazon.com/kinesisvideostreams-webrtc-dg/latest/devguide/kvswebrtc-sdk-ios.html).
 
