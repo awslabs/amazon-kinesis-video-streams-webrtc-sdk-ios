@@ -64,7 +64,6 @@ jobs:
         run: |
           set -o pipefail && xcodebuild clean test -workspace Swift/AWSKinesisVideoWebRTCDemoApp.xcworkspace \
           -scheme AWSKinesisVideoWebRTCDemoApp \
-          -sdk iphoneos \
           -resultBundlePath TestResults \
           -enableCodeCoverage YES \
           -destination 'platform=iOS Simulator,OS=${{ matrix.config.os }},name=iPhone ${{ matrix.config.iphone_ver }}' \
