@@ -10,6 +10,10 @@ let cognitoIdentityUserPoolAppClientId = "REPLACEME"
 let cognitoIdentityUserPoolAppClientSecret = "REPLACEME"
 let cognitoIdentityPoolId = "REPLACEME"
 
+// App constants
+let appName = "aws-kvs-webrtc-ios-client"
+let appVersion = "1.0.0"
+
 // KinesisVideo constants
 let awsKinesisVideoKey = "kinesisvideo"
 let videoProtocols =  ["WSS", "HTTPS"]
@@ -21,6 +25,8 @@ let connectAsViewerKey = "connect-as-viewer"
 let masterRole = "MASTER"
 let viewerRole = "VIEWER"
 let connectAsViewClientId = "ConsumerViewer"
+
+let userAgentHeader = "User-Agent"
 
 // AWSv4 signer constants
 let signerAlgorithm = "AWS4-HMAC-SHA256"

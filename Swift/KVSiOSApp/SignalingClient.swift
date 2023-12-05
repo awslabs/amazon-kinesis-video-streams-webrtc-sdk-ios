@@ -1,5 +1,6 @@
 import Foundation
 import Starscream
+import WebKit
 import WebRTC
 
 // interface for remote connectivity events
@@ -16,7 +17,16 @@ final class SignalingClient {
     weak var delegate: SignalClientDelegate?
 
     init(serverUrl: URL) {
-        socket = WebSocket(url: serverUrl)
+        var request: URLRequest = URLRequest(url: serverUrl)
+
+        let UA = WKWebView().value(forKey: "userAgent") as? String?
+        if let agent = UA {
+            request.setValue(appName + "/" + appVersion + " " + agent!, forHTTPHeaderField: userAgentHeader)
+        } else {
+            request.setValue(appName + "/" + appVersion, forHTTPHeaderField: userAgentHeader)
+        }
+        
+        socket = WebSocket(request: request)
     }
 
     func connect() {
