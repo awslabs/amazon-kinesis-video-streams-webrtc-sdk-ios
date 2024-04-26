@@ -19,7 +19,10 @@ final class SignalingClient {
     init(serverUrl: URL) {
         var request: URLRequest = URLRequest(url: serverUrl)
 
-        let UA = WKWebView().value(forKey: "userAgent") as? String?
+        let webView = WKWebView()
+        webView.configuration.preferences.javaScriptEnabled = false
+
+        let UA = webView.value(forKey: "userAgent") as? String?
         if let agent = UA {
             request.setValue(appName + "/" + appVersion + " " + agent!, forHTTPHeaderField: userAgentHeader)
         } else {
