@@ -170,7 +170,17 @@ class ChannelConfigurationViewController: UIViewController, UITextFieldDelegate 
         }
         // get signalling channel endpoints
         let endpoints = getSignallingEndpoints(channelARN: channelARN!, region: awsRegionValue, isMaster: self.isMaster, useMediaServer: usingMediaServer)
+        //// Ensure that the WebSocket (WSS) endpoint is available; WebRTC requires a valid signaling endpoint.
+        if endpoints["WSS"] == nil {
+            popUpError(title: "Invalid SignallingEndpoints", message: "SignallingEndpoints is required for WebRTC connection")
+            return
+        }
         let wssURL = createSignedWSSUrl(channelARN: channelARN!, region: awsRegionValue, wssEndpoint: endpoints["WSS"]!, isMaster: self.isMaster)
+        // Ensure that the signed WebSocket URL is successfully created; a valid signed URL is required to establish a WebRTC connection.
+        if wssURL == nil {
+            popUpError(title: "Failed to create signed WSSUrl", message: "SignedWSSUrl is required for WebRTC connection")
+            return
+        }
         print("WSS URL :", wssURL?.absoluteString as Any)
         // get ice candidates using https endpoint
         let httpsEndpoint =
