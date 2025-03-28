@@ -63,6 +63,8 @@ class KVSSigner {
     static func iso8601() -> (fullDateTimestamp: String, shortDate: String) {
         let dateFormatter: DateFormatter = DateFormatter()
         dateFormatter.dateFormat = utcDateFormatter
+        // Ensures the date format is consistent regardless of the device's regional settings, preventing issues with 12-hour vs. 24-hour time formats.
+        dateFormatter.locale = Locale(identifier: "en_US_POSIX")
         dateFormatter.timeZone = TimeZone(abbreviation: utcTimezone)
         let date = Date()
         let dateString = dateFormatter.string(from: date)
@@ -143,6 +145,7 @@ class KVSSigner {
         queryParamsBuilderArray.append(URLQueryItem(name: xAmzSignature, value: signature))
 
         if #available(iOS 11.0, *) {
+            // ensuring that special characters (such as spaces in timestamps) are handled correctly.
             components.percentEncodedQueryItems = queryParamsBuilderArray
         } else {
             
