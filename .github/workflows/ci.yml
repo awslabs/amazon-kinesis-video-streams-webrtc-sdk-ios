@@ -12,11 +12,12 @@ jobs:
     strategy:
       matrix:
         config: [
-          {mac_ver: "11", xc_ver: "13.2.1", os: "15.2", iphone_ver: "13"},
-          {mac_ver: "12", xc_ver: "13.4.1", os: "15.5", iphone_ver: "13"},
-          {mac_ver: "13", xc_ver: "14.3", os: "16.4", iphone_ver: "14"},
-          {mac_ver: "13", xc_ver: "15.0", os: "17.0", iphone_ver: "15"}
+          {mac_ver: "13", xc_ver: "15.2", os: "17.2", iphone_ver: "14"},
+          {mac_ver: "14", xc_ver: "15.4", os: "17.5", iphone_ver: "15"},
+          {mac_ver: "15", xc_ver: "15.4", os: "17.5", iphone_ver: "15 Pro"},
+          {mac_ver: "15", xc_ver: "16.0", os: "18.0", iphone_ver: "16"}
         ]
+      fail-fast: false
     runs-on: macos-${{ matrix.config.mac_ver }}
     steps:
       - name: Git - Checkout
@@ -28,25 +29,29 @@ jobs:
           cd Swift
           pod setup
           pod install --repo-update
+          lipo -info Pods/GoogleWebRTC/Frameworks/frameworks/WebRTC.framework/WebRTC
       - name: XCode Build
         run: |
           xcodebuild clean build -workspace Swift/AWSKinesisVideoWebRTCDemoApp.xcworkspace \
           -scheme AWSKinesisVideoWebRTCDemoApp \
-          -sdk iphoneos \
+          -sdk iphonesimulator \
           -destination 'platform=iOS Simulator,OS=${{ matrix.config.os }},name=iPhone ${{ matrix.config.iphone_ver }}' \
           CODE_SIGN_IDENTITY="" \
           CODE_SIGNING_REQUIRED="NO" \
           CODE_SIGN_ENTITLEMENTS="" \
-          CODE_SIGNING_ALLOWED="NO"
+          CODE_SIGNING_ALLOWED="NO" \
+          ARCHS="x86_64"
+
   run-unit-tests:
     strategy:
       matrix:
         config: [
-          {mac_ver: "11", xc_ver: "13.2.1", os: "15.2", iphone_ver: "13"},
-          {mac_ver: "12", xc_ver: "13.4.1", os: "15.5", iphone_ver: "13"},
-          {mac_ver: "13", xc_ver: "14.3", os: "16.4", iphone_ver: "14"},
-          {mac_ver: "13", xc_ver: "15.0", os: "17.0.1", iphone_ver: "15"}
+          {mac_ver: "13", xc_ver: "15.2", os: "17.2", iphone_ver: "14"},
+          {mac_ver: "14", xc_ver: "15.4", os: "17.5", iphone_ver: "15"},
+          {mac_ver: "15", xc_ver: "15.4", os: "17.5", iphone_ver: "15 Pro"},
+          {mac_ver: "15", xc_ver: "16.0", os: "18.0", iphone_ver: "16"}
         ]
+      fail-fast: false
     runs-on: macos-${{ matrix.config.mac_ver }}
     steps:
       - name: Git - Checkout
@@ -64,13 +69,14 @@ jobs:
         run: |
           set -o pipefail && xcodebuild clean test -workspace Swift/AWSKinesisVideoWebRTCDemoApp.xcworkspace \
           -scheme AWSKinesisVideoWebRTCDemoApp \
-          -sdk iphoneos \
+          -sdk iphonesimulator \
           -resultBundlePath TestResults \
           -enableCodeCoverage YES \
           -destination 'platform=iOS Simulator,OS=${{ matrix.config.os }},name=iPhone ${{ matrix.config.iphone_ver }}' \
-          '-only-testing:AWSKinesisVideoWebRTCDemoAppTests' | xcpretty
+          '-only-testing:AWSKinesisVideoWebRTCDemoAppTests' \
+          ARCHS="x86_64" | xcpretty
       - name: Publish results
-        uses: kishikawakatsumi/xcresulttool@v1
+        uses: slidoapp/xcresulttool@v3.1.0
         with:
           title: Test results (OS ${{ matrix.config.os }})
           path: TestResults.xcresult
