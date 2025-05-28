@@ -15,7 +15,7 @@ jobs:
           {mac_ver: "13", xc_ver: "15.2", os: "17.2", iphone_ver: "14"},
           {mac_ver: "14", xc_ver: "15.4", os: "17.5", iphone_ver: "15"},
           {mac_ver: "15", xc_ver: "15.4", os: "17.5", iphone_ver: "15 Pro"},
-          {mac_ver: "15", xc_ver: "16.0", os: "18.0", iphone_ver: "16"}
+          {mac_ver: "15", xc_ver: "16.3", os: "18.4", iphone_ver: "16"}
         ]
       fail-fast: false
     runs-on: macos-${{ matrix.config.mac_ver }}
@@ -49,7 +49,7 @@ jobs:
           {mac_ver: "13", xc_ver: "15.2", os: "17.2", iphone_ver: "14"},
           {mac_ver: "14", xc_ver: "15.4", os: "17.5", iphone_ver: "15"},
           {mac_ver: "15", xc_ver: "15.4", os: "17.5", iphone_ver: "15 Pro"},
-          {mac_ver: "15", xc_ver: "16.0", os: "18.0", iphone_ver: "16"}
+          {mac_ver: "15", xc_ver: "16.3", os: "18.4", iphone_ver: "16"}
         ]
       fail-fast: false
     runs-on: macos-${{ matrix.config.mac_ver }}
