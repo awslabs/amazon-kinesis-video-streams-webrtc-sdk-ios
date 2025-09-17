@@ -12,7 +12,7 @@ protocol SignalClientDelegate: class {
 }
 
 final class SignalingClient {
-    private let socket: WebSocket
+    private let socket: Starscream.WebSocket
     private let encoder = JSONEncoder()
     weak var delegate: SignalClientDelegate?
 
