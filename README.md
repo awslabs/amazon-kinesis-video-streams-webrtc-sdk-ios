@@ -143,7 +143,17 @@ Complete the following steps:
 
 ##### Note
 
-* _This sample application has been tested in iPhone XS and iPhone 6._
+* _This sample application has been tested in Simulator (iPhone 16e) and iPhone SE 2nd Generation._
+
+
+#### Using AWS credentials directly instead of Cognito
+
+> [!IMPORTANT]
+> This is not recommended for production use.
+
+In the `Constants.swift`, replaces awsAccessKey and awsSecretKey (optional: awsSessionToken) with your values.
+
+Upon launching the application, it will skip the sign in screen and go straight to the channel configuration screen.
 
 ## Troubleshooting
 
