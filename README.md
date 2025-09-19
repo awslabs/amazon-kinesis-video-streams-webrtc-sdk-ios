@@ -146,7 +146,7 @@ Complete the following steps:
 * _This sample application has been tested in Simulator (iPhone 16e) and iPhone SE 2nd Generation._
 
 
-#### Using user-provided AWS credentials directly instead of Cognito integration
+#### Using user-provided AWS credentials
 
 > [!IMPORTANT]
 > This is not recommended for production use.
