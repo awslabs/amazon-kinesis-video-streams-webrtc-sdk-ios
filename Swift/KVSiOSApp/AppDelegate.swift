@@ -18,7 +18,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Check if AWS credentials are provided to bypass Cognito
         if let accessKey = awsAccessKey, let secretKey = awsSecretKey, !accessKey.isEmpty, !secretKey.isEmpty {
             // Use static AWS credentials
-            print("Bypassing Cognito sign-in screen")
+            print("Skipping Cognito sign-in screen")
             print("⚠️ WARNING: Using static AWS credentials - FOR PROTOTYPING ONLY, DO NOT USE IN PRODUCTION!")
 
             // Skip to channel configuration
