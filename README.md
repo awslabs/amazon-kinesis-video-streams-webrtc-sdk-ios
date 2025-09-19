@@ -146,14 +146,16 @@ Complete the following steps:
 * _This sample application has been tested in Simulator (iPhone 16e) and iPhone SE 2nd Generation._
 
 
-#### Using AWS credentials directly instead of Cognito
+#### Using user-provided AWS credentials directly instead of Cognito integration
 
 > [!IMPORTANT]
 > This is not recommended for production use.
 
-In the `Constants.swift`, replaces awsAccessKey and awsSecretKey (optional: awsSessionToken) with your values.
+In the `Constants.swift`, set variables `awsAccessKey` and `awsSecretKey` (optional: `awsSessionToken`) with your values.
+In this mode, your `awsconfiguration.json` does not need to be modified, and neither do the `REPLACEME` values
+in the `Constants.swift`.
 
-Upon launching the application, it will skip the sign in screen and go straight to the channel configuration screen.
+Those user-provided credentials will be used to interact with KVS APIs instead of using credentials fetched from AWS Cognito Service.
 
 ## Troubleshooting
 

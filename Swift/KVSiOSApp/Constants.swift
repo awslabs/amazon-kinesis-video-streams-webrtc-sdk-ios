@@ -28,7 +28,8 @@ let connectAsViewClientId = "ConsumerViewer"
 
 let userAgentHeader = "User-Agent"
 
-// AWS Credentials (set these to override Cognito authentication)
+// User-provided AWS Credentials to use when calling KVS APIs
+// Instead of fetching credentials from AWS Cognito service
 // Not recommended to use this in production
 let awsAccessKey: String? = nil // "YOUR_ACCESS_KEY"
 let awsSecretKey: String? = nil // "YOUR_SECRET_KEY"

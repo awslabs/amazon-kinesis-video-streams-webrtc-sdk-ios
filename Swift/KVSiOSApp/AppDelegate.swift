@@ -15,9 +15,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
 
+        // Do not show Cognito sign-in screen and go directly to channel configuration screen
+        // when not using Cognito integration
         if let accessKey = awsAccessKey, let secretKey = awsSecretKey, !accessKey.isEmpty, !secretKey.isEmpty {
-            // Use static AWS credentials
-            print("Skipping Cognito sign-in screen")
             print("⚠️ WARNING: Using static AWS credentials - FOR PROTOTYPING ONLY, DO NOT USE IN PRODUCTION!")
 
             // Skip to channel configuration
