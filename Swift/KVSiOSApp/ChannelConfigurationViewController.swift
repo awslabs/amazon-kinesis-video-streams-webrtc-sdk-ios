@@ -46,7 +46,8 @@ class ChannelConfigurationViewController: UIViewController, UITextFieldDelegate 
 
     // Helper function to get appropriate credentials provider
     private func getCredentialsProvider() -> AWSCredentialsProvider {
-        if let accessKey = awsAccessKey, let secretKey = awsSecretKey, !accessKey.isEmpty, !secretKey.isEmpty {
+        if let accessKey = awsAccessKey, !accessKey.isEmpty,
+           let secretKey = awsSecretKey, !secretKey.isEmpty {
             print("⚠️ WARNING: Using static AWS credentials - FOR PROTOTYPING ONLY, DO NOT USE IN PRODUCTION!")
 
             if let sessionToken = awsSessionToken, !sessionToken.isEmpty {
@@ -110,7 +111,8 @@ class ChannelConfigurationViewController: UIViewController, UITextFieldDelegate 
     @IBAction func signOut(_ sender: AnyObject) {
 
         // When using IAM credentials for development testing, do not return to Cognito sign-in screen
-        if let accessKey = awsAccessKey, let secretKey = awsSecretKey, !accessKey.isEmpty, !secretKey.isEmpty {
+        if let accessKey = awsAccessKey, !accessKey.isEmpty,
+            let secretKey = awsSecretKey, !secretKey.isEmpty {
             popUpError(title: "Using hard-coded AWS IAM credentials for development testing", message: "Do not use this in production")
             return
         }

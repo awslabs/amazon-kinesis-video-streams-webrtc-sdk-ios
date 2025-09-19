@@ -151,7 +151,9 @@ Complete the following steps:
 > [!IMPORTANT]
 > This is not recommended for production use.
 
-In the `Constants.swift`, set variables `awsAccessKey` and `awsSecretKey` (optional: `awsSessionToken`) with your values.
+In the top navigation of the XCode UI, choose "Product" > "Scheme" > "Edit Scheme". Choose "Run", "Environment Variables"
+and set the "AWS_ACCESS_KEY_ID", "AWS_SECRET_ACCESS_KEY", (optional: "AWS_SESSION_TOKEN") environment variables.
+
 In this mode, your `awsconfiguration.json` does not need to be modified, and neither do the `REPLACEME` values
 in the `Constants.swift`.
 

@@ -17,7 +17,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
         // Do not show Cognito sign-in screen and go directly to channel configuration screen
         // when not using Cognito integration
-        if let accessKey = awsAccessKey, let secretKey = awsSecretKey, !accessKey.isEmpty, !secretKey.isEmpty {
+        if let accessKey = awsAccessKey, !accessKey.isEmpty,
+           let secretKey = awsSecretKey, !secretKey.isEmpty {
             print("⚠️ WARNING: Using static AWS credentials - FOR PROTOTYPING ONLY, DO NOT USE IN PRODUCTION!")
 
             // Skip to channel configuration

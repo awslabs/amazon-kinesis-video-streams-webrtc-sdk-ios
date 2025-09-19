@@ -28,13 +28,6 @@ let connectAsViewClientId = "ConsumerViewer"
 
 let userAgentHeader = "User-Agent"
 
-// User-provided AWS Credentials to use when calling KVS APIs
-// Instead of fetching credentials from AWS Cognito service
-// Not recommended to use this in production
-let awsAccessKey: String? = nil // "YOUR_ACCESS_KEY"
-let awsSecretKey: String? = nil // "YOUR_SECRET_KEY"
-let awsSessionToken: String? = nil // "YOUR_SESSION_TOKEN", leave as nil if not using ephemeral credentials
-
 // AWSv4 signer constants
 let signerAlgorithm = "AWS4-HMAC-SHA256"
 let awsRequestTypeKey = "aws4_request"
@@ -62,3 +55,6 @@ let wssKey = "wss"
 let plusEncoding = "%2B"
 let equalsEncoding = "%3D"
 
+let awsAccessKey: String? = ProcessInfo.processInfo.environment["AWS_ACCESS_KEY_ID"]
+let awsSecretKey: String? = ProcessInfo.processInfo.environment["AWS_SECRET_ACCESS_KEY"]
+let awsSessionToken: String? = ProcessInfo.processInfo.environment["AWS_SESSION_TOKEN"]
