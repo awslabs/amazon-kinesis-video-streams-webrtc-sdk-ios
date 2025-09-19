@@ -108,8 +108,10 @@ class ChannelConfigurationViewController: UIViewController, UITextFieldDelegate 
     }
 
     @IBAction func signOut(_ sender: AnyObject) {
+
+        // When using IAM credentials for development testing, do not return to Cognito sign-in screen
         if let accessKey = awsAccessKey, let secretKey = awsSecretKey, !accessKey.isEmpty, !secretKey.isEmpty {
-            popUpError(title: "Using hard-coded credentials", message: "Do not use this in production")
+            popUpError(title: "Using hard-coded AWS IAM credentials for development testing", message: "Do not use this in production")
             return
         }
 
