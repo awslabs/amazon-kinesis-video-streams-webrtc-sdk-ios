@@ -833,7 +833,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = B7FFA0959C9A8A6DEFEA075F /* Pods-AWSKinesisVideoWebRTCDemoApp.release.xcconfig */;
 			buildSettings = {
-				ARCHS = x86_64;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				DEVELOPMENT_TEAM = "";
 				ENABLE_BITCODE = NO;
