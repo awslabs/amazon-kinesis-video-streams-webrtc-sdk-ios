@@ -15,6 +15,21 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
 
+        // Application uses the user provided test IAM credentials through environment (testing only)
+        if let accessKey = awsAccessKey, !accessKey.isEmpty,
+           let secretKey = awsSecretKey, !secretKey.isEmpty {
+            print("⚠️ WARNING: Using static AWS credentials - FOR PROTOTYPING ONLY, DO NOT USE IN PRODUCTION!")
+
+            // Skip to channel configuration
+            self.storyboard = UIStoryboard(name: "Main", bundle: nil)
+            self.navigationController = self.storyboard?.instantiateViewController(withIdentifier: "channelConfig") as? UINavigationController
+            self.channelConfigViewController = self.navigationController?.viewControllers[0] as? ChannelConfigurationViewController
+            DispatchQueue.main.async {
+                self.window?.rootViewController?.present(self.navigationController!, animated: true, completion: nil)
+            }
+            return true
+        }
+
         // Warn user if configuration not updated
         if (cognitoIdentityUserPoolId == "REPLACEME") {
             let alertController = UIAlertController(title: "Invalid Configuration",

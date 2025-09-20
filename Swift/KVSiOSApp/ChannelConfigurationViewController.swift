@@ -44,6 +44,21 @@ class ChannelConfigurationViewController: UIViewController, UITextFieldDelegate 
     
     var peerConnection: RTCPeerConnection?
 
+    // Helper function to get appropriate credentials provider
+    private func getCredentialsProvider() -> AWSCredentialsProvider {
+        if let accessKey = awsAccessKey, !accessKey.isEmpty,
+           let secretKey = awsSecretKey, !secretKey.isEmpty {
+            print("⚠️ WARNING: Using static AWS credentials - FOR PROTOTYPING ONLY, DO NOT USE IN PRODUCTION!")
+
+            if let sessionToken = awsSessionToken, !sessionToken.isEmpty {
+                return AWSBasicSessionCredentialsProvider(accessKey: accessKey, secretKey: secretKey, sessionToken: sessionToken)
+            } else {
+                return AWSStaticCredentialsProvider(accessKey: accessKey, secretKey: secretKey)
+            }
+        }
+        return AWSMobileClient.default()
+    }
+
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(true)
         self.signalingConnected = false
@@ -94,6 +109,14 @@ class ChannelConfigurationViewController: UIViewController, UITextFieldDelegate 
     }
 
     @IBAction func signOut(_ sender: AnyObject) {
+
+        // Disable signout option (n/a) when testing with user provided credentials through environment
+        if let accessKey = awsAccessKey, !accessKey.isEmpty,
+            let secretKey = awsSecretKey, !secretKey.isEmpty {
+            popUpError(title: "Using hard-coded AWS IAM credentials for development testing", message: "Do not use this in production")
+            return
+        }
+
         AWSMobileClient.default().signOut()
         let mainStoryBoard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
         self.present((mainStoryBoard.instantiateViewController(withIdentifier: "signinController") as? UINavigationController)!, animated: true, completion: nil)
@@ -145,7 +168,7 @@ class ChannelConfigurationViewController: UIViewController, UITextFieldDelegate 
             print("Generated clientID is \(self.localSenderId)")
         }
         // Kinesis Video Client Configuration
-        let configuration = AWSServiceConfiguration(region: awsRegionType, credentialsProvider: AWSMobileClient.default())
+        let configuration = AWSServiceConfiguration(region: awsRegionType, credentialsProvider: getCredentialsProvider())
         AWSKinesisVideo.register(with: configuration!, forKey: awsKinesisVideoKey)
 
         // Attempt to retrieve signalling channel.  If it does not exist create the channel
@@ -297,7 +320,7 @@ class ChannelConfigurationViewController: UIViewController, UITextFieldDelegate 
         let configuration =
             AWSServiceConfiguration(region: regionType,
                                     endpoint: endpoint,
-                                    credentialsProvider: AWSMobileClient.default())
+                                    credentialsProvider: getCredentialsProvider())
         AWSKinesisVideoSignaling.register(with: configuration!, forKey: awsKinesisVideoKey)
         let kvsSignalingClient = AWSKinesisVideoSignaling(forKey: awsKinesisVideoKey)
 
@@ -373,13 +396,16 @@ class ChannelConfigurationViewController: UIViewController, UITextFieldDelegate 
     
     func createSignedWSSUrl(channelARN: String, region: String, wssEndpoint: String?, isMaster: Bool) -> URL? {
         // get AWS credentials to sign WSS Url with
-        var AWSCredentials : AWSCredentials?
-        AWSMobileClient.default().getAWSCredentials { credentials, _ in
-            AWSCredentials = credentials
-        }
+        var awsCreds : AWSCredentials?
+
+        getCredentialsProvider().credentials().continueWith { task in
+                awsCreds = task.result
+                return nil
+            }.waitUntilFinished()
         
-        while(AWSCredentials == nil){
-            usleep(5)
+        guard awsCreds != nil else {
+            popUpError(title: "Error fetching credentials", message: "Unable to fetch the credentials")
+            return nil
         }
 
         var httpURlString = wssEndpoint!
@@ -391,9 +417,9 @@ class ChannelConfigurationViewController: UIViewController, UITextFieldDelegate 
         let wssRequestURL = URL(string: wssEndpoint!)
         let wssURL = KVSSigner
             .sign(signRequest: httpRequestURL!,
-                  secretKey: (AWSCredentials?.secretKey)!,
-                  accessKey: (AWSCredentials?.accessKey)!,
-                  sessionToken: (AWSCredentials?.sessionKey)!,
+                  secretKey: (awsCreds?.secretKey)!,
+                  accessKey: (awsCreds?.accessKey)!,
+                  sessionToken: (awsCreds?.sessionKey ?? ""),
                   wssRequest: wssRequestURL!,
                   region: region)
         return wssURL

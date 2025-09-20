@@ -55,3 +55,6 @@ let wssKey = "wss"
 let plusEncoding = "%2B"
 let equalsEncoding = "%3D"
 
+let awsAccessKey: String? = ProcessInfo.processInfo.environment["AWS_ACCESS_KEY_ID"]
+let awsSecretKey: String? = ProcessInfo.processInfo.environment["AWS_SECRET_ACCESS_KEY"]
+let awsSessionToken: String? = ProcessInfo.processInfo.environment["AWS_SESSION_TOKEN"]

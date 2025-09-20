@@ -143,7 +143,21 @@ Complete the following steps:
 
 ##### Note
 
-* _This sample application has been tested in iPhone XS and iPhone 6._
+* _This sample application has been tested in Simulator (iPhone 16e) and iPhone SE 2nd Generation._
+
+
+#### Using user-provided AWS credentials
+
+> [!IMPORTANT]
+> This is not recommended for production use.
+
+In the top navigation of the XCode UI, choose "Product" > "Scheme" > "Edit Scheme". Choose "Run", "Environment Variables"
+and set the "AWS_ACCESS_KEY_ID", "AWS_SECRET_ACCESS_KEY", (optional: "AWS_SESSION_TOKEN") environment variables.
+
+In this mode, your `awsconfiguration.json` does not need to be modified, and neither do the `REPLACEME` values
+in the `Constants.swift`.
+
+Those user-provided credentials will be used to interact with KVS APIs instead of using credentials fetched from AWS Cognito Service.
 
 ## Troubleshooting
 
