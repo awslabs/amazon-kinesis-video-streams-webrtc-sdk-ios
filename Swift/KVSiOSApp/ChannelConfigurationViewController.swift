@@ -2,9 +2,26 @@ import AWSCore
 import AWSCognitoIdentityProvider
 import AWSKinesisVideo
 import AWSKinesisVideoSignaling
+import AWSKinesisVideoWebRTCStorage
 import AWSMobileClient
 import Foundation
 import WebRTC
+
+enum VideoResolution: String, CaseIterable {
+    case qvga = "320x240"
+    case vga = "640x480"
+    case hd720 = "1280x720"
+    case hd1080 = "1920x1080"
+    
+    var dimensions: (width: Int32, height: Int32) {
+        switch self {
+        case .qvga: return (320, 240)
+        case .vga: return (640, 480)
+        case .hd720: return (1280, 720)
+        case .hd1080: return (1920, 1080)
+        }
+    }
+}
 
 class ChannelConfigurationViewController: UIViewController, UITextFieldDelegate {
     
@@ -18,6 +35,7 @@ class ChannelConfigurationViewController: UIViewController, UITextFieldDelegate 
     var sendAudioEnabled: Bool = true
     var isMaster: Bool = false
     var signalingConnected: Bool = false
+    var selectedResolution: VideoResolution = .hd720
 
     // clients for WEBRTC Connection
     var signalingClient: SignalingClient?
@@ -35,6 +53,7 @@ class ChannelConfigurationViewController: UIViewController, UITextFieldDelegate 
     @IBOutlet var clientID: UITextField!
     @IBOutlet var regionName: UITextField!
     @IBOutlet var isAudioEnabled: UISwitch!
+    @IBOutlet var resolutionButton: UIButton!
 
     // Connect Buttons
     @IBOutlet weak var connectAsMasterButton: UIButton!
@@ -73,6 +92,10 @@ class ChannelConfigurationViewController: UIViewController, UITextFieldDelegate 
         channelName.delegate = self
         clientID.delegate = self
         regionName.delegate = self
+        
+        regionName.text = "us-west-2"
+        channelName.text = "demo-channel"
+        resolutionButton.setTitle(selectedResolution.rawValue, for: .normal)
     }
 
     func textFieldShouldReturn(_: UITextField) -> Bool {
@@ -96,6 +119,27 @@ class ChannelConfigurationViewController: UIViewController, UITextFieldDelegate 
         } else {
             self.sendAudioEnabled = false
         }
+    }
+
+    @IBAction func resolutionButtonTapped(_ sender: UIButton) {
+        let alert = UIAlertController(title: "Select Resolution", message: nil, preferredStyle: .actionSheet)
+        
+        for resolution in VideoResolution.allCases {
+            let action = UIAlertAction(title: resolution.rawValue, style: .default) { _ in
+                self.selectedResolution = resolution
+                sender.setTitle(resolution.rawValue, for: .normal)
+            }
+            alert.addAction(action)
+        }
+        
+        alert.addAction(UIAlertAction(title: "Cancel", style: .cancel))
+        
+        if let popover = alert.popoverPresentationController {
+            popover.sourceView = sender
+            popover.sourceRect = sender.bounds
+        }
+        
+        present(alert, animated: true)
     }
 
     @IBAction func connectAsViewer(_sender _: AnyObject) {
@@ -211,8 +255,19 @@ class ChannelConfigurationViewController: UIViewController, UITextFieldDelegate 
                         service: .KinesisVideo,
                         url: URL(string: endpoints["HTTPS"]!!))
         let RTCIceServersList = getIceCandidates(channelARN: channelARN!, endpoint: httpsEndpoint!, regionType: awsRegionType, clientId: localSenderId)
-        webRTCClient = WebRTCClient(iceServers: RTCIceServersList, isAudioOn: sendAudioEnabled)
+        webRTCClient = WebRTCClient(iceServers: RTCIceServersList, isAudioOn: sendAudioEnabled, resolution: selectedResolution)
         webRTCClient!.delegate = self
+        
+        if let webrtcStorageClientEndpoint = endpoints["WEBRTC"] {
+            let webrtcStorageClientAWSEndpoint = AWSEndpoint(region: awsRegionType,
+                                                             service: .KinesisVideo,
+                                                             url: URL(string: webrtcStorageClientEndpoint!))
+        
+            let webrtcStorageClientConfig = AWSServiceConfiguration(region: awsRegionType,
+                                                                    endpoint: webrtcStorageClientAWSEndpoint,
+                                                                    credentialsProvider: getCredentialsProvider())
+            AWSKinesisVideoWebRTCStorage.register(with: webrtcStorageClientConfig!, forKey: awsKinesisVideoKey)
+        }
 
         // Connect to signalling channel with wss endpoint
         print("Connecting to web socket from channel config")
@@ -224,7 +279,7 @@ class ChannelConfigurationViewController: UIViewController, UITextFieldDelegate 
         let seconds = 2.0
         DispatchQueue.main.asyncAfter(deadline: .now() + seconds) {
             self.updateConnectionLabel()
-            self.vc = VideoViewController(webRTCClient: self.webRTCClient!, signalingClient: self.signalingClient!, localSenderClientID: self.localSenderId, isMaster: self.isMaster, mediaServerEndPoint: endpoints["WEBRTC"] ?? nil)
+            self.vc = VideoViewController(webRTCClient: self.webRTCClient!, signalingClient: self.signalingClient!, localSenderClientID: self.localSenderId, isMaster: self.isMaster, signalingChannelARN: endpoints["WEBRTC"] != nil ? channelARN : nil)
             self.present(self.vc!, animated: true, completion: nil)
         }
     }

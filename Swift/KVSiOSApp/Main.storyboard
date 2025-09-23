@@ -557,7 +557,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <stackView opaque="NO" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" axis="vertical" spacing="43" translatesAutoresizingMaskIntoConstraints="NO" id="4pf-3f-52M">
-                                <rect key="frame" x="66" y="74" width="250" height="428.5"/>
+                                <rect key="frame" x="66" y="74" width="250" height="496.5"/>
                                 <subviews>
                                     <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Channel Name " textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="zEP-tC-ik7">
                                         <rect key="frame" x="0.0" y="0.0" width="250" height="25"/>
@@ -588,8 +588,22 @@
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <textInputTraits key="textInputTraits"/>
                                     </textField>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="3k1-42-Mbg">
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="res-btn-123">
                                         <rect key="frame" x="0.0" y="204" width="250" height="25"/>
+                                        <color key="backgroundColor" systemColor="systemGrayColor"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="25" id="res-height-123"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                        <state key="normal" title="1280x720">
+                                            <color key="titleColor" systemColor="labelColor"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="resolutionButtonTapped:" destination="fxY-gB-7Yj" eventType="touchUpInside" id="res-action-123"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="3k1-42-Mbg">
+                                        <rect key="frame" x="0.0" y="272" width="250" height="25"/>
                                         <color key="backgroundColor" red="0.1960784314" green="0.60392156860000001" blue="0.83921568629999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <accessibility key="accessibilityConfiguration" identifier="connectasmasterbutton"/>
                                         <constraints>
@@ -605,7 +619,7 @@
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="KMq-bs-4Hv">
-                                        <rect key="frame" x="0.0" y="272" width="250" height="25"/>
+                                        <rect key="frame" x="0.0" y="340" width="250" height="25"/>
                                         <color key="backgroundColor" red="0.1960784314" green="0.60392156860000001" blue="0.83921568629999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <accessibility key="accessibilityConfiguration" identifier="connectasviewerbutton"/>
                                         <constraints>
@@ -620,7 +634,7 @@
                                         </connections>
                                     </button>
                                     <stackView opaque="NO" contentMode="scaleToFill" spacing="120" translatesAutoresizingMaskIntoConstraints="NO" id="G8H-J9-l8I">
-                                        <rect key="frame" x="0.0" y="340" width="250" height="31"/>
+                                        <rect key="frame" x="0.0" y="408" width="250" height="31"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Audio" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pV1-OS-ahX">
                                                 <rect key="frame" x="0.0" y="0.0" width="81" height="31"/>
@@ -641,7 +655,7 @@
                                         </constraints>
                                     </stackView>
                                     <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Not Connected" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="NOw-C6-Bie">
-                                        <rect key="frame" x="0.0" y="414" width="250" height="14.5"/>
+                                        <rect key="frame" x="0.0" y="482" width="250" height="14.5"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                         <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -675,6 +689,7 @@
                         <outlet property="connectedLabel" destination="NOw-C6-Bie" id="cMG-kR-3E9"/>
                         <outlet property="isAudioEnabled" destination="uWn-mC-EnS" id="CUs-sB-mgl"/>
                         <outlet property="regionName" destination="nr9-tN-CuW" id="tX6-zd-Kpw"/>
+                        <outlet property="resolutionButton" destination="res-btn-123" id="res-outlet-123"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="7NB-jG-Ywn" userLabel="First Responder" sceneMemberID="firstResponder"/>

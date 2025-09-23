@@ -4,12 +4,9 @@ import WebRTC
 public class Event {
     public class func parseEvent(event: String) -> Message? {
         do {
-            print("Event = \(event)")
-
             let payLoad = try event.convertToDictionaryValueAsString()
 
             if payLoad.count >= 2 {
-                print(payLoad)
 
                 let messageType: String = payLoad["messageType"]! as! String
                 let messagePayload: String = payLoad["messagePayload"]! as! String

@@ -18,11 +18,9 @@ final class SignalingClient {
 
     init(serverUrl: URL) {
         var request: URLRequest = URLRequest(url: serverUrl)
+        
+        let UA = WKWebView().value(forKey: "userAgent") as? String?
 
-        let webView = WKWebView()
-        webView.configuration.preferences.javaScriptEnabled = false
-
-        let UA = webView.value(forKey: "userAgent") as? String?
         if let agent = UA {
             request.setValue(appName + "/" + appVersion + " " + agent!, forHTTPHeaderField: userAgentHeader)
         } else {
@@ -57,8 +55,13 @@ final class SignalingClient {
 
     func sendAnswer(rtcSdp: RTCSessionDescription, recipientClientId: String) {
         do {
+            self.sentOneRelay = false
+            
             debugPrint("Sending SDP answer\(rtcSdp)")
-            let message: Message = Message.createAnswerMessage(sdp: rtcSdp.sdp, recipientClientId)
+            
+            let updatedSdpStr = rtcSdp.sdp.replacingOccurrences(of: "a=ice-options:trickle renomination", with: "a=ice-options:trickle")
+            
+            let message: Message = Message.createAnswerMessage(sdp: updatedSdpStr, recipientClientId)
             let data = try encoder.encode(message)
             let msg = String(data: data, encoding: .utf8)!
             socket.write(string: msg)
@@ -67,6 +70,8 @@ final class SignalingClient {
             print(error)
         }
     }
+    
+    var sentOneRelay: Bool = false
 
     func sendIceCandidate(rtcIceCandidate: RTCIceCandidate, master: Bool,
                           recipientClientId: String,
@@ -138,9 +143,7 @@ extension SignalingClient: WebSocketDelegate {
                         guard let iceCandidate = jsonObject["candidate"] as? String else {
                             return
                         }
-                        guard let sdpMid = jsonObject["sdpMid"] as? String else {
-                            return
-                        }
+                        let sdpMid = jsonObject["sdpMid"] as? String
                         guard let sdpMLineIndex = jsonObject["sdpMLineIndex"] as? Int32 else {
                             return
                         }

@@ -5,12 +5,14 @@ public class Message: Codable {
     private var recipientClientId: String?
     private var senderClientId: String?
     private var messagePayload: String
+    private var correlationId: String
 
     public init(_ action: String, _ senderClientId: String, _ messagePayload: String) {
         self.action = action
         recipientClientId = nil
         self.senderClientId = senderClientId
         self.messagePayload = messagePayload
+        self.correlationId = NSUUID().uuidString.lowercased()
     }
 
     public init(_ action: String, _ recipientClientId: String, _ senderClientId: String, _ messagePayload: String) {
@@ -18,6 +20,7 @@ public class Message: Codable {
         self.recipientClientId = recipientClientId
         self.senderClientId = senderClientId
         self.messagePayload = messagePayload
+        self.correlationId = NSUUID().uuidString.lowercased()
     }
 
     public func getAction() -> String {

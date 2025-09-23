@@ -17,6 +17,7 @@ final class WebRTCClient: NSObject {
 
     weak var delegate: WebRTCClientDelegate?
     private let peerConnection: RTCPeerConnection
+    private var videoSource: RTCVideoSource?
 
     // Accept video and audio from remote peer
     private let streamId = "KvsLocalMediaStream"
@@ -28,11 +29,13 @@ final class WebRTCClient: NSObject {
     private var remoteVideoTrack: RTCVideoTrack?
     private var remoteDataChannel: RTCDataChannel?
     private var constructedIceServers: [RTCIceServer]?
+    private var selectedResolution: VideoResolution = .hd720
 
     private var peerConnectionFoundMap = [String: RTCPeerConnection]()
     private var pendingIceCandidatesMap = [String: Set<RTCIceCandidate>]()
 
-    required init(iceServers: [RTCIceServer], isAudioOn: Bool) {
+    required init(iceServers: [RTCIceServer], isAudioOn: Bool, resolution: VideoResolution = .hd720) {
+        self.selectedResolution = resolution
         let config = RTCConfiguration()
         config.iceServers = iceServers
         config.sdpSemantics = .unifiedPlan
@@ -41,8 +44,9 @@ final class WebRTCClient: NSObject {
         config.keyType = .ECDSA
         config.rtcpMuxPolicy = .require
         config.tcpCandidatePolicy = .enabled
+        config.iceTransportPolicy = .all
 
-        let constraints = RTCMediaConstraints(mandatoryConstraints: nil, optionalConstraints: nil)
+        let constraints = RTCMediaConstraints(mandatoryConstraints: ["RtpDataChannels" : "false"], optionalConstraints: nil)
         peerConnection = WebRTCClient.factory.peerConnection(with: config, constraints: constraints, delegate: nil)
 
         super.init()
@@ -53,6 +57,8 @@ final class WebRTCClient: NSObject {
         }
         createLocalVideoStream()
         peerConnection.delegate = self
+        
+        NotificationCenter.default.addObserver(forName: .AVAudioSessionRouteChange, object: nil, queue: nil, using: routeChange)
     }
 
     func configureAudioSession() {
@@ -63,7 +69,7 @@ final class WebRTCClient: NSObject {
                 // NOTE : Can remove .defaultToSpeaker when not required.
                 try
                     audioSession.setCategory(AVAudioSessionCategoryPlayAndRecord, with:.defaultToSpeaker)
-                try audioSession.setMode(AVAudioSessionModeDefault)
+                try audioSession.setMode(AVAudioSessionModeVoiceChat)
                 // NOTE : Can remove the following line when speaker not required.
                 try audioSession.overrideOutputAudioPort(.speaker)
                 //When passed in the options parameter of the setActive(_:options:) instance method, this option indicates that when your audio session deactivates, other audio sessions that had been interrupted by your session can return to their active state.
@@ -75,6 +81,20 @@ final class WebRTCClient: NSObject {
               audioSession.unlockForConfiguration()
             }
         
+    }
+    
+    private func routeChange(_ n: Notification) {
+        guard let info = n.userInfo,
+            let value = info[AVAudioSessionRouteChangeReasonKey] as? UInt,
+            let reason = AVAudioSessionRouteChangeReason(rawValue: value) else { return }
+        switch reason {
+        case .categoryChange:
+            try? AVAudioSession.sharedInstance().overrideOutputAudioPort(.speaker)
+        case .oldDeviceUnavailable:
+            try? AVAudioSession.sharedInstance().overrideOutputAudioPort(.speaker)
+        default:
+            break
+        }
     }
 
     func shutdown() {
@@ -141,9 +161,11 @@ final class WebRTCClient: NSObject {
     func set(remoteSdp: RTCSessionDescription, clientId: String, completion: @escaping (Error?) -> Void) {
         peerConnection.setRemoteDescription(remoteSdp, completionHandler: completion)
         if remoteSdp.type == RTCSdpType.answer {
-            print("Received answer for client ID: \(clientId)")
-            updatePeerConnectionAndHandleIceCandidates(clientId: clientId)
+            print("Set remote description answer for client ID: \(clientId)")
+        } else if remoteSdp.type == RTCSdpType.offer {
+            print("Set remote description offer for client ID: \(clientId)")
         }
+        updatePeerConnectionAndHandleIceCandidates(clientId: clientId)
     }
 
     func checkAndAddIceCandidate(remoteCandidate: RTCIceCandidate, clientId: String) {
@@ -183,15 +205,26 @@ final class WebRTCClient: NSObject {
             return
         }
 
-        guard
-            let frontCamera = (RTCCameraVideoCapturer.captureDevices().first { $0.position == .front }),
-
-            let format = RTCCameraVideoCapturer.supportedFormats(for: frontCamera).last,
-
-            let fps = format.videoSupportedFrameRateRanges.first?.maxFrameRate else {
-                debugPrint("Error setting fps.")
-                return
-            }
+        guard let frontCamera = (RTCCameraVideoCapturer.captureDevices().first { $0.position == .front }) else {
+            return
+        }
+        
+        let targetDimensions = selectedResolution.dimensions
+        let formats = RTCCameraVideoCapturer.supportedFormats(for: frontCamera)
+        
+        let selectedFormat = formats.first { format in
+            let dims = CMVideoFormatDescriptionGetDimensions(format.formatDescription)
+            return dims.width == targetDimensions.width && dims.height == targetDimensions.height
+        } ?? formats.first
+        
+        guard let format = selectedFormat,
+              let fps = format.videoSupportedFrameRateRanges.first?.maxFrameRate else {
+            debugPrint("No suitable format found")
+            return
+        }
+        
+        let dims = CMVideoFormatDescriptionGetDimensions(format.formatDescription)
+        print("Selected camera format: \(dims.width)x\(dims.height) at \(Int(fps.magnitude)) fps")
 
         capturer.startCapture(with: frontCamera,
                               format: format,
@@ -225,8 +258,8 @@ final class WebRTCClient: NSObject {
 
     private func createVideoTrack() -> RTCVideoTrack {
         let videoSource = WebRTCClient.factory.videoSource()
-        videoSource.adaptOutputFormat(toWidth: 1280, height: 720, fps: 30)
-        videoCapturer = RTCCameraVideoCapturer(delegate: videoSource)
+        self.videoSource = videoSource
+        videoCapturer = RTCCameraVideoCapturer(delegate: self)
         return WebRTCClient.factory.videoTrack(with: videoSource, trackId: "KvsVideoTrack")
     }
 
@@ -275,6 +308,14 @@ extension WebRTCClient: RTCPeerConnectionDelegate {
     func peerConnection(_: RTCPeerConnection, didOpen dataChannel: RTCDataChannel) {
         debugPrint("peerConnection didOpen \(dataChannel)")
         remoteDataChannel = dataChannel
+    }
+}
+
+extension WebRTCClient: RTCVideoCapturerDelegate {
+    func capturer(_ capturer: RTCVideoCapturer, didCapture frame: RTCVideoFrame) {
+        videoSource?.capturer(capturer, didCapture: frame)
+//        let rotatedFrame = RTCVideoFrame(buffer: frame.buffer, rotation: ._90, timeStampNs: frame.timeStampNs)
+//        videoSource?.capturer(capturer, didCapture: rotatedFrame)
     }
 }
 

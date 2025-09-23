@@ -1,5 +1,6 @@
 import UIKit
 import AWSKinesisVideo
+import AWSKinesisVideoWebRTCStorage
 import WebRTC
 
 class VideoViewController: UIViewController {
@@ -10,22 +11,31 @@ class VideoViewController: UIViewController {
     private let signalingClient: SignalingClient
     private let localSenderClientID: String
     private let isMaster: Bool
+    private let signalingChannelARN: String?
 
-    init(webRTCClient: WebRTCClient, signalingClient: SignalingClient, localSenderClientID: String, isMaster: Bool, mediaServerEndPoint: String?) {
+    /// signalingChannelARN: If this is provided, use WebRTC ingestion mode
+    init(webRTCClient: WebRTCClient, signalingClient: SignalingClient, localSenderClientID: String, isMaster: Bool, signalingChannelARN: String?) {
         self.webRTCClient = webRTCClient
         self.signalingClient = signalingClient
         self.localSenderClientID = localSenderClientID
         self.isMaster = isMaster
+        if let channelArn = signalingChannelARN {
+            self.signalingChannelARN = channelArn
+        } else {
+            self.joinStorageButton?.isHidden = true
+            self.signalingChannelARN = nil
+        }
+
         super.init(nibName: String(describing: VideoViewController.self), bundle: Bundle.main)
+        
+        RTCSetMinDebugLogLevel(RTCLoggingSeverity.verbose)
+        RTCEnableMetrics()
         
         if !isMaster {
             // In viewer mode send offer once connection is established
             webRTCClient.offer { sdp in
                 self.signalingClient.sendOffer(rtcSdp: sdp, senderClientid: self.localSenderClientID)
             }
-        }
-        if mediaServerEndPoint == nil {
-            self.joinStorageButton?.isHidden = true
         }
     }
     
@@ -87,6 +97,7 @@ class VideoViewController: UIViewController {
         print("button pressed")
         joinStorageButton?.isHidden = true
         
+        joinStorageSessionWithRetry(maxRetries: 3)
     }
 
     func sendAnswer(recipientClientID: String) {
@@ -94,6 +105,38 @@ class VideoViewController: UIViewController {
             self.signalingClient.sendAnswer(rtcSdp: localSdp, recipientClientId: recipientClientID)
             print("Sent answer. Update peer connection map and handle pending ice candidates")
             self.webRTCClient.updatePeerConnectionAndHandleIceCandidates(clientId: recipientClientID)
+        }
+    }
+    
+    func joinStorageSessionWithRetry(maxRetries: Int = 3) {
+        let webrtcStorageClient = AWSKinesisVideoWebRTCStorage(forKey: awsKinesisVideoKey)
+        let joinStorageSessionRequest = AWSKinesisVideoWebRTCStorageJoinStorageSessionInput()
+        joinStorageSessionRequest?.channelArn = self.signalingChannelARN
+        
+        for attempt in 1...maxRetries {
+            let semaphore = DispatchSemaphore(value: 0)
+            var taskCompleted = false
+            
+            webrtcStorageClient.joinSession(joinStorageSessionRequest!).continueWith(block: { (task) -> Void in
+                if let error = task.error {
+                    print("Error joining storage session: \(error)")
+                } else {
+                    print("Joined storage session!")
+                }
+                taskCompleted = true
+                semaphore.signal()
+            })
+            
+            let result = semaphore.wait(timeout: .now() + 6.0)
+            
+            if result == .success && taskCompleted {
+                break
+            } else {
+                print("Attempt \(attempt) timed out")
+                if attempt == maxRetries {
+                    print("All attempts failed")
+                }
+            }
         }
     }
 }
