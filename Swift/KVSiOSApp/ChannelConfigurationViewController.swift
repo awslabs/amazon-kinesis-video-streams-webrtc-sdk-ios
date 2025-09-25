@@ -168,7 +168,9 @@ class ChannelConfigurationViewController: UIViewController, UITextFieldDelegate 
             print("Generated clientID is \(self.localSenderId)")
         }
         // Kinesis Video Client Configuration
-        let configuration = AWSServiceConfiguration(region: awsRegionType, credentialsProvider: getCredentialsProvider())
+        let configuration = AWSServiceConfiguration(region: awsRegionType,
+                                                    endpoint: kvsControlPlaneOverride.map { AWSEndpoint(urlString: $0) },
+                                                    credentialsProvider: getCredentialsProvider())
         AWSKinesisVideo.register(with: configuration!, forKey: awsKinesisVideoKey)
 
         // Attempt to retrieve signalling channel.  If it does not exist create the channel
