@@ -136,15 +136,21 @@ extension SignalingClient: WebSocketDelegate {
                         debugPrint("SDP answer received from signaling \(sdp)")
                     } else if messageType == "ICE_CANDIDATE" {
                         guard let iceCandidate = jsonObject["candidate"] as? String else {
+                            print("Dropping \(jsonObject), due to missing 'candidate' property")
                             return
                         }
-                        guard let sdpMid = jsonObject["sdpMid"] as? String else {
+                        let sdpMid = jsonObject["sdpMid"] as? String
+                        let sdpMLineIndex = jsonObject["sdpMLineIndex"] as? Int32
+                        
+                        guard sdpMid != nil || sdpMLineIndex != nil else {
+                            print("Dropping \(jsonObject), both sdpMid and sdpMLineIndex missing (at least one must be present)")
                             return
                         }
-                        guard let sdpMLineIndex = jsonObject["sdpMLineIndex"] as? Int32 else {
-                            return
-                        }
-                        let rtcIceCandidate: RTCIceCandidate = RTCIceCandidate(sdp: iceCandidate, sdpMLineIndex: sdpMLineIndex, sdpMid: sdpMid)
+                        let rtcIceCandidate: RTCIceCandidate = RTCIceCandidate(
+                            sdp: iceCandidate,
+                            sdpMLineIndex: sdpMLineIndex ?? 0,
+                            sdpMid: sdpMid
+                        )
                         delegate?.signalClient(self, senderClientId: senderClientId!, didReceiveCandidate: rtcIceCandidate)
                         debugPrint("ICE candidate received from signaling \(iceCandidate)")
                     }
