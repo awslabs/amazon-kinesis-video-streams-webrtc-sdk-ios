@@ -6,6 +6,22 @@ import AWSMobileClient
 import Foundation
 import WebRTC
 
+enum VideoResolution: String, CaseIterable {
+    case resolution240p = "320x240"
+    case resolution480p = "640x480"
+    case resolution720p = "1280x720"
+    case resolution1080p = "1920x1080"
+
+    var dimensions: (width: Int32, height: Int32) {
+        switch self {
+        case .resolution240p: return (320, 240)
+        case .resolution480p: return (640, 480)
+        case .resolution720p: return (1280, 720)
+        case .resolution1080p: return (1920, 1080)
+        }
+    }
+}
+
 class ChannelConfigurationViewController: UIViewController, UITextFieldDelegate {
     
     // cognito credentials
@@ -18,6 +34,7 @@ class ChannelConfigurationViewController: UIViewController, UITextFieldDelegate 
     var sendAudioEnabled: Bool = true
     var isMaster: Bool = false
     var signalingConnected: Bool = false
+    var selectedResolution: VideoResolution = .resolution720p
 
     // clients for WEBRTC Connection
     var signalingClient: SignalingClient?
@@ -35,6 +52,7 @@ class ChannelConfigurationViewController: UIViewController, UITextFieldDelegate 
     @IBOutlet var clientID: UITextField!
     @IBOutlet var regionName: UITextField!
     @IBOutlet var isAudioEnabled: UISwitch!
+    @IBOutlet var resolutionButton: UIButton!
 
     // Connect Buttons
     @IBOutlet weak var connectAsMasterButton: UIButton!
@@ -73,6 +91,8 @@ class ChannelConfigurationViewController: UIViewController, UITextFieldDelegate 
         channelName.delegate = self
         clientID.delegate = self
         regionName.delegate = self
+
+        resolutionButton.setTitle(selectedResolution.rawValue, for: .normal)
     }
 
     func textFieldShouldReturn(_: UITextField) -> Bool {
@@ -96,6 +116,27 @@ class ChannelConfigurationViewController: UIViewController, UITextFieldDelegate 
         } else {
             self.sendAudioEnabled = false
         }
+    }
+
+    @IBAction func resolutionButtonTapped(_ sender: UIButton) {
+        let alert = UIAlertController(title: "Select Resolution", message: nil, preferredStyle: .actionSheet)
+
+        for resolution in VideoResolution.allCases {
+            let action = UIAlertAction(title: resolution.rawValue, style: .default) { _ in
+                self.selectedResolution = resolution
+                sender.setTitle(resolution.rawValue, for: .normal)
+            }
+            alert.addAction(action)
+        }
+
+        alert.addAction(UIAlertAction(title: "Cancel", style: .cancel))
+
+        if let popover = alert.popoverPresentationController {
+            popover.sourceView = sender
+            popover.sourceRect = sender.bounds
+        }
+
+        present(alert, animated: true)
     }
 
     @IBAction func connectAsViewer(_sender _: AnyObject) {
@@ -211,7 +252,7 @@ class ChannelConfigurationViewController: UIViewController, UITextFieldDelegate 
                         service: .KinesisVideo,
                         url: URL(string: endpoints["HTTPS"]!!))
         let RTCIceServersList = getIceCandidates(channelARN: channelARN!, endpoint: httpsEndpoint!, regionType: awsRegionType, clientId: localSenderId)
-        webRTCClient = WebRTCClient(iceServers: RTCIceServersList, isAudioOn: sendAudioEnabled)
+        webRTCClient = WebRTCClient(iceServers: RTCIceServersList, isAudioOn: sendAudioEnabled, resolution: selectedResolution)
         webRTCClient!.delegate = self
 
         // Connect to signalling channel with wss endpoint

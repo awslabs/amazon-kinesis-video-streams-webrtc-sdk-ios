@@ -17,6 +17,7 @@ final class WebRTCClient: NSObject {
 
     weak var delegate: WebRTCClientDelegate?
     private let peerConnection: RTCPeerConnection
+    private var videoSource: RTCVideoSource?
 
     // Accept video and audio from remote peer
     private let streamId = "KvsLocalMediaStream"
@@ -28,11 +29,14 @@ final class WebRTCClient: NSObject {
     private var remoteVideoTrack: RTCVideoTrack?
     private var remoteDataChannel: RTCDataChannel?
     private var constructedIceServers: [RTCIceServer]?
+    private var selectedResolution: VideoResolution
 
     private var peerConnectionFoundMap = [String: RTCPeerConnection]()
     private var pendingIceCandidatesMap = [String: Set<RTCIceCandidate>]()
 
-    required init(iceServers: [RTCIceServer], isAudioOn: Bool) {
+    required init(iceServers: [RTCIceServer], isAudioOn: Bool, resolution: VideoResolution = .resolution720p) {
+        self.selectedResolution = resolution
+
         let config = RTCConfiguration()
         config.iceServers = iceServers
         config.sdpSemantics = .unifiedPlan
@@ -183,15 +187,27 @@ final class WebRTCClient: NSObject {
             return
         }
 
-        guard
-            let frontCamera = (RTCCameraVideoCapturer.captureDevices().first { $0.position == .front }),
+        guard let frontCamera = (RTCCameraVideoCapturer.captureDevices().first { $0.position == .front }) else {
+            print("Unable to find the front camera (selfie camera)")
+            return
+        }
 
-            let format = RTCCameraVideoCapturer.supportedFormats(for: frontCamera).last,
+        let targetDimensions = selectedResolution.dimensions
+        let formats = RTCCameraVideoCapturer.supportedFormats(for: frontCamera)
 
-            let fps = format.videoSupportedFrameRateRanges.first?.maxFrameRate else {
-                debugPrint("Error setting fps.")
-                return
-            }
+        let selectedFormat = formats.first { format in
+            let dims = CMVideoFormatDescriptionGetDimensions(format.formatDescription)
+            return dims.width == targetDimensions.width && dims.height == targetDimensions.height
+        } ?? formats.first
+
+        guard let format = selectedFormat,
+              let fps = format.videoSupportedFrameRateRanges.first?.maxFrameRate else {
+            debugPrint("No suitable format found")
+            return
+        }
+
+        let dims = CMVideoFormatDescriptionGetDimensions(format.formatDescription)
+        print("Selected camera format: \(dims.width)x\(dims.height) at \(Int(fps.magnitude)) fps")
 
         capturer.startCapture(with: frontCamera,
                               format: format,
@@ -225,8 +241,8 @@ final class WebRTCClient: NSObject {
 
     private func createVideoTrack() -> RTCVideoTrack {
         let videoSource = WebRTCClient.factory.videoSource()
-        videoSource.adaptOutputFormat(toWidth: 1280, height: 720, fps: 30)
-        videoCapturer = RTCCameraVideoCapturer(delegate: videoSource)
+        self.videoSource = videoSource
+        videoCapturer = RTCCameraVideoCapturer(delegate: self)
         return WebRTCClient.factory.videoTrack(with: videoSource, trackId: "KvsVideoTrack")
     }
 
@@ -275,6 +291,16 @@ extension WebRTCClient: RTCPeerConnectionDelegate {
     func peerConnection(_: RTCPeerConnection, didOpen dataChannel: RTCDataChannel) {
         debugPrint("peerConnection didOpen \(dataChannel)")
         remoteDataChannel = dataChannel
+    }
+}
+
+extension WebRTCClient: RTCVideoCapturerDelegate {
+    func capturer(_ capturer: RTCVideoCapturer, didCapture frame: RTCVideoFrame) {
+        videoSource?.capturer(capturer, didCapture: frame)
+
+        // If you want to rotate the frame:
+        // let rotatedFrame = RTCVideoFrame(buffer: frame.buffer, rotation: ._0, timeStampNs: frame.timeStampNs)
+        // videoSource?.capturer(capturer, didCapture: rotatedFrame)
     }
 }
 
