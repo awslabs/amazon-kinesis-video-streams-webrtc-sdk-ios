@@ -12,7 +12,7 @@ let cognitoIdentityPoolId = "REPLACEME"
 
 // App constants
 let appName = "aws-kvs-webrtc-ios-client"
-let appVersion = "1.0.0"
+let appVersion = "1.1.0"
 
 // KinesisVideo constants
 let awsKinesisVideoKey = "kinesisvideo"
