@@ -104,6 +104,11 @@ extension SignalingClient: WebSocketDelegate {
     }
 
     func websocketDidReceiveMessage(socket _: WebSocketClient, text: String) {
+        guard !text.isEmpty else {
+            debugPrint("Ignoring empty WebSocket message")
+            return
+        }
+
         debugPrint("Additional signaling messages \(text)")
         var parsedMessage: Message?
 

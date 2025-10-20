@@ -30,11 +30,12 @@ final class WebRTCClient: NSObject {
     private var remoteDataChannel: RTCDataChannel?
     private var constructedIceServers: [RTCIceServer]?
     private var selectedResolution: VideoResolution
+    private var remoteRenderer: RTCVideoRenderer?
 
     private var peerConnectionFoundMap = [String: RTCPeerConnection]()
     private var pendingIceCandidatesMap = [String: Set<RTCIceCandidate>]()
 
-    required init(iceServers: [RTCIceServer], isAudioOn: Bool, resolution: VideoResolution = .resolution720p) {
+    required init(iceServers: [RTCIceServer], isAudioOn: Bool, isVideoOn: Bool = true, resolution: VideoResolution = .resolution720p) {
         self.selectedResolution = resolution
 
         let config = RTCConfiguration()
@@ -55,7 +56,9 @@ final class WebRTCClient: NSObject {
         if (isAudioOn) {
         createLocalAudioStream()
         }
+        if (isVideoOn) {
         createLocalVideoStream()
+        }
         peerConnection.delegate = self
     }
 
@@ -146,8 +149,10 @@ final class WebRTCClient: NSObject {
         peerConnection.setRemoteDescription(remoteSdp, completionHandler: completion)
         if remoteSdp.type == RTCSdpType.answer {
             print("Received answer for client ID: \(clientId)")
-            updatePeerConnectionAndHandleIceCandidates(clientId: clientId)
+        } else {
+            print("Received offer from remote")
         }
+        updatePeerConnectionAndHandleIceCandidates(clientId: clientId)
     }
 
     func checkAndAddIceCandidate(remoteCandidate: RTCIceCandidate, clientId: String) {
@@ -217,7 +222,17 @@ final class WebRTCClient: NSObject {
     }
 
     func renderRemoteVideo(to renderer: RTCVideoRenderer) {
+        debugPrint("renderRemoteVideo called, remoteVideoTrack: \(remoteVideoTrack != nil)")
+        remoteRenderer = renderer
         remoteVideoTrack?.add(renderer)
+    }
+
+    func enableVideo(_ enabled: Bool) {
+        localVideoTrack?.isEnabled = enabled
+    }
+
+    func enableAudio(_ enabled: Bool) {
+        localAudioTrack?.isEnabled = enabled
     }
 
     private func createLocalVideoStream() {
@@ -225,9 +240,7 @@ final class WebRTCClient: NSObject {
 
         if let localVideoTrack = localVideoTrack {
             peerConnection.add(localVideoTrack, streamIds: [streamId])
-            remoteVideoTrack = peerConnection.transceivers.first { $0.mediaType == .video }?.receiver.track as? RTCVideoTrack
         }
-
     }
 
     private func createLocalAudioStream() {
@@ -264,6 +277,19 @@ extension WebRTCClient: RTCPeerConnectionDelegate {
 
     func peerConnection(_: RTCPeerConnection, didRemove stream: RTCMediaStream) {
         debugPrint("peerConnection didRemove stream:\(stream)")
+    }
+
+    func peerConnection(_ peerConnection: RTCPeerConnection, didAdd rtpReceiver: RTCRtpReceiver, streams mediaStreams: [RTCMediaStream]) {
+        debugPrint("peerConnection didAdd rtpReceiver: \(rtpReceiver.track?.kind ?? "unknown")")
+        if rtpReceiver.track?.kind == kRTCMediaStreamTrackKindVideo {
+            remoteVideoTrack = rtpReceiver.track as? RTCVideoTrack
+            debugPrint("Remote video track assigned: \(remoteVideoTrack != nil)")
+            // Add to renderer if we have one stored
+            if let renderer = remoteRenderer {
+                remoteVideoTrack?.add(renderer)
+                debugPrint("Added remote video track to renderer")
+            }
+        }
     }
 
     func peerConnectionShouldNegotiate(_: RTCPeerConnection) {

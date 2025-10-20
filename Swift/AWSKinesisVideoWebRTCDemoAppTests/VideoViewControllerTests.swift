@@ -20,9 +20,9 @@ class VideoViewControllerTests: XCTestCase{
         signalingClient!.connect()
         
         RTCIceServersList.append(RTCIceServer.init(urlStrings: ["stun:stun.kinesisvideo." + "us-west-2" + ".amazonaws.com:443"]))
-        webRTCClient = WebRTCClient(iceServers: RTCIceServersList, isAudioOn: true)
+        webRTCClient = WebRTCClient(iceServers: RTCIceServersList, isAudioOn: true, isVideoOn: true)
         webRTCClient!.delegate = channelVC
-        videoViewController = VideoViewController(webRTCClient: self.webRTCClient!, signalingClient: self.signalingClient!, localSenderClientID: "randomClientID", isMaster: true, mediaServerEndPoint: nil)
+        videoViewController = VideoViewController(webRTCClient: self.webRTCClient!, signalingClient: self.signalingClient!, localSenderClientID: "randomClientID", isMaster: true, signalingChannelArn: nil)
     }
     
     override func tearDown() {
