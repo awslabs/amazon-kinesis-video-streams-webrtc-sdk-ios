@@ -13,7 +13,7 @@ class VideoViewController: UIViewController {
     private let signalingChannelArn: String?
     private let isVideoEnabled: Bool
     private var hasReceivedOffer = false
-    private var storageSessionAttempts: [Date]
+    private var storageSessionConnectionAttempts: [Date]
 
     init(webRTCClient: WebRTCClient, signalingClient: SignalingClient, localSenderClientID: String, isMaster: Bool, signalingChannelArn: String?, isVideoEnabled: Bool = true) {
         self.webRTCClient = webRTCClient
@@ -22,21 +22,21 @@ class VideoViewController: UIViewController {
         self.isMaster = isMaster
         self.signalingChannelArn = signalingChannelArn
         self.isVideoEnabled = isVideoEnabled
-        self.storageSessionAttempts = []
+        self.storageSessionConnectionAttempts = []
         super.init(nibName: String(describing: VideoViewController.self), bundle: Bundle.main)
         
-        let isIngestMedia: Bool = self.signalingChannelArn != nil
-        print("isIngestMedia? \(isIngestMedia)")
+        let isStorageSession: Bool = self.signalingChannelArn != nil
+        print("isStorageSession? \(isStorageSession)")
         print("role: \(isMaster ? "master" : "viewer")")
         
-        if !isIngestMedia && !isMaster {
+        if !isStorageSession && !isMaster {
             // In viewer mode send offer once connection is established
             webRTCClient.offer { sdp in
                 self.signalingClient.sendOffer(rtcSdp: sdp, senderClientid: self.localSenderClientID)
             }
         }
 
-        if isIngestMedia {
+        if isStorageSession {
             DispatchQueue.global(qos: .background).async {
                 self.joinStorageSessionWithRetry()
             }
@@ -129,16 +129,16 @@ class VideoViewController: UIViewController {
         
         // Clean up attempts older than 10 minutes
         let tenMinutesAgo = Date().addingTimeInterval(-600)
-        storageSessionAttempts = storageSessionAttempts.filter { $0 > tenMinutesAgo }
+        storageSessionConnectionAttempts = storageSessionConnectionAttempts.filter { $0 > tenMinutesAgo }
         
         // Check if we've exceeded 3 attempts in the last 10 minutes
-        if storageSessionAttempts.count >= 3 {
+        if storageSessionConnectionAttempts.count >= 3 {
             print("Too many storage session attempts (3) within 10 minutes. Stopping retries.")
             return
         }
         
         // Record this attempt
-        storageSessionAttempts.append(Date())
+        storageSessionConnectionAttempts.append(Date())
         
         let webrtcStorageClient = AWSKinesisVideoWebRTCStorage(forKey: awsKinesisVideoKey)
 
@@ -146,7 +146,7 @@ class VideoViewController: UIViewController {
             let joinStorageSessionRequest = AWSKinesisVideoWebRTCStorageJoinStorageSessionInput()
             joinStorageSessionRequest?.channelArn = signalingChannelArn
             
-            print("Calling JoinStorageSession with ARN: \(signalingChannelArn) (attempt \(storageSessionAttempts.count))")
+            print("Calling JoinStorageSession with ARN: \(signalingChannelArn) (attempt \(storageSessionConnectionAttempts.count))")
 
             webrtcStorageClient.joinSession(joinStorageSessionRequest!).continueWith(block: { (task) -> Void in
                 if let error = task.error {
@@ -165,7 +165,7 @@ class VideoViewController: UIViewController {
             joinStorageSessionAsViewerRequest?.channelArn = signalingChannelArn
             joinStorageSessionAsViewerRequest?.clientId = self.localSenderClientID
 
-            print("Calling JoinStorageSessionAsViewer with ARN: \(signalingChannelArn) and clientId: \(self.localSenderClientID) (attempt \(storageSessionAttempts.count))")
+            print("Calling JoinStorageSessionAsViewer with ARN: \(signalingChannelArn) and clientId: \(self.localSenderClientID) (attempt \(storageSessionConnectionAttempts.count))")
             
             webrtcStorageClient.joinSession(asViewer: joinStorageSessionAsViewerRequest!).continueWith(block: { (task) -> Void in
                 if let error = task.error {

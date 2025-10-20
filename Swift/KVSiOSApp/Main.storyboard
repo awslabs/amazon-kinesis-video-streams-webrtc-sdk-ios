@@ -552,7 +552,7 @@
                         <viewControllerLayoutGuide type="top" id="719-2R-FoQ"/>
                         <viewControllerLayoutGuide type="bottom" id="xzu-VI-sNV"/>
                     </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="PaL-Mo-bUW" customClass="View">
+                    <view key="view" contentMode="scaleToFill" id="PaL-Mo-bUW">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>

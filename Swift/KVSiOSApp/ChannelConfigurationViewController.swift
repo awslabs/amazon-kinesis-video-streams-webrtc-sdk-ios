@@ -235,9 +235,9 @@ class ChannelConfigurationViewController: UIViewController, UITextFieldDelegate 
             }
         }
         // check whether signalling channel will save its recording to a stream
-        var usingMediaServer: Bool = isUsingMediaServer(channelARN: channelARN!, channelName: channelNameValue)
+        var useStorageSession: Bool = isUsingStorageSession(channelARN: channelARN!, channelName: channelNameValue)
         // Make sure that audio is enabled if ingesting webrtc connection
-        if(usingMediaServer) {
+        if (useStorageSession) {
             if (self.isMaster && (!self.isAudioEnabled.isOn || !self.isVideoEnabled.isOn)) {
                 // Master mode: Both audio and video required
                 popUpError(title: "Invalid Configuration", message: "Video and audio must be enabled for WebRTC ingestion master")
@@ -252,7 +252,7 @@ class ChannelConfigurationViewController: UIViewController, UITextFieldDelegate 
         }
 
         // get signalling channel endpoints
-        let endpoints = getSignallingEndpoints(channelARN: channelARN!, region: awsRegionValue, isMaster: self.isMaster, useMediaServer: usingMediaServer)
+        let endpoints = getSignallingEndpoints(channelARN: channelARN!, region: awsRegionValue, isMaster: self.isMaster, useStorageSession: useStorageSession)
         //// Ensure that the WebSocket (WSS) endpoint is available; WebRTC requires a valid signaling endpoint.
         if endpoints["WSS"] == nil {
             popUpError(title: "Invalid SignallingEndpoints", message: "SignallingEndpoints is required for WebRTC connection")
@@ -274,11 +274,11 @@ class ChannelConfigurationViewController: UIViewController, UITextFieldDelegate 
         webRTCClient = WebRTCClient(iceServers: RTCIceServersList, isAudioOn: sendAudioEnabled, isVideoOn: sendVideoEnabled, resolution: selectedResolution)
         webRTCClient!.delegate = self
         
-        guard !usingMediaServer || endpoints["WEBRTC"] != nil else {
+        guard !useStorageSession || endpoints["WEBRTC"] != nil else {
             print("connectAsRole IllegalState! WEBRTC endpoint is required for WebRTC ingestion")
             return
         }
-        if usingMediaServer {
+        if useStorageSession {
             let webRTCEndpoint: String = endpoints["WEBRTC"]!!
             let webRTCStorageConfiguration = AWSServiceConfiguration(region: awsRegionType,
                                                                     endpoint: AWSEndpoint(urlString: webRTCEndpoint),
@@ -296,7 +296,7 @@ class ChannelConfigurationViewController: UIViewController, UITextFieldDelegate 
         let seconds = 2.0
         DispatchQueue.main.asyncAfter(deadline: .now() + seconds) {
             self.updateConnectionLabel()
-            self.vc = VideoViewController(webRTCClient: self.webRTCClient!, signalingClient: self.signalingClient!, localSenderClientID: self.localSenderId, isMaster: self.isMaster, signalingChannelArn: usingMediaServer ? channelARN : nil, isVideoEnabled: self.sendVideoEnabled)
+            self.vc = VideoViewController(webRTCClient: self.webRTCClient!, signalingClient: self.signalingClient!, localSenderClientID: self.localSenderId, isMaster: self.isMaster, signalingChannelArn: useStorageSession ? channelARN : nil, isVideoEnabled: self.sendVideoEnabled)
             self.present(self.vc!, animated: true, completion: nil)
         }
     }
@@ -356,8 +356,8 @@ class ChannelConfigurationViewController: UIViewController, UITextFieldDelegate 
         return channelARN
     }
     
-    // check media server is enabled for signalling channel
-    func isUsingMediaServer(channelARN: String, channelName: String) -> Bool {
+    // check storage session (WebRTC ingestion) is enabled for signalling channel
+    func isUsingStorageSession(channelARN: String, channelName: String) -> Bool {
         var usingMediaServer : Bool = false
         /*
             equivalent AWS CLI command:
@@ -418,7 +418,7 @@ class ChannelConfigurationViewController: UIViewController, UITextFieldDelegate 
     }
    
     // Get signalling endpoints for the given signalling channel ARN 
-    func getSignallingEndpoints(channelARN: String, region: String, isMaster: Bool, useMediaServer: Bool) -> Dictionary<String, String?> {
+    func getSignallingEndpoints(channelARN: String, region: String, isMaster: Bool, useStorageSession: Bool) -> Dictionary<String, String?> {
         
         var endpoints = Dictionary <String, String?>()
         /*
@@ -430,7 +430,7 @@ class ChannelConfigurationViewController: UIViewController, UITextFieldDelegate 
         singleMasterChannelEndpointConfiguration?.protocols = videoProtocols
         singleMasterChannelEndpointConfiguration?.role = getSingleMasterChannelEndpointRole(isMaster: isMaster)
         
-        if(useMediaServer){
+        if (useStorageSession){
             singleMasterChannelEndpointConfiguration?.protocols?.append("WEBRTC")
         }
  
