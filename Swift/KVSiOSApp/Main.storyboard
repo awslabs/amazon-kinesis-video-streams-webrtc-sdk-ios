@@ -552,12 +552,12 @@
                         <viewControllerLayoutGuide type="top" id="719-2R-FoQ"/>
                         <viewControllerLayoutGuide type="bottom" id="xzu-VI-sNV"/>
                     </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="PaL-Mo-bUW" customClass="zz">
+                    <view key="view" contentMode="scaleToFill" id="PaL-Mo-bUW">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <stackView opaque="NO" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" axis="vertical" spacing="43" translatesAutoresizingMaskIntoConstraints="NO" id="4pf-3f-52M">
-                                <rect key="frame" x="66" y="104" width="243" height="425.5"/>
+                            <stackView opaque="NO" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" axis="vertical" spacing="40" translatesAutoresizingMaskIntoConstraints="NO" id="4pf-3f-52M">
+                                <rect key="frame" x="66" y="74" width="243" height="564.5"/>
                                 <subviews>
                                     <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Channel Name " textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="zEP-tC-ik7">
                                         <rect key="frame" x="0.0" y="0.0" width="243" height="25"/>
@@ -569,7 +569,7 @@
                                         <textInputTraits key="textInputTraits"/>
                                     </textField>
                                     <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Client ID (optional)" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="a2V-fh-lBx">
-                                        <rect key="frame" x="0.0" y="68" width="243" height="25"/>
+                                        <rect key="frame" x="0.0" y="65" width="243" height="25"/>
                                         <accessibility key="accessibilityConfiguration" identifier="clientidtextfield"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="25" id="drp-Hv-OMz"/>
@@ -578,7 +578,7 @@
                                         <textInputTraits key="textInputTraits"/>
                                     </textField>
                                     <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Region" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="nr9-tN-CuW">
-                                        <rect key="frame" x="0.0" y="136" width="243" height="25"/>
+                                        <rect key="frame" x="0.0" y="130" width="243" height="25"/>
                                         <accessibility key="accessibilityConfiguration" identifier="regiontextfield"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="25" id="NqF-xK-94H"/>
@@ -587,7 +587,7 @@
                                         <textInputTraits key="textInputTraits"/>
                                     </textField>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="res-btn-123">
-                                        <rect key="frame" x="0.0" y="204" width="243" height="25"/>
+                                        <rect key="frame" x="0.0" y="195" width="243" height="25"/>
                                         <color key="backgroundColor" systemColor="systemGrayColor"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="25" id="res-height-123"/>
@@ -601,7 +601,7 @@
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="3k1-42-Mbg">
-                                        <rect key="frame" x="0.0" y="272" width="250" height="25"/>
+                                        <rect key="frame" x="0.0" y="260" width="243" height="25"/>
                                         <color key="backgroundColor" red="0.1960784314" green="0.60392156860000001" blue="0.83921568629999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <accessibility key="accessibilityConfiguration" identifier="connectasmasterbutton"/>
                                         <constraints>
@@ -616,7 +616,7 @@
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="KMq-bs-4Hv">
-                                        <rect key="frame" x="0.0" y="272" width="243" height="25"/>
+                                        <rect key="frame" x="0.0" y="325" width="243" height="25"/>
                                         <color key="backgroundColor" red="0.1960784314" green="0.60392156860000001" blue="0.83921568629999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <accessibility key="accessibilityConfiguration" identifier="connectasviewerbutton"/>
                                         <constraints>
@@ -630,16 +630,34 @@
                                             <action selector="connectAsViewerWith_sender:" destination="fxY-gB-7Yj" eventType="touchUpInside" id="0T8-1E-4hO"/>
                                         </connections>
                                     </button>
-                                    <stackView opaque="NO" contentMode="scaleToFill" spacing="120" translatesAutoresizingMaskIntoConstraints="NO" id="G8H-J9-l8I">
-                                        <rect key="frame" x="0.0" y="340" width="243" height="28"/>
+                                    <stackView opaque="NO" contentMode="scaleToFill" ambiguous="YES" spacing="120" translatesAutoresizingMaskIntoConstraints="NO" id="YHE-xZ-R4i">
+                                        <rect key="frame" x="0.0" y="390" width="243" height="52"/>
                                         <subviews>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Audio" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pV1-OS-ahX">
-                                                <rect key="frame" x="0.0" y="0.0" width="62" height="28"/>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="Send Video" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vLC-Za-qPN">
+                                                <rect key="frame" x="0.0" y="0.0" width="62" height="52"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="11"/>
-                                                <nil key="textColor"/>
+                                                <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
-                                            <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="uWn-mC-EnS">
+                                            <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" ambiguous="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" title="Is Video Enabled" translatesAutoresizingMaskIntoConstraints="NO" id="Z0n-7n-HzH">
+                                                <rect key="frame" x="182" y="0.0" width="63" height="52"/>
+                                                <accessibility key="accessibilityConfiguration" identifier="audioswitch"/>
+                                                <connections>
+                                                    <action selector="videoStateChangedWithSender:" destination="fxY-gB-7Yj" eventType="valueChanged" id="Vqg-xx-bxL"/>
+                                                </connections>
+                                            </switch>
+                                        </subviews>
+                                    </stackView>
+                                    <stackView opaque="NO" contentMode="scaleToFill" ambiguous="YES" spacing="120" translatesAutoresizingMaskIntoConstraints="NO" id="G8H-J9-l8I">
+                                        <rect key="frame" x="0.0" y="482" width="243" height="28"/>
+                                        <subviews>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="Send Audio" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pV1-OS-ahX">
+                                                <rect key="frame" x="0.0" y="0.0" width="62" height="28"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="11"/>
+                                                <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" ambiguous="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="uWn-mC-EnS">
                                                 <rect key="frame" x="182" y="0.0" width="63" height="28"/>
                                                 <accessibility key="accessibilityConfiguration" identifier="audioswitch"/>
                                                 <connections>
@@ -647,12 +665,9 @@
                                                 </connections>
                                             </switch>
                                         </subviews>
-                                        <constraints>
-                                            <constraint firstAttribute="height" constant="50" id="H9p-0h-v6z"/>
-                                        </constraints>
                                     </stackView>
                                     <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Not Connected" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="NOw-C6-Bie">
-                                        <rect key="frame" x="0.0" y="411" width="200" height="14.5"/>
+                                        <rect key="frame" x="0.0" y="550" width="243" height="14.5"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                         <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -664,7 +679,7 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="4pf-3f-52M" firstAttribute="centerX" secondItem="PaL-Mo-bUW" secondAttribute="centerX" id="NVI-gQ-wnE"/>
-                            <constraint firstItem="4pf-3f-52M" firstAttribute="top" secondItem="719-2R-FoQ" secondAttribute="bottom" constant="30" id="Zez-5g-7f3"/>
+                            <constraint firstItem="4pf-3f-52M" firstAttribute="top" secondItem="719-2R-FoQ" secondAttribute="bottom" id="Zez-5g-7f3"/>
                             <constraint firstItem="4pf-3f-52M" firstAttribute="leading" secondItem="PaL-Mo-bUW" secondAttribute="leadingMargin" constant="50" id="n2h-Cg-NaW"/>
                         </constraints>
                     </view>
@@ -685,6 +700,7 @@
                         <outlet property="connectAsViewerButton" destination="KMq-bs-4Hv" id="HDg-vF-0CB"/>
                         <outlet property="connectedLabel" destination="NOw-C6-Bie" id="cMG-kR-3E9"/>
                         <outlet property="isAudioEnabled" destination="uWn-mC-EnS" id="CUs-sB-mgl"/>
+                        <outlet property="isVideoEnabled" destination="Z0n-7n-HzH" id="q4o-zH-9LY"/>
                         <outlet property="regionName" destination="nr9-tN-CuW" id="tX6-zd-Kpw"/>
                         <outlet property="resolutionButton" destination="res-btn-123" id="res-outlet-123"/>
                     </connections>
@@ -755,8 +771,14 @@
         </scene>
     </scenes>
     <resources>
+        <systemColor name="labelColor">
+            <color white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+        <systemColor name="systemGrayColor">
+            <color red="0.55686274509803924" green="0.55686274509803924" blue="0.57647058823529407" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
     </resources>
 </document>
