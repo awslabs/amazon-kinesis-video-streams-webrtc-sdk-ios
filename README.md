@@ -81,8 +81,6 @@ git clone https://github.com/awslabs/amazon-kinesis-video-streams-webrtc-sdk-ios
       let cognitoIdentityPoolId = "us-west-2:01234567-89ab-cdef-0123-456789abcdef"
       ```
    </details>
-   
-
 
    Open [KvsiOSApp/awsconfiguration.json](Swift/KVSiOSApp/awsconfiguration.json) and replace the "REPLACEME" values with the values obtained earlier.
 
