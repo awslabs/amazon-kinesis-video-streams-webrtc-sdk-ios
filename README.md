@@ -62,7 +62,7 @@ git clone https://github.com/awslabs/amazon-kinesis-video-streams-webrtc-sdk-ios
     xed .
     ```
 
-6. Open [KvsiOSApp/Constants.swift](Swift/KVSiOSApp/Constants.swift). Set `CognitoIdentityUserPoolRegion`, `CognitoIdentityUserPoolId`, `CognitoIdentityUserPoolAppClientId`, `CognitoIdentityUserPoolAppClientSecret` and `CognitoIdentityPoolId` to the values obtained in step 3.
+6. Open [KvsiOSApp/Constants.swift](Swift/KVSiOSApp/Constants.swift). Set `CognitoIdentityUserPoolRegion`, `CognitoIdentityUserPoolId`, `CognitoIdentityUserPoolAppClientId`, `CognitoIdentityUserPoolAppClientSecret` and `CognitoIdentityPoolId` to the values obtained in step 4.
 
 > [!NOTE]  
 > If the User-Pool App-Client does not have a secret, then set `cognitoIdentityUserPoolAppClientSecret` to `nil`:
