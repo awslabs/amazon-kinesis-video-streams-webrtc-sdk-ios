@@ -27,15 +27,15 @@ git clone https://github.com/awslabs/amazon-kinesis-video-streams-webrtc-sdk-ios
 
 #### Using XCode to build the project
 
-0. Install XCode. You can install XCode from https://developer.apple.com/download/all/
+1. Install XCode. You can install XCode from https://developer.apple.com/download/all/
 
-1. The [AWS Mobile SDK for iOS](https://github.com/aws-amplify/aws-sdk-ios) is available through [CocoaPods](http://cocoapods.org). If CocoaPods is not installed, install it using the following command. Note that Ruby will also be installed, as it is a dependency of Cocoapods.
+2. The [AWS Mobile SDK for iOS](https://github.com/aws-amplify/aws-sdk-ios) is available through [CocoaPods](http://cocoapods.org). If CocoaPods is not installed, install it using the following command. Note that Ruby will also be installed, as it is a dependency of Cocoapods.
    ```bash
    brew install cocoapods
    pod setup
    ```
 
-2. The following cocoa pod dependencies are included in the [Podfile](Swift/Podfile) and need to be `pod install`'ed:
+3. The following cocoa pod dependencies are included in the [Podfile](Swift/Podfile) and need to be `pod install`'ed:
 
    * Starscream
    * Common Crytpo
@@ -52,9 +52,9 @@ git clone https://github.com/awslabs/amazon-kinesis-video-streams-webrtc-sdk-ios
    pod install --repo-update
    ```
 
-3. Create an [Amazon Cognito User Pool](https://docs.aws.amazon.com/cognito/latest/developerguide/what-is-amazon-cognito.html). Follow steps 2-3 in the [AWS KVS Android WebRTC Repo](https://github.com/awslabs/amazon-kinesis-video-streams-webrtc-sdk-android).
+4. Create an [Amazon Cognito User Pool](https://docs.aws.amazon.com/cognito/latest/developerguide/what-is-amazon-cognito.html). Follow steps 2-3 in the [AWS KVS Android WebRTC Repo](https://github.com/awslabs/amazon-kinesis-video-streams-webrtc-sdk-android).
 
-4. To open the project, you can choose between these two methods:
+5. To open the project, you can choose between these two methods:
 
    1. Open XCode, select "Open a project or file", and choose [AWSKinesisVideoWebRTCDemoApp.**xcworkspace**](Swift/AWSKinesisVideoWebRTCDemoApp.xcworkspace), **OR**
    2. Run the following command from the [Swift](Swift) folder.
@@ -62,7 +62,13 @@ git clone https://github.com/awslabs/amazon-kinesis-video-streams-webrtc-sdk-ios
     xed .
     ```
 
-5. Open [KvsiOSApp/Constants.swift](Swift/KVSiOSApp/Constants.swift). Set `CognitoIdentityUserPoolRegion`, `CognitoIdentityUserPoolId`, `CognitoIdentityUserPoolAppClientId`, `CognitoIdentityUserPoolAppClientSecret` and `CognitoIdentityPoolId` to the values obtained in step 3.
+6. Open [KvsiOSApp/Constants.swift](Swift/KVSiOSApp/Constants.swift). Set `CognitoIdentityUserPoolRegion`, `CognitoIdentityUserPoolId`, `CognitoIdentityUserPoolAppClientId`, `CognitoIdentityUserPoolAppClientSecret` and `CognitoIdentityPoolId` to the values obtained in step 4.
+
+> [!NOTE]  
+> If the User-Pool App-Client does not have a secret, then set `cognitoIdentityUserPoolAppClientSecret` to `nil`:
+> ```
+> let cognitoIdentityUserPoolAppClientSecret: String? = nil
+> ```
 
    <details>
        <summary><strong>Example Constants.swift</strong></summary>
@@ -74,10 +80,15 @@ git clone https://github.com/awslabs/amazon-kinesis-video-streams-webrtc-sdk-ios
       let cognitoIdentityUserPoolAppClientSecret = "abcdefghijklmnopqrstuvwxyz0123456789abcdefghijklmno"
       let cognitoIdentityPoolId = "us-west-2:01234567-89ab-cdef-0123-456789abcdef"
       ```
-
    </details>
 
    Open [KvsiOSApp/awsconfiguration.json](Swift/KVSiOSApp/awsconfiguration.json) and replace the "REPLACEME" values with the values obtained earlier.
+
+> [!NOTE]  
+> If the User-Pool App-Client does not have a secret, then remove the following line from _awsconfiguration.json_:
+> ```
+> "AppClientSecret": "REPLACEME",
+> ```
 
    <details>
        <summary><strong>Example awsconfiguration.json</strong></summary>
@@ -109,7 +120,7 @@ git clone https://github.com/awslabs/amazon-kinesis-video-streams-webrtc-sdk-ios
 
    </details>
 
-6. To build and run, click the play button at the top of the XCode UI.
+7. To build and run, click the play button at the top of the XCode UI.
 
 #### Run the iOS Sample Application
 Building the iOS sample application installs the AWSKinesisVideoWebRTCDemoApp on your iOS device. Using this app, you can verify live audio/video streaming between mobile, web and IoT device clients (camera). The procedure below describes some of these scenarios.
