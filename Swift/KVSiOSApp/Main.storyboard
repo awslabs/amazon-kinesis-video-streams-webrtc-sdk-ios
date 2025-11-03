@@ -615,21 +615,21 @@
                                                 <rect key="frame" x="0.0" y="22" width="243" height="31"/>
                                                 <subviews>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Legacy" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="8" translatesAutoresizingMaskIntoConstraints="NO" id="umz-uu-SIf">
-                                                        <rect key="frame" x="24" y="6.5" width="49.5" height="18"/>
-                                                        <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                                        <rect key="frame" x="24" y="7" width="46.5" height="17"/>
+                                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                         <nil key="textColor"/>
                                                         <nil key="highlightedColor"/>
                                                     </label>
                                                     <switch opaque="NO" contentMode="center" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" title="KVS Endpoint Type" translatesAutoresizingMaskIntoConstraints="NO" id="rin-LU-Fkr" userLabel="KVS Endpoint Type">
-                                                        <rect key="frame" x="84.5" y="0.0" width="51" height="31"/>
+                                                        <rect key="frame" x="85" y="0.0" width="51" height="31"/>
                                                         <accessibility key="accessibilityConfiguration" identifier="kvsEndpointTypeSwitch"/>
                                                         <connections>
                                                             <action selector="kvsEndpointStateChangedWithSender:" destination="fxY-gB-7Yj" eventType="valueChanged" id="arq-uB-UFD"/>
                                                         </connections>
                                                     </switch>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Dual-stack" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="8" translatesAutoresizingMaskIntoConstraints="NO" id="5Jb-mZ-Lhl">
-                                                        <rect key="frame" x="144.5" y="6.5" width="74.5" height="18"/>
-                                                        <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                                        <rect key="frame" x="148.5" y="7" width="70.5" height="17"/>
+                                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                         <nil key="textColor"/>
                                                         <nil key="highlightedColor"/>
                                                     </label>
@@ -761,8 +761,10 @@
                         <outlet property="connectAsMasterButton" destination="3k1-42-Mbg" id="SsG-ss-9bL"/>
                         <outlet property="connectAsViewerButton" destination="KMq-bs-4Hv" id="HDg-vF-0CB"/>
                         <outlet property="connectedLabel" destination="NOw-C6-Bie" id="cMG-kR-3E9"/>
+                        <outlet property="dualStackLabel" destination="5Jb-mZ-Lhl" id="dIO-qL-AwB"/>
                         <outlet property="isAudioEnabled" destination="uWn-mC-EnS" id="CUs-sB-mgl"/>
                         <outlet property="isVideoEnabled" destination="Z0n-7n-HzH" id="q4o-zH-9LY"/>
+                        <outlet property="legacyLabel" destination="umz-uu-SIf" id="xvY-pq-11Z"/>
                         <outlet property="regionName" destination="nr9-tN-CuW" id="tX6-zd-Kpw"/>
                         <outlet property="resolutionButton" destination="res-btn-123" id="res-outlet-123"/>
                         <outlet property="useDualStackKvsEndpointSwitch" destination="rin-LU-Fkr" id="e7a-sc-PVQ"/>

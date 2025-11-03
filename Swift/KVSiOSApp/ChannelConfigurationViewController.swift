@@ -148,7 +148,8 @@ class ChannelConfigurationViewController: UIViewController, UITextFieldDelegate 
     
     let endpointLabelAlpha_selected: CGFloat = 1.0
     let endpointLabelAlpha_deselected: CGFloat = 0.7
-    let animation transitionDuration: TimeInterval = 0.3
+    let transitionDuration: TimeInterval = 0.3
+    
 
     // Animate the legacy and dual-stack labels based on the switch state.
     private func animateEndpointLabels(isDualStackOn: Bool) {
@@ -156,8 +157,8 @@ class ChannelConfigurationViewController: UIViewController, UITextFieldDelegate 
         let semiBoldFont = UIFont.systemFont(ofSize: self.legacyLabel.font.pointSize, weight: .semibold)
 
         UIView.animate(withDuration: transitionDuration, delay: 0, options: [.curveEaseInOut], animations: {
-            self.dualStackLabel.alpha = isDualStackOn ? endpointLabelAlpha_selected : endpointLabelAlpha_deselected
-            self.legacyLabel.alpha = isDualStackOn ? endpointLabelAlpha_deselected : endpointLabelAlpha_selected
+            self.dualStackLabel.alpha = isDualStackOn ? self.endpointLabelAlpha_selected : self.endpointLabelAlpha_deselected
+            self.legacyLabel.alpha = isDualStackOn ? self.endpointLabelAlpha_deselected : self.endpointLabelAlpha_selected
         })
 
         UIView.transition(with: dualStackLabel, duration: transitionDuration, options: .transitionCrossDissolve, animations: {
