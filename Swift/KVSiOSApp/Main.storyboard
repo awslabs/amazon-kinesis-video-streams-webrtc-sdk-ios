@@ -623,6 +623,9 @@
                                                     <switch opaque="NO" contentMode="center" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" title="KVS Endpoint Type" translatesAutoresizingMaskIntoConstraints="NO" id="rin-LU-Fkr" userLabel="KVS Endpoint Type">
                                                         <rect key="frame" x="84.5" y="0.0" width="51" height="31"/>
                                                         <accessibility key="accessibilityConfiguration" identifier="kvsEndpointTypeSwitch"/>
+                                                        <connections>
+                                                            <action selector="kvsEndpointStateChangedWithSender:" destination="fxY-gB-7Yj" eventType="valueChanged" id="arq-uB-UFD"/>
+                                                        </connections>
                                                     </switch>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Dual-stack" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="8" translatesAutoresizingMaskIntoConstraints="NO" id="5Jb-mZ-Lhl">
                                                         <rect key="frame" x="144.5" y="6.5" width="74.5" height="18"/>
@@ -762,6 +765,7 @@
                         <outlet property="isVideoEnabled" destination="Z0n-7n-HzH" id="q4o-zH-9LY"/>
                         <outlet property="regionName" destination="nr9-tN-CuW" id="tX6-zd-Kpw"/>
                         <outlet property="resolutionButton" destination="res-btn-123" id="res-outlet-123"/>
+                        <outlet property="useDualStackKvsEndpointSwitch" destination="rin-LU-Fkr" id="e7a-sc-PVQ"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="7NB-jG-Ywn" userLabel="First Responder" sceneMemberID="firstResponder"/>
