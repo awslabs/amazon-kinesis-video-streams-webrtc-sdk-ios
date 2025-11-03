@@ -82,6 +82,7 @@ class ChannelConfigurationViewController: UIViewController, UITextFieldDelegate 
         return AWSMobileClient.default()
     }
 
+    // Helper function to get KVS endpoint override if specified.
     private func getKvsEndpointOverride()-> String? {
 
         // Environment variable override takes precedence.
@@ -118,6 +119,7 @@ class ChannelConfigurationViewController: UIViewController, UITextFieldDelegate 
         super.viewDidLoad()
         self.signalingConnected = false
         updateConnectionLabel()
+        animateEndpointLabels(isDualStackOn: useDualStackKvsEndpointSwitch.isOn)
 
         channelName.delegate = self
         clientID.delegate = self
@@ -141,8 +143,34 @@ class ChannelConfigurationViewController: UIViewController, UITextFieldDelegate 
         navigationController?.setToolbarHidden(false, animated: true)
     }
 
+    @IBOutlet weak var legacyLabel: UILabel!
+    @IBOutlet weak var dualStackLabel: UILabel!
+    
+    let endpointLabelAlpha_selected: CGFloat = 1.0
+    let endpointLabelAlpha_deselected: CGFloat = 0.7
+    let animation transitionDuration: TimeInterval = 0.3
+
+    // Animate the legacy and dual-stack labels based on the switch state.
+    private func animateEndpointLabels(isDualStackOn: Bool) {
+        let baseFont = UIFont.systemFont(ofSize: self.legacyLabel.font.pointSize, weight: .regular)
+        let semiBoldFont = UIFont.systemFont(ofSize: self.legacyLabel.font.pointSize, weight: .semibold)
+
+        UIView.animate(withDuration: transitionDuration, delay: 0, options: [.curveEaseInOut], animations: {
+            self.dualStackLabel.alpha = isDualStackOn ? endpointLabelAlpha_selected : endpointLabelAlpha_deselected
+            self.legacyLabel.alpha = isDualStackOn ? endpointLabelAlpha_deselected : endpointLabelAlpha_selected
+        })
+
+        UIView.transition(with: dualStackLabel, duration: transitionDuration, options: .transitionCrossDissolve, animations: {
+            self.dualStackLabel.font = isDualStackOn ? semiBoldFont : baseFont
+        })
+        UIView.transition(with: legacyLabel, duration: transitionDuration, options: .transitionCrossDissolve, animations: {
+            self.legacyLabel.font = isDualStackOn ? baseFont : semiBoldFont
+        })
+    }
+
     @IBAction func kvsEndpointStateChanged(sender: UISwitch!) {
         self.useDualStackKvsEndpoint = sender.isOn
+        animateEndpointLabels(isDualStackOn: sender.isOn)
     }
 
     @IBAction func audioStateChanged(sender: UISwitch!) {
