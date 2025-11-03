@@ -611,25 +611,27 @@
                                                     </label>
                                                 </subviews>
                                             </stackView>
-                                            <stackView opaque="NO" contentMode="center" distribution="equalCentering" alignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="jPH-dG-OBo">
+                                            <stackView opaque="NO" contentMode="center" distribution="equalSpacing" alignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="jPH-dG-OBo">
                                                 <rect key="frame" x="0.0" y="22" width="243" height="31"/>
                                                 <subviews>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Legacy" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="8" translatesAutoresizingMaskIntoConstraints="NO" id="umz-uu-SIf">
-                                                        <rect key="frame" x="0.0" y="6.5" width="49.5" height="18"/>
+                                                        <rect key="frame" x="24" y="6.5" width="49.5" height="18"/>
                                                         <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                                         <nil key="textColor"/>
                                                         <nil key="highlightedColor"/>
                                                     </label>
-                                                    <switch opaque="NO" contentMode="center" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" title="KVS Endpoint Type" translatesAutoresizingMaskIntoConstraints="NO" id="rin-LU-Fkr">
-                                                        <rect key="frame" x="91" y="0.0" width="51" height="31"/>
+                                                    <switch opaque="NO" contentMode="center" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" title="KVS Endpoint Type" translatesAutoresizingMaskIntoConstraints="NO" id="rin-LU-Fkr" userLabel="KVS Endpoint Type">
+                                                        <rect key="frame" x="84.5" y="0.0" width="51" height="31"/>
+                                                        <accessibility key="accessibilityConfiguration" identifier="kvsEndpointTypeSwitch"/>
                                                     </switch>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Dual-stack" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="8" translatesAutoresizingMaskIntoConstraints="NO" id="5Jb-mZ-Lhl">
-                                                        <rect key="frame" x="168.5" y="6.5" width="74.5" height="18"/>
+                                                        <rect key="frame" x="144.5" y="6.5" width="74.5" height="18"/>
                                                         <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                                         <nil key="textColor"/>
                                                         <nil key="highlightedColor"/>
                                                     </label>
                                                 </subviews>
+                                                <edgeInsets key="layoutMargins" top="0.0" left="24" bottom="0.0" right="24"/>
                                             </stackView>
                                         </subviews>
                                     </stackView>
