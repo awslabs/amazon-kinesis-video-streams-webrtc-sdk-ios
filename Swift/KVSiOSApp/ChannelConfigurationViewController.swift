@@ -438,7 +438,13 @@ class ChannelConfigurationViewController: UIViewController, UITextFieldDelegate 
     func getIceCandidates(channelARN: String, endpoint: AWSEndpoint, regionType: AWSRegionType, clientId: String) -> [RTCIceServer] {
         var RTCIceServersList = [RTCIceServer]()
         // TODO: don't use the self.regionName.text!
-        let kvsStunUrlStrings = ["stun:stun.kinesisvideo." + self.regionName.text! + ".amazonaws.com:443"]
+    
+        let kvsStunUrlStrings: [String]
+        if self.useDualStackKvsEndpoint {
+            kvsStunUrlStrings = ["stun:stun.kinesisvideo." + self.regionName.text! + ".api.aws:443"]
+        } else {
+            kvsStunUrlStrings = ["stun:stun.kinesisvideo." + self.regionName.text! + ".amazonaws.com:443"]
+        }
         /*
             equivalent AWS CLI command:
             aws kinesis-video-signaling get-ice-server-config --channel-arn channelARN --client-id clientId --region cognitoIdentityUserPoolRegion
