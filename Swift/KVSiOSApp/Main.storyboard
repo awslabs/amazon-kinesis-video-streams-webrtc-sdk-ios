@@ -566,7 +566,7 @@
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="14" translatesAutoresizingMaskIntoConstraints="NO" id="kmG-RW-rZ0">
-                                        <rect key="frame" x="0.0" y="63.5" width="243" height="103"/>
+                                        <rect key="frame" x="0.0" y="77" width="243" height="103"/>
                                         <subviews>
                                             <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Channel Name " textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="zEP-tC-ik7">
                                                 <rect key="frame" x="0.0" y="0.0" width="243" height="25"/>
@@ -597,49 +597,8 @@
                                             </textField>
                                         </subviews>
                                     </stackView>
-                                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="7jW-e1-Anr">
-                                        <rect key="frame" x="0.0" y="190" width="243" height="53"/>
-                                        <subviews>
-                                            <stackView opaque="NO" contentMode="scaleToFill" distribution="equalSpacing" translatesAutoresizingMaskIntoConstraints="NO" id="ymZ-2T-Enz">
-                                                <rect key="frame" x="0.0" y="0.0" width="243" height="17"/>
-                                                <subviews>
-                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="KVS Endpoint Type" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="sUl-7W-tTx">
-                                                        <rect key="frame" x="0.0" y="0.0" width="243" height="17"/>
-                                                        <fontDescription key="fontDescription" type="system" weight="medium" pointSize="14"/>
-                                                        <nil key="textColor"/>
-                                                        <nil key="highlightedColor"/>
-                                                    </label>
-                                                </subviews>
-                                            </stackView>
-                                            <stackView opaque="NO" contentMode="center" distribution="equalSpacing" alignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="jPH-dG-OBo">
-                                                <rect key="frame" x="0.0" y="22" width="243" height="31"/>
-                                                <subviews>
-                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Legacy" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="8" translatesAutoresizingMaskIntoConstraints="NO" id="umz-uu-SIf">
-                                                        <rect key="frame" x="24" y="7" width="46.5" height="17"/>
-                                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                                        <nil key="textColor"/>
-                                                        <nil key="highlightedColor"/>
-                                                    </label>
-                                                    <switch opaque="NO" contentMode="center" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" title="KVS Endpoint Type" translatesAutoresizingMaskIntoConstraints="NO" id="rin-LU-Fkr" userLabel="KVS Endpoint Type">
-                                                        <rect key="frame" x="85" y="0.0" width="51" height="31"/>
-                                                        <accessibility key="accessibilityConfiguration" identifier="kvsEndpointTypeSwitch"/>
-                                                        <connections>
-                                                            <action selector="kvsEndpointStateChangedWithSender:" destination="fxY-gB-7Yj" eventType="valueChanged" id="arq-uB-UFD"/>
-                                                        </connections>
-                                                    </switch>
-                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Dual-stack" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="8" translatesAutoresizingMaskIntoConstraints="NO" id="5Jb-mZ-Lhl">
-                                                        <rect key="frame" x="148.5" y="7" width="70.5" height="17"/>
-                                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                                        <nil key="textColor"/>
-                                                        <nil key="highlightedColor"/>
-                                                    </label>
-                                                </subviews>
-                                                <edgeInsets key="layoutMargins" top="0.0" left="24" bottom="0.0" right="24"/>
-                                            </stackView>
-                                        </subviews>
-                                    </stackView>
                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="14" translatesAutoresizingMaskIntoConstraints="NO" id="UD9-M2-qiC">
-                                        <rect key="frame" x="0.0" y="266.5" width="243" height="103"/>
+                                        <rect key="frame" x="0.0" y="192" width="243" height="103"/>
                                         <subviews>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="res-btn-123">
                                                 <rect key="frame" x="0.0" y="0.0" width="243" height="25"/>
@@ -688,7 +647,7 @@
                                         </subviews>
                                     </stackView>
                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="14" translatesAutoresizingMaskIntoConstraints="NO" id="X20-Nx-f2Q">
-                                        <rect key="frame" x="0.0" y="381.5" width="243" height="76"/>
+                                        <rect key="frame" x="0.0" y="320.5" width="243" height="76"/>
                                         <subviews>
                                             <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="YHE-xZ-R4i">
                                                 <rect key="frame" x="0.0" y="0.0" width="243" height="31"/>
@@ -728,6 +687,41 @@
                                             </stackView>
                                         </subviews>
                                     </stackView>
+                                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="7jW-e1-Anr">
+                                        <rect key="frame" x="0.0" y="423.5" width="243" height="53"/>
+                                        <subviews>
+                                            <stackView opaque="NO" contentMode="scaleToFill" distribution="equalSpacing" translatesAutoresizingMaskIntoConstraints="NO" id="ymZ-2T-Enz">
+                                                <rect key="frame" x="0.0" y="0.0" width="243" height="17"/>
+                                                <subviews>
+                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="KVS Endpoint Type" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="sUl-7W-tTx">
+                                                        <rect key="frame" x="0.0" y="0.0" width="243" height="17"/>
+                                                        <fontDescription key="fontDescription" type="system" weight="medium" pointSize="14"/>
+                                                        <nil key="textColor"/>
+                                                        <nil key="highlightedColor"/>
+                                                    </label>
+                                                </subviews>
+                                            </stackView>
+                                            <stackView opaque="NO" contentMode="center" distribution="equalSpacing" alignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="jPH-dG-OBo">
+                                                <rect key="frame" x="0.0" y="22" width="243" height="31"/>
+                                                <subviews>
+                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Dual-stack" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="8" translatesAutoresizingMaskIntoConstraints="NO" id="5Jb-mZ-Lhl">
+                                                        <rect key="frame" x="24" y="7" width="70.5" height="17"/>
+                                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                        <nil key="textColor"/>
+                                                        <nil key="highlightedColor"/>
+                                                    </label>
+                                                    <switch opaque="NO" contentMode="center" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" title="KVS Endpoint Type" translatesAutoresizingMaskIntoConstraints="NO" id="rin-LU-Fkr" userLabel="KVS Endpoint Type">
+                                                        <rect key="frame" x="170" y="0.0" width="51" height="31"/>
+                                                        <accessibility key="accessibilityConfiguration" identifier="kvsEndpointTypeSwitch"/>
+                                                        <connections>
+                                                            <action selector="kvsEndpointStateChangedWithSender:" destination="fxY-gB-7Yj" eventType="valueChanged" id="arq-uB-UFD"/>
+                                                        </connections>
+                                                    </switch>
+                                                </subviews>
+                                                <edgeInsets key="layoutMargins" top="0.0" left="24" bottom="0.0" right="24"/>
+                                            </stackView>
+                                        </subviews>
+                                    </stackView>
                                     <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Not Connected" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="NOw-C6-Bie">
                                         <rect key="frame" x="0.0" y="488.5" width="243" height="14.5"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -761,10 +755,8 @@
                         <outlet property="connectAsMasterButton" destination="3k1-42-Mbg" id="SsG-ss-9bL"/>
                         <outlet property="connectAsViewerButton" destination="KMq-bs-4Hv" id="HDg-vF-0CB"/>
                         <outlet property="connectedLabel" destination="NOw-C6-Bie" id="cMG-kR-3E9"/>
-                        <outlet property="dualStackLabel" destination="5Jb-mZ-Lhl" id="dIO-qL-AwB"/>
                         <outlet property="isAudioEnabled" destination="uWn-mC-EnS" id="CUs-sB-mgl"/>
                         <outlet property="isVideoEnabled" destination="Z0n-7n-HzH" id="q4o-zH-9LY"/>
-                        <outlet property="legacyLabel" destination="umz-uu-SIf" id="xvY-pq-11Z"/>
                         <outlet property="regionName" destination="nr9-tN-CuW" id="tX6-zd-Kpw"/>
                         <outlet property="resolutionButton" destination="res-btn-123" id="res-outlet-123"/>
                         <outlet property="useDualStackKvsEndpointSwitch" destination="rin-LU-Fkr" id="e7a-sc-PVQ"/>
