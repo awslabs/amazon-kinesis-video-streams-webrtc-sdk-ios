@@ -37,6 +37,7 @@ class ChannelConfigurationViewController: UIViewController, UITextFieldDelegate 
     var isMaster: Bool = false
     var signalingConnected: Bool = false
     var selectedResolution: VideoResolution = .resolution720p
+    var useDualStackKvsEndpoint: Bool = false
 
     // clients for WEBRTC Connection
     var signalingClient: SignalingClient?
@@ -53,6 +54,7 @@ class ChannelConfigurationViewController: UIViewController, UITextFieldDelegate 
     @IBOutlet var channelName: UITextField!
     @IBOutlet var clientID: UITextField!
     @IBOutlet var regionName: UITextField!
+    @IBOutlet var useDualStackKvsEndpointSwitch: UISwitch!
     @IBOutlet var isAudioEnabled: UISwitch!
     @IBOutlet var isVideoEnabled: UISwitch!
     @IBOutlet var resolutionButton: UIButton!
@@ -79,6 +81,33 @@ class ChannelConfigurationViewController: UIViewController, UITextFieldDelegate 
         }
         return AWSMobileClient.default()
     }
+
+    // Helper function to get KVS endpoint override if specified.
+    private func getKvsEndpointOverride()-> String? {
+
+        // Environment variable override takes precedence.
+        if let envVarOverride = kvsControlPlaneOverride, !envVarOverride.isEmpty {
+            return envVarOverride
+        }
+
+        // If using dual-stack endpoint format, construct the appropriate endpoint using the region name.
+        if self.useDualStackKvsEndpoint {
+
+            guard let regionText = self.regionName.text?.trim(),
+                !regionText.isEmpty else {
+                return nil
+            }
+
+            if regionText.hasPrefix("cn-") {
+                return String(format: PROD_CONTROL_PLANE_ENDPOINT_FORMAT_DUAL_STACK_CN, regionText)
+            }
+
+            return String(format: PROD_CONTROL_PLANE_ENDPOINT_FORMAT_DUAL_STACK, regionText)
+        }
+
+        return nil
+    }
+
 
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(true)
@@ -113,20 +142,16 @@ class ChannelConfigurationViewController: UIViewController, UITextFieldDelegate 
         navigationController?.setToolbarHidden(false, animated: true)
     }
 
+    @IBAction func kvsEndpointStateChanged(sender: UISwitch!) {
+        self.useDualStackKvsEndpoint = sender.isOn
+    }
+
     @IBAction func audioStateChanged(sender: UISwitch!) {
-        if sender.isOn {
-            self.sendAudioEnabled = true
-        } else {
-            self.sendAudioEnabled = false
-        }
+        self.sendAudioEnabled = sender.isOn
     }
 
     @IBAction func videoStateChanged(sender: UISwitch!) {
-        if sender.isOn {
-            self.sendVideoEnabled = true
-        } else {
-            self.sendVideoEnabled = false
-        }
+        self.sendVideoEnabled = sender.isOn
     }
 
     @IBAction func resolutionButtonTapped(_ sender: UIButton) {
@@ -221,7 +246,7 @@ class ChannelConfigurationViewController: UIViewController, UITextFieldDelegate 
         }
         // Kinesis Video Client Configuration
         let configuration = AWSServiceConfiguration(region: awsRegionType,
-                                                    endpoint: kvsControlPlaneOverride.map { AWSEndpoint(urlString: $0) },
+                                                    endpoint: getKvsEndpointOverride().map { AWSEndpoint(urlString: $0) },
                                                     credentialsProvider: getCredentialsProvider())
         AWSKinesisVideo.register(with: configuration!, forKey: awsKinesisVideoKey)
 
@@ -252,7 +277,7 @@ class ChannelConfigurationViewController: UIViewController, UITextFieldDelegate 
         }
 
         // get signalling channel endpoints
-        let endpoints = getSignallingEndpoints(channelARN: channelARN!, region: awsRegionValue, isMaster: self.isMaster, useStorageSession: useStorageSession)
+        let endpoints = getSignallingEndpoints(channelARN: channelARN!, awsRegionValue: awsRegionValue, isMaster: self.isMaster, useStorageSession: useStorageSession)
         //// Ensure that the WebSocket (WSS) endpoint is available; WebRTC requires a valid signaling endpoint.
         if endpoints["WSS"] == nil {
             popUpError(title: "Invalid SignallingEndpoints", message: "SignallingEndpoints is required for WebRTC connection")
@@ -385,7 +410,13 @@ class ChannelConfigurationViewController: UIViewController, UITextFieldDelegate 
     func getIceCandidates(channelARN: String, endpoint: AWSEndpoint, regionType: AWSRegionType, clientId: String) -> [RTCIceServer] {
         var RTCIceServersList = [RTCIceServer]()
         // TODO: don't use the self.regionName.text!
-        let kvsStunUrlStrings = ["stun:stun.kinesisvideo." + self.regionName.text! + ".amazonaws.com:443"]
+    
+        let kvsStunUrlStrings: [String]
+        if self.useDualStackKvsEndpoint {
+            kvsStunUrlStrings = ["stun:stun.kinesisvideo." + self.regionName.text! + ".api.aws:443"]
+        } else {
+            kvsStunUrlStrings = ["stun:stun.kinesisvideo." + self.regionName.text! + ".amazonaws.com:443"]
+        }
         /*
             equivalent AWS CLI command:
             aws kinesis-video-signaling get-ice-server-config --channel-arn channelARN --client-id clientId --region cognitoIdentityUserPoolRegion
@@ -418,7 +449,7 @@ class ChannelConfigurationViewController: UIViewController, UITextFieldDelegate 
     }
    
     // Get signalling endpoints for the given signalling channel ARN 
-    func getSignallingEndpoints(channelARN: String, region: String, isMaster: Bool, useStorageSession: Bool) -> Dictionary<String, String?> {
+    func getSignallingEndpoints(channelARN: String, awsRegionValue: String, isMaster: Bool, useStorageSession: Bool) -> Dictionary<String, String?> {
         
         var endpoints = Dictionary <String, String?>()
         /*
