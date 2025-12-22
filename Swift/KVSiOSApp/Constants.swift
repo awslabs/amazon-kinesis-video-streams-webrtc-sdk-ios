@@ -12,7 +12,7 @@ let cognitoIdentityPoolId = "REPLACEME"
 
 // App constants
 let appName = "aws-kvs-webrtc-ios-client"
-let appVersion = "1.1.0"
+let appVersion = "1.2.0"
 
 // KinesisVideo constants
 let awsKinesisVideoKey = "kinesisvideo"
@@ -59,3 +59,7 @@ let awsAccessKey: String? = ProcessInfo.processInfo.environment["AWS_ACCESS_KEY_
 let awsSecretKey: String? = ProcessInfo.processInfo.environment["AWS_SECRET_ACCESS_KEY"]
 let awsSessionToken: String? = ProcessInfo.processInfo.environment["AWS_SESSION_TOKEN"]
 let kvsControlPlaneOverride: String? = ProcessInfo.processInfo.environment["CONTROL_PLANE_URI"]
+
+// Dual-stack endpoint formats.
+let PROD_CONTROL_PLANE_ENDPOINT_FORMAT_DUAL_STACK = "https://kinesisvideo.%@.api.aws"
+let PROD_CONTROL_PLANE_ENDPOINT_FORMAT_DUAL_STACK_CN = "https://kinesisvideo.%@.api.amazonwebservices.com.cn"
